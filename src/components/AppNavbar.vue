@@ -19,19 +19,19 @@ export default {
             <ul>
                 <li>
                     <a href="#" class="active">
-                        <FontAwesomeIcon icon="fas fa-house" size="xl" class="d-md-none" />
+                        <FontAwesomeIcon icon="fas fa-house" size="lg" class="d-md-none" />
                         Home
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <FontAwesomeIcon icon="fas fa-search" size="xl" class="d-md-none" />
+                        <FontAwesomeIcon icon="fas fa-search" size="lg" class="d-md-none" />
                         Search
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <FontAwesomeIcon icon="fas fa-book" size="xl" class="d-md-none" />
+                        <FontAwesomeIcon icon="fas fa-book" size="lg" class="d-md-none" />
                         Library
                     </a>
                 </li>
