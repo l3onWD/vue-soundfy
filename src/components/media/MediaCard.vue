@@ -29,10 +29,11 @@ export default {
 
 
 .media-card {
+    padding: 10px 5px;
 
     img {
-        height: 150px;
-        width: 150px;
+        height: 160px;
+        width: 160px;
 
         object-fit: cover;
     }

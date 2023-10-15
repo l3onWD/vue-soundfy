@@ -19,6 +19,13 @@ export default {
                 author: 'Unknow 2',
                 length: 300,
                 cover: '25'
+            },
+            {
+                id: 3,
+                title: 'Brano 3',
+                author: 'Unknow 3',
+                length: 300,
+                cover: '212'
             }
         ]
     })
@@ -33,6 +40,9 @@ export default {
 
             <!-- Recently Played -->
             <MediaSection title="Recently Played" :media="media" />
+
+            <!-- More of what you like -->
+            <MediaSection title="More of what you like" :media="media" />
 
         </div>
     </main>
