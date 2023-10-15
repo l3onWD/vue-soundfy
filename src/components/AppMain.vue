@@ -58,12 +58,14 @@ export default {
 <style lang="scss">
 @use '../assets/scss/vars' as *;
 
+
 .app-main {
     flex-grow: 1;
 
     overflow-y: auto;
 }
 
+// MEDIA MD
 @media screen and (min-width: 768px) {
     .app-main {
         margin-top: 60px;

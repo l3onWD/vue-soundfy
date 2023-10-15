@@ -10,6 +10,7 @@ export default {
     <nav class="app-navbar py-2">
         <div class="container">
 
+            <!-- Main Menù -->
             <ul class="d-flex align-items-center gap-3 text-light">
                 <li class="nav-link">
                     <a href="#" class="nav-link">Home</a>
@@ -21,6 +22,7 @@ export default {
                     <a href="#" class="nav-link">Library</a>
                 </li>
             </ul>
+
         </div>
     </nav>
 </template>
@@ -44,7 +46,7 @@ export default {
     }
 }
 
-
+// MEDIA MD
 @media screen and (min-width: 768px) {
     .app-navbar {
         position: fixed;
