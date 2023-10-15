@@ -7,7 +7,7 @@ export default {
 
 
 <template>
-    <main class="app-main text-bg-primary">
+    <main class="app-main">
         <div class="container">
             <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
                 dicta
