@@ -12,14 +12,23 @@ export default {
 
             <!-- Main Menù -->
             <ul class="d-flex align-items-center gap-3 text-light">
-                <li class="nav-link">
-                    <a href="#" class="nav-link">Home</a>
+                <li>
+                    <a href="#" class="d-flex">
+                        <FontAwesomeIcon icon="fas fa-house" />
+                        Home
+                    </a>
                 </li>
-                <li class="nav-link">
-                    <a href="#" class="nav-link">Search</a>
+                <li>
+                    <a href="#">
+                        <FontAwesomeIcon icon="fas fa-search" />
+                        Search
+                    </a>
                 </li>
-                <li class="nav-link">
-                    <a href="#" class="nav-link">Library</a>
+                <li>
+                    <a href="#">
+                        <FontAwesomeIcon icon="fas fa-book" />
+                        Library
+                    </a>
                 </li>
             </ul>
 
@@ -43,7 +52,13 @@ export default {
         display: flex;
         justify-content: space-evenly;
         align-items: center;
+
+        a {
+            display: flex;
+            flex-direction: column;
+        }
     }
+
 }
 
 // MEDIA MD
