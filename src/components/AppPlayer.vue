@@ -10,12 +10,12 @@ export default {
 
 
 <template>
-    <div v-if="isVisible" class="app-player bg-danger">
+    <div v-if="isVisible" class="app-player">
 
         <!-- Main Actions -->
         <ul class="d-flex align-items-center justify-content-center h-100">
             <li>
-                <button class="btn btn-outline-light">
+                <button class="btn">
                     <FontAwesomeIcon icon="fas fa-play" />
                 </button>
             </li>
@@ -32,6 +32,10 @@ export default {
 .app-player {
     height: $layout-player;
 
+    background-color: $col-gray-500;
+    border-top: 1px solid $col-gray-700;
+    border-bottom: 1px solid $col-gray-700;
+
     button {
         padding: 0;
         width: 2.5rem;
@@ -41,6 +45,10 @@ export default {
         justify-content: center;
         align-items: center;
         border-radius: 50%;
+
+        &:hover {
+            color: $col-orange;
+        }
     }
 }
 </style>
