@@ -1,13 +1,16 @@
 <script>
 export default {
 
+    data: () => ({
+        isVisible: true
+    })
 
 }
 </script>
 
 
 <template>
-    <div class="app-player bg-danger py-2">
+    <div v-if="isVisible" class="app-player bg-danger py-2">
         <ul class="d-flex align-items-center justify-content-center">
             <li>
                 <button class="btn btn-outline-light p-1">Play</button>

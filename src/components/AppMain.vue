@@ -43,7 +43,7 @@ export default {
 @use '../assets/scss/vars' as *;
 
 .app-main {
-    height: calc(100vh - ($layout-navbar + $layout-player));
+    flex-grow: 1;
 
     overflow-y: auto;
 }
