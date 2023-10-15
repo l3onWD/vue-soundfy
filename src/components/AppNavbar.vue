@@ -7,7 +7,7 @@ export default {
 
 
 <template>
-    <nav class="app-navbar py-2">
+    <nav class="app-navbar">
         <div class="container">
 
             <!-- Logo -->
@@ -16,7 +16,7 @@ export default {
             </a>
 
             <!-- Main Menù -->
-            <ul class="d-flex align-items-center gap-3 text-light">
+            <ul class="d-flex align-items-center text-light">
                 <li>
                     <a href="#" class="active">
                         <FontAwesomeIcon icon="fas fa-house" />
@@ -66,14 +66,24 @@ export default {
 
     ul {
         flex-basis: 100%;
+        height: 100%;
 
         display: flex;
         justify-content: space-evenly;
         align-items: center;
 
+        li {
+            flex: 0 0 calc(100%/3);
+            height: 100%;
+        }
+
         a {
+            height: 100%;
+
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: $col-gray-500;
             background-color: $col-gray-900;
             border: 1px solid $col-dark;
@@ -102,6 +112,11 @@ export default {
 
         ul {
             justify-content: flex-start;
+
+            li {
+                flex: 0 0 80px;
+                height: 100%;
+            }
         }
     }
 }
