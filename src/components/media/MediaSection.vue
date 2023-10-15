@@ -1,5 +1,9 @@
 <script>
+import MediaCard from './MediaCard.vue';
+
+
 export default {
+    components: { MediaCard },
     props: {
         title: {
             type: String,
@@ -21,8 +25,10 @@ export default {
         <h2>{{ title }}</h2>
 
         <!-- Carousel -->
-        <div>
-
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+            <div v-for="m in media" :key="m.id" class="col">
+                <MediaCard :media="m" />
+            </div>
         </div>
 
     </section>
