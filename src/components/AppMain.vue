@@ -1,6 +1,9 @@
 <script>
-export default {
+import MediaSection from './media/MediaSection.vue';
 
+
+export default {
+    components: { MediaSection }
 
 }
 </script>
@@ -9,47 +12,10 @@ export default {
 <template>
     <main class="app-main">
         <div class="container">
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
-            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
-                dicta
-                debitis quam
-                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.
-                END!!!!!</p>
+
+            <!-- Recently Played -->
+            <MediaSection />
+
         </div>
     </main>
 </template>
