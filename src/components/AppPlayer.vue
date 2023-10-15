@@ -1,5 +1,13 @@
 <script>
+/* -----------------------------------------
+* RESOURCES
+-------------------------------------------*/
+/*** COMPONENTS ***/
+import ProgressBar from './player/ProgressBar.vue';
+
+
 export default {
+    components: { ProgressBar },
 
     data: () => ({
         isVisible: true
@@ -32,7 +40,7 @@ export default {
         </ul>
 
         <!-- Progress Bar -->
-        <div></div>
+        <ProgressBar />
 
         <!-- Volume -->
 
