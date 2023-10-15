@@ -1,5 +1,8 @@
 <script>
+import AppNavbar from './components/AppNavbar.vue';
+
 export default {
+    components: { AppNavbar }
 
 
 }
@@ -7,9 +10,7 @@ export default {
 
 
 <template>
-    <h1>
-        Hello World
-    </h1>
+    <AppNavbar />
 </template>
 
 
