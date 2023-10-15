@@ -16,7 +16,7 @@ export default {
             </a>
 
             <!-- Main Menù -->
-            <ul class="d-flex align-items-center text-light">
+            <ul>
                 <li>
                     <a href="#" class="active">
                         <FontAwesomeIcon icon="fas fa-house" size="xl" class="d-md-none" />
