@@ -7,7 +7,7 @@ export default {
 
 
 <template>
-    <nav class="nav-menu py-2">
+    <nav class="app-navbar py-2">
         <div class="container">
 
             <ul class="d-flex align-items-center gap-3 text-light">
@@ -30,17 +30,14 @@ export default {
 @use '../assets/scss/vars' as *;
 
 
-.nav-menu {
-    height: $layout-bottom;
+.app-navbar {
+    height: $layout-navbar;
 
     display: flex;
     align-items: center;
     background-color: black;
 
     ul {
-        margin: 0;
-        padding: 0;
-
         display: flex;
         justify-content: center;
         align-items: center;

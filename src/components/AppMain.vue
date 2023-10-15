@@ -7,7 +7,7 @@ export default {
 
 
 <template>
-    <main class="text-bg-primary">
+    <main class="app-main text-bg-primary">
         <div class="container">
             <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
                 dicta
@@ -42,8 +42,8 @@ export default {
 <style lang="scss">
 @use '../assets/scss/vars' as *;
 
-main {
-    height: calc(100vh - $layout-bottom);
+.app-main {
+    height: calc(100vh - ($layout-navbar + $layout-player));
 
     overflow-y: auto;
 }
