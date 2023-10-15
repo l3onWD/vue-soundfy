@@ -1,10 +1,10 @@
 <script>
 import AppMain from './components/AppMain.vue';
-import AppNavbar from './components/AppNavbar.vue';
-import AppPlayer from './components/AppPlayer.vue';
+import AppBottom from './components/AppBottom.vue';
+
 
 export default {
-    components: { AppMain, AppNavbar, AppPlayer }
+    components: { AppMain, AppBottom }
 
 
 }
@@ -12,9 +12,10 @@ export default {
 
 
 <template>
-    <AppMain />
-    <AppPlayer />
-    <AppNavbar />
+    <div class="d-flex flex-column vh-100">
+        <AppMain />
+        <AppBottom />
+    </div>
 </template>
 
 
