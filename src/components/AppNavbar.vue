@@ -18,7 +18,7 @@ export default {
             <!-- Main Menù -->
             <ul class="d-flex align-items-center gap-3 text-light">
                 <li>
-                    <a href="#" class="d-flex">
+                    <a href="#" class="active">
                         <FontAwesomeIcon icon="fas fa-house" />
                         Home
                     </a>
@@ -49,7 +49,7 @@ export default {
 .app-navbar {
     height: $layout-navbar;
 
-    background-color: black;
+    background-color: $col-dark;
 
     >.container {
         height: 100%;
@@ -74,6 +74,18 @@ export default {
         a {
             display: flex;
             flex-direction: column;
+            color: $col-gray-500;
+            background-color: $col-gray-900;
+            border: 1px solid $col-dark;
+
+            &:hover,
+            &.active {
+                color: $col-gray-300;
+            }
+
+            &.active {
+                background-color: $col-dark;
+            }
         }
     }
 
