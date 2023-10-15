@@ -45,6 +45,9 @@ export default {
             <PlayerProgress />
 
             <!-- Player Volume Control -->
+            <button class="btn">
+                <FontAwesomeIcon icon="fas fa-volume-high" size="lg" />
+            </button>
 
             <!-- Player Details -->
 
@@ -71,7 +74,7 @@ export default {
 
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 2rem;
     }
 
     ul {
