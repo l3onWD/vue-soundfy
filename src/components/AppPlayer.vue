@@ -32,9 +32,9 @@ export default {
 .app-player {
     height: $layout-player;
 
-    background-color: $col-gray-500;
-    border-top: 1px solid $col-gray-700;
-    border-bottom: 1px solid $col-gray-700;
+    background-color: $col-light;
+    border-top: 1px solid $col-gray-500;
+    border-bottom: 1px solid $col-gray-500;
 
     button {
         padding: 0;
