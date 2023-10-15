@@ -10,6 +10,11 @@ export default {
     <nav class="app-navbar py-2">
         <div class="container">
 
+            <!-- Logo -->
+            <a href="#" class="d-none d-md-inline-block me-4">
+                <img src="../assets/img/logo.svg" alt="Logo" class="logo">
+            </a>
+
             <!-- Main Menù -->
             <ul class="d-flex align-items-center gap-3 text-light">
                 <li>
@@ -44,11 +49,24 @@ export default {
 .app-navbar {
     height: $layout-navbar;
 
-    display: flex;
-    align-items: center;
     background-color: black;
 
+    >.container {
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        height: 50px;
+        width: auto;
+        filter: invert(1);
+    }
+
     ul {
+        flex-basis: 100%;
+
         display: flex;
         justify-content: space-evenly;
         align-items: center;
