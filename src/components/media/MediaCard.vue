@@ -13,14 +13,21 @@ export default {
 
 <template>
     <div v-if="media" class="media-card">
-        <img :src="`https://picsum.photos/id/${media.cover}/300/300`" :alt="media.title" class="img-fluid">
-        <h5>{{ media.title }}</h5>
+
+        <!-- Cover -->
+        <img :src="`https://picsum.photos/id/${media.cover}/300/300`" :alt="media.title">
+
+        <!-- Data -->
+        <h5 class="mb-1">{{ media.title }}</h5>
         <span>{{ media.author }}</span>
     </div>
 </template>
 
 
 <style lang="scss" scoped>
+@use '../../assets/scss/vars' as *;
+
+
 .media-card {
 
     img {
@@ -28,6 +35,10 @@ export default {
         width: 150px;
 
         object-fit: cover;
+    }
+
+    span {
+        color: $col-gray-700;
     }
 }
 </style>

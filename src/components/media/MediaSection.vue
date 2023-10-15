@@ -22,7 +22,7 @@ export default {
 <template>
     <section class="py-4 border-bottom">
         <!-- Title -->
-        <h2>{{ title }}</h2>
+        <h2 class="mb-4">{{ title }}</h2>
 
         <!-- Carousel -->
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
