@@ -19,19 +19,19 @@ export default {
             <ul class="d-flex align-items-center text-light">
                 <li>
                     <a href="#" class="active">
-                        <FontAwesomeIcon icon="fas fa-house" />
+                        <FontAwesomeIcon icon="fas fa-house" size="xl" />
                         Home
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <FontAwesomeIcon icon="fas fa-search" />
+                        <FontAwesomeIcon icon="fas fa-search" size="xl" />
                         Search
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <FontAwesomeIcon icon="fas fa-book" />
+                        <FontAwesomeIcon icon="fas fa-book" size="xl" />
                         Library
                     </a>
                 </li>
