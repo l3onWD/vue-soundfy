@@ -3,7 +3,25 @@ import MediaSection from './media/MediaSection.vue';
 
 
 export default {
-    components: { MediaSection }
+    components: { MediaSection },
+    data: () => ({
+        media: [
+            {
+                id: 1,
+                title: 'Brano 1',
+                author: 'Unknow',
+                length: 120,
+                cover: '10'
+            },
+            {
+                id: 2,
+                title: 'Brano 2',
+                author: 'Unknow 2',
+                length: 300,
+                cover: '25'
+            }
+        ]
+    })
 
 }
 </script>
@@ -14,7 +32,7 @@ export default {
         <div class="container">
 
             <!-- Recently Played -->
-            <MediaSection title="Recently Played" />
+            <MediaSection title="Recently Played" :media="media" />
 
         </div>
     </main>
