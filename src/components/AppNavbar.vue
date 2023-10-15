@@ -27,12 +27,23 @@ export default {
 
 
 <style lang="scss">
+@use '../assets/scss/vars' as *;
+
+
 .nav-menu {
+    height: $layout-bottom;
+
+    display: flex;
+    align-items: center;
     background-color: black;
 
     ul {
         margin: 0;
         padding: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 </style>
