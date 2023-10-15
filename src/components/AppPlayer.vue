@@ -3,11 +3,11 @@
 * RESOURCES
 -------------------------------------------*/
 /*** COMPONENTS ***/
-import ProgressBar from './player/ProgressBar.vue';
+import PlayerProgress from './player/PlayerProgress.vue';
 
 
 export default {
-    components: { ProgressBar },
+    components: { PlayerProgress },
 
     data: () => ({
         isVisible: true
@@ -20,33 +20,36 @@ export default {
 <template>
     <div v-if="isVisible" class="app-player">
 
-        <!-- Main Actions -->
-        <ul class="d-flex align-items-center justify-content-center h-100">
-            <li>
-                <button class="btn">
-                    <FontAwesomeIcon icon="fas fa-backward-step" />
-                </button>
-            </li>
-            <li>
-                <button class="btn">
-                    <FontAwesomeIcon icon="fas fa-play" size="lg" />
-                </button>
-            </li>
-            <li>
-                <button class="btn">
-                    <FontAwesomeIcon icon="fas fa-forward-step" />
-                </button>
-            </li>
-        </ul>
+        <div class="container">
 
-        <!-- Progress Bar -->
-        <ProgressBar />
+            <!-- Player Main Controls -->
+            <ul>
+                <li>
+                    <button class="btn">
+                        <FontAwesomeIcon icon="fas fa-backward-step" />
+                    </button>
+                </li>
+                <li>
+                    <button class="btn">
+                        <FontAwesomeIcon icon="fas fa-play" size="lg" />
+                    </button>
+                </li>
+                <li>
+                    <button class="btn">
+                        <FontAwesomeIcon icon="fas fa-forward-step" />
+                    </button>
+                </li>
+            </ul>
 
-        <!-- Volume -->
+            <!-- Player Progress Bar -->
+            <PlayerProgress />
 
-        <!-- Media Details -->
+            <!-- Player Volume Control -->
 
-        <!-- Other Actions -->
+            <!-- Player Details -->
+
+            <!-- Other Controls -->
+        </div>
 
     </div>
 </template>
@@ -62,6 +65,21 @@ export default {
     background-color: $col-light;
     border-top: 1px solid $col-gray-500;
     border-bottom: 1px solid $col-gray-500;
+
+    >.container {
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    ul {
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+    }
 
     button {
         padding: 0;
