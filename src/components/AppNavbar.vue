@@ -43,4 +43,19 @@ export default {
         align-items: center;
     }
 }
+
+
+@media screen and (min-width: 768px) {
+    .app-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+
+        z-index: 1;
+
+        ul {
+            justify-content: flex-start;
+        }
+    }
+}
 </style>

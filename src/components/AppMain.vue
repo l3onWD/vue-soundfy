@@ -32,6 +32,22 @@ export default {
             <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
                 dicta
                 debitis quam
+                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
+            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
+                dicta
+                debitis quam
+                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
+            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
+                dicta
+                debitis quam
+                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
+            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
+                dicta
+                debitis quam
+                dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.</p>
+            <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, commodi ratione? Veritatis
+                dicta
+                debitis quam
                 dolore molestias! Eos minus saepe numquam! Fugit nesciunt quis dicta a pariatur. Eveniet, nemo error.
                 END!!!!!</p>
         </div>
@@ -46,5 +62,11 @@ export default {
     flex-grow: 1;
 
     overflow-y: auto;
+}
+
+@media screen and (min-width: 768px) {
+    .app-main {
+        margin-top: 60px;
+    }
 }
 </style>
