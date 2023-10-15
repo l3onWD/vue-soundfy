@@ -1,8 +1,9 @@
 <script>
+import AppMain from './components/AppMain.vue';
 import AppNavbar from './components/AppNavbar.vue';
 
 export default {
-    components: { AppNavbar }
+    components: { AppMain, AppNavbar }
 
 
 }
@@ -10,6 +11,7 @@ export default {
 
 
 <template>
+    <AppMain />
     <AppNavbar />
 </template>
 
