@@ -1,6 +1,15 @@
 <script>
 export default {
-
+    props: {
+        title: {
+            type: String,
+            default: 'Media'
+        },
+        media: {
+            type: Array,
+            default: []
+        }
+    }
 
 }
 </script>
@@ -9,7 +18,7 @@ export default {
 <template>
     <section class="py-4 border-bottom">
         <!-- Title -->
-        <h2>Recently Played</h2>
+        <h2>{{ title }}</h2>
 
         <!-- Carousel -->
         <div>

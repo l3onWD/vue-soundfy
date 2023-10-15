@@ -14,7 +14,7 @@ export default {
         <div class="container">
 
             <!-- Recently Played -->
-            <MediaSection />
+            <MediaSection title="Recently Played" />
 
         </div>
     </main>
