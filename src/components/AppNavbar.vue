@@ -19,19 +19,19 @@ export default {
             <ul class="d-flex align-items-center text-light">
                 <li>
                     <a href="#" class="active">
-                        <FontAwesomeIcon icon="fas fa-house" size="xl" />
+                        <FontAwesomeIcon icon="fas fa-house" size="xl" class="d-md-none" />
                         Home
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <FontAwesomeIcon icon="fas fa-search" size="xl" />
+                        <FontAwesomeIcon icon="fas fa-search" size="xl" class="d-md-none" />
                         Search
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <FontAwesomeIcon icon="fas fa-book" size="xl" />
+                        <FontAwesomeIcon icon="fas fa-book" size="xl" class="d-md-none" />
                         Library
                     </a>
                 </li>
@@ -84,6 +84,7 @@ export default {
             flex-direction: column;
             justify-content: center;
             align-items: center;
+
             color: $col-gray-500;
             background-color: $col-gray-900;
             border: 1px solid $col-dark;
