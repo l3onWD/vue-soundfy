@@ -47,7 +47,7 @@ export default {
 // MEDIA MD
 @media screen and (min-width: 768px) {
     .app-main {
-        margin-top: 60px;
+        margin-top: $layout-navbar;
     }
 }
 </style>
