@@ -16,10 +16,29 @@ export default {
         <ul class="d-flex align-items-center justify-content-center h-100">
             <li>
                 <button class="btn">
-                    <FontAwesomeIcon icon="fas fa-play" />
+                    <FontAwesomeIcon icon="fas fa-backward-step" />
+                </button>
+            </li>
+            <li>
+                <button class="btn">
+                    <FontAwesomeIcon icon="fas fa-play" size="lg" />
+                </button>
+            </li>
+            <li>
+                <button class="btn">
+                    <FontAwesomeIcon icon="fas fa-forward-step" />
                 </button>
             </li>
         </ul>
+
+        <!-- Progress Bar -->
+        <div></div>
+
+        <!-- Volume -->
+
+        <!-- Media Details -->
+
+        <!-- Other Actions -->
 
     </div>
 </template>
