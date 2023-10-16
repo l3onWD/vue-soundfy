@@ -5,13 +5,14 @@
 /*** COMPONENTS ***/
 import PlayerProgress from './player/PlayerProgress.vue';
 import PlayerDetails from './player/PlayerDetails.vue';
+import BaseButton from './base/BaseButton.vue';
 
 /*** DATA ***/
 import { mediaList } from '../data';
 
 
 export default {
-    components: { PlayerProgress, PlayerDetails },
+    components: { PlayerProgress, PlayerDetails, BaseButton },
 
     data: () => ({
         isVisible: true,
@@ -34,9 +35,7 @@ export default {
                 <PlayerDetails :track="currentTrack" />
 
                 <!-- Favorite Button -->
-                <button class="btn col-gray-700">
-                    <FontAwesomeIcon icon="far fa-heart" />
-                </button>
+                <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
             </div>
 
 
@@ -45,19 +44,13 @@ export default {
                 <!-- Main Controls -->
                 <ul>
                     <li>
-                        <button class="btn">
-                            <FontAwesomeIcon icon="fas fa-backward-step" />
-                        </button>
+                        <BaseButton icon="backward-step" />
                     </li>
                     <li>
-                        <button class="btn">
-                            <FontAwesomeIcon icon="fas fa-play" size="lg" />
-                        </button>
+                        <BaseButton icon="play" size="lg" />
                     </li>
                     <li>
-                        <button class="btn">
-                            <FontAwesomeIcon icon="fas fa-forward-step" />
-                        </button>
+                        <BaseButton icon="forward-step" />
                     </li>
                 </ul>
 
@@ -71,9 +64,7 @@ export default {
             <div class="app-player-right">
 
                 <!-- Track Volume -->
-                <button class="btn ms-auto">
-                    <FontAwesomeIcon icon="fas fa-volume-high" size="lg" />
-                </button>
+                <BaseButton icon="volume-high" size="lg" class="ms-auto" />
             </div>
 
         </div>
@@ -118,21 +109,6 @@ export default {
 
         .app-player-right {
             display: none;
-        }
-    }
-
-    button {
-        padding: 0;
-        width: 2.5rem;
-        height: 2.5rem;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-
-        &:hover {
-            color: $col-orange;
         }
     }
 }
