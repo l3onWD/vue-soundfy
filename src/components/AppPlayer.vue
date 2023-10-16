@@ -29,8 +29,11 @@ export default {
 
             <!-- Left Panel -->
             <div class="app-player-left">
+
+                <!-- Track Details -->
                 <PlayerDetails :track="currentTrack" />
 
+                <!-- Favorite Button -->
                 <button class="btn col-gray-700">
                     <FontAwesomeIcon icon="far fa-heart" />
                 </button>
@@ -66,6 +69,8 @@ export default {
 
             <!-- Right Panel -->
             <div class="app-player-right">
+
+                <!-- Track Volume -->
                 <button class="btn ms-auto">
                     <FontAwesomeIcon icon="fas fa-volume-high" size="lg" />
                 </button>
@@ -103,15 +108,17 @@ export default {
             display: flex;
         }
 
+        .app-player-center {
+            ul {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
         .app-player-right {
             display: none;
         }
-    }
-
-    ul {
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     button {
