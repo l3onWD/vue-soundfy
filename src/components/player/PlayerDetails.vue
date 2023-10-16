@@ -20,7 +20,7 @@ export default {
         <!-- Track Info -->
         <div class="player-details-info">
             <h5>{{ track.title }}</h5>
-            <span>{{ track.author }}</span>
+            <span class="col-gray-700">{{ track.author }}</span>
         </div>
     </div>
 </template>
@@ -49,10 +49,6 @@ export default {
         h5 {
             margin-bottom: 0.25rem;
             font-size: 1.1rem;
-        }
-
-        span {
-            color: $col-gray-700;
         }
     }
 

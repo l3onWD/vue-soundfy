@@ -31,7 +31,7 @@ export default {
             <div class="app-player-left">
                 <PlayerDetails :track="currentTrack" />
 
-                <button class="btn">
+                <button class="btn col-gray-700">
                     <FontAwesomeIcon icon="far fa-heart" />
                 </button>
             </div>
@@ -101,10 +101,6 @@ export default {
 
         .app-player-left {
             display: flex;
-
-            button {
-                color: $col-gray-700;
-            }
         }
 
         .app-player-right {

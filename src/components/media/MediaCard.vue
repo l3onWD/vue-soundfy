@@ -19,7 +19,7 @@ export default {
 
         <!-- Data -->
         <h5 class="mb-1">{{ media.title }}</h5>
-        <span>{{ media.author }}</span>
+        <span class="col-gray-700">{{ media.author }}</span>
     </div>
 </template>
 
@@ -36,10 +36,6 @@ export default {
         width: 160px;
 
         object-fit: cover;
-    }
-
-    span {
-        color: $col-gray-700;
     }
 }
 </style>
