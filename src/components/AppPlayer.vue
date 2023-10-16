@@ -30,6 +30,10 @@ export default {
             <!-- Left Panel -->
             <div class="app-player-left">
                 <PlayerDetails :track="currentTrack" />
+
+                <button class="btn">
+                    <FontAwesomeIcon icon="far fa-heart" />
+                </button>
             </div>
 
 
@@ -96,6 +100,14 @@ export default {
 
         .app-player-center {
             flex-basis: 60%;
+        }
+
+        .app-player-left {
+            display: flex;
+
+            button {
+                color: $col-gray-700;
+            }
         }
     }
 
