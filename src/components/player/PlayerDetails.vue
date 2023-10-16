@@ -30,7 +30,7 @@ export default {
 @use '../../assets/scss/vars' as *;
 
 .player-details {
-    min-width: 280px;
+    min-width: 100px;
 
     display: flex;
     align-items: center;

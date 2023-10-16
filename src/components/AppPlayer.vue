@@ -27,38 +27,46 @@ export default {
 
         <div class="container">
 
-            <!-- Player Main Controls -->
-            <ul>
-                <li>
-                    <button class="btn">
-                        <FontAwesomeIcon icon="fas fa-backward-step" />
-                    </button>
-                </li>
-                <li>
-                    <button class="btn">
-                        <FontAwesomeIcon icon="fas fa-play" size="lg" />
-                    </button>
-                </li>
-                <li>
-                    <button class="btn">
-                        <FontAwesomeIcon icon="fas fa-forward-step" />
-                    </button>
-                </li>
-            </ul>
-
-            <!-- Player Progress Bar -->
-            <PlayerProgress />
-
-            <!-- Player Volume Control -->
-            <button class="btn">
-                <FontAwesomeIcon icon="fas fa-volume-high" size="lg" />
-            </button>
-
-            <!-- Player Details -->
-            <PlayerDetails :track="currentTrack" />
+            <!-- Left Panel -->
+            <div class="app-player-left">
+                <PlayerDetails :track="currentTrack" />
+            </div>
 
 
-            <!-- Other Controls -->
+            <!-- Center Panel -->
+            <div class="app-player-center">
+                <!-- Main Controls -->
+                <ul>
+                    <li>
+                        <button class="btn">
+                            <FontAwesomeIcon icon="fas fa-backward-step" />
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn">
+                            <FontAwesomeIcon icon="fas fa-play" size="lg" />
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn">
+                            <FontAwesomeIcon icon="fas fa-forward-step" />
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Progress Bar -->
+                <PlayerProgress />
+
+            </div>
+
+
+            <!-- Right Panel -->
+            <div class="app-player-right">
+                <button class="btn ms-auto">
+                    <FontAwesomeIcon icon="fas fa-volume-high" size="lg" />
+                </button>
+            </div>
+
         </div>
 
     </div>
@@ -81,13 +89,19 @@ export default {
 
         display: flex;
         align-items: center;
-        gap: 2rem;
+
+        >* {
+            flex: 0 0 20%;
+        }
+
+        .app-player-center {
+            flex-basis: 60%;
+        }
     }
 
     ul {
-        height: 100%;
-
         display: flex;
+        justify-content: center;
         align-items: center;
     }
 
