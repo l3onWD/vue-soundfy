@@ -83,6 +83,7 @@ export default {
 
 .app-player {
     height: $layout-player;
+    position: relative;
 
     background-color: $col-light;
     border-top: 1px solid $col-gray-500;

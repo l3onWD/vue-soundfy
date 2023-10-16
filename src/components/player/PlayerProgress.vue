@@ -7,12 +7,12 @@ export default {
 
 
 <template>
-    <div class="media-progress">
+    <div class="player-progress">
         <!-- Track Current Time -->
         <span>0:00</span>
 
         <!-- Bar -->
-        <div class="media-progress-bar">
+        <div class="player-progress-bar">
             <div class="value"></div>
         </div>
 
@@ -25,7 +25,7 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/scss/vars' as *;
 
-.media-progress {
+.player-progress {
     width: 100%;
     height: 100%;
 
@@ -33,12 +33,18 @@ export default {
     align-items: center;
     gap: 0.75rem;
 
-    .media-progress-bar {
-        flex-grow: 1;
-        height: 2px;
-        position: relative;
+    span {
+        display: none;
+    }
 
-        background-color: $col-gray-500;
+    &-bar {
+        width: 100%;
+        height: 2px;
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+
+        background-color: $col-gray-700;
 
         .value {
             position: absolute;
@@ -48,6 +54,22 @@ export default {
             width: 23%;
 
             background-color: $col-orange;
+        }
+    }
+}
+
+
+// MEDIA MD
+@media screen and (min-width: 768px) {
+    .player-progress {
+        span {
+            display: inline;
+        }
+
+        &-bar {
+            position: relative;
+            background-color: $col-gray-500;
+
         }
     }
 }
