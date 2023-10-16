@@ -111,7 +111,7 @@ export default {
         .app-player-center {
             ul {
                 display: flex;
-                justify-content: center;
+                justify-content: end;
                 align-items: center;
             }
         }
@@ -149,6 +149,10 @@ export default {
 
             .app-player-center {
                 flex-basis: 60%;
+
+                ul {
+                    justify-content: center;
+                }
             }
 
             .app-player-right {
