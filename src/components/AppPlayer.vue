@@ -4,13 +4,18 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import PlayerProgress from './player/PlayerProgress.vue';
+import PlayerDetails from './player/PlayerDetails.vue';
+
+/*** DATA ***/
+import { mediaList } from '../data';
 
 
 export default {
-    components: { PlayerProgress },
+    components: { PlayerProgress, PlayerDetails },
 
     data: () => ({
-        isVisible: true
+        isVisible: true,
+        currentTrack: mediaList[0]
     })
 
 }
@@ -50,6 +55,8 @@ export default {
             </button>
 
             <!-- Player Details -->
+            <PlayerDetails :track="currentTrack" />
+
 
             <!-- Other Controls -->
         </div>
