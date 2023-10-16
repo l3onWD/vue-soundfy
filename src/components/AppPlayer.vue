@@ -95,11 +95,7 @@ export default {
         align-items: center;
 
         >* {
-            flex: 0 0 20%;
-        }
-
-        .app-player-center {
-            flex-basis: 60%;
+            flex: 0 0 50%;
         }
 
         .app-player-left {
@@ -108,6 +104,10 @@ export default {
             button {
                 color: $col-gray-700;
             }
+        }
+
+        .app-player-right {
+            display: none;
         }
     }
 
@@ -129,6 +129,27 @@ export default {
 
         &:hover {
             color: $col-orange;
+        }
+    }
+}
+
+
+// MEDIA MD
+@media screen and (min-width: 768px) {
+    .app-player {
+        >.container {
+
+            >* {
+                flex: 0 0 20%;
+            }
+
+            .app-player-center {
+                flex-basis: 60%;
+            }
+
+            .app-player-right {
+                display: flex;
+            }
         }
     }
 }
