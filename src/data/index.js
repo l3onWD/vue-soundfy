@@ -1,3 +1,3 @@
-import mediaList from './_mediaList';
+import songs from './_songs';
 
-export { mediaList };
+export { songs };

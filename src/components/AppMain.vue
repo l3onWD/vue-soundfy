@@ -6,13 +6,13 @@
 import MediaSection from './media/MediaSection.vue';
 
 /*** DATA ***/
-import { mediaList } from '../data';
+import { songs } from '../data';
 
 
 export default {
     components: { MediaSection },
     data: () => ({
-        mediaList
+        songs
     })
 
 }
@@ -24,10 +24,10 @@ export default {
         <div class="container">
 
             <!-- Recently Played -->
-            <MediaSection title="Recently Played" :media="mediaList" />
+            <MediaSection title="Recently Played" :media="songs" />
 
             <!-- More of what you like -->
-            <MediaSection title="More of what you like" :media="mediaList" />
+            <MediaSection title="More of what you like" :media="songs" />
 
         </div>
     </main>
