@@ -1,18 +1,26 @@
 <script>
+/* -----------------------------------------
+* RESOURCES
+-------------------------------------------*/
+/*** DATA ***/
+import { store } from '../../data/store';
+
+
 export default {
     props: {
         media: {
             type: Object,
             default: null
         }
-    }
+    },
+    data: () => ({ store })
 
 }
 </script>
 
 
 <template>
-    <div v-if="media" class="media-card">
+    <div v-if="media" @click="store.currentSong = media" class="media-card">
 
         <!-- Cover -->
         <img :src="media.albumCover" :alt="media.title">
@@ -30,6 +38,8 @@ export default {
 
 .media-card {
     padding: 10px 5px;
+
+    cursor: pointer;
 
     img {
         height: 100%;
