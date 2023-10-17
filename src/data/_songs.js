@@ -5,7 +5,7 @@ export default [
         author: 'nakaradaalexander',
         duration: 357,
         albumCover: 'https://picsum.photos/id/10/300/300',
-        src: './src/assets/music/test-song-01.mp3',
+        src: './src/assets/music/might-amp-magic-138999.mp3',
         isFavorite: false
     },
     {

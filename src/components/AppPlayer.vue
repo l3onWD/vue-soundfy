@@ -8,22 +8,28 @@ import PlayerDetails from './player/PlayerDetails.vue';
 import BaseButton from './base/BaseButton.vue';
 
 /*** DATA ***/
-import { songs } from '../data';
+import { store } from '../data/store';
 
 
 export default {
     components: { PlayerProgress, PlayerDetails, BaseButton },
 
     data: () => ({
-        isVisible: true,
-        currentSong: songs[0],
+        store,
         audio: null,
-
         player: {
             currentTime: 0,
             isPlaying: false
         }
     }),
+    watch: {
+        'store.currentSong.src'(newValue) {
+            this.audio.src = newValue;
+            this.audio.load();
+            this.player.currentTime = 0;
+            this.player.isPlaying = false;
+        }
+    },
     methods: {
         play() {
             if (this.audio.paused) {
@@ -36,13 +42,13 @@ export default {
         }
     },
     mounted() {
-        this.audio = new Audio(this.currentSong.src);
+        this.audio = new Audio();
 
         this.audio.addEventListener('timeupdate', () => { this.player.currentTime = this.audio.currentTime });
 
         this.audio.addEventListener('ended', () => {
             this.player.currentTime = 0;
-            this.isPlaying = false;
+            this.player.isPlaying = false;
         });
     }
 }
@@ -50,7 +56,7 @@ export default {
 
 
 <template>
-    <div v-if="isVisible" class="app-player">
+    <div v-if="store.currentSong" class="app-player">
 
         <div class="container">
 
@@ -58,7 +64,7 @@ export default {
             <div class="app-player-left">
 
                 <!-- Track Details -->
-                <PlayerDetails :song="currentSong" />
+                <PlayerDetails :song="store.currentSong" />
 
                 <!-- Favorite Button -->
                 <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
@@ -82,7 +88,7 @@ export default {
                 </ul>
 
                 <!-- Progress Bar -->
-                <PlayerProgress :currentTime="player.currentTime" :duration="currentSong.duration" />
+                <PlayerProgress :currentTime="player.currentTime" :duration="store.currentSong?.duration" />
 
             </div>
 
