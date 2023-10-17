@@ -15,7 +15,7 @@ export default {
     <div v-if="media" class="media-card">
 
         <!-- Cover -->
-        <img :src="`https://picsum.photos/id/${media.cover}/300/300`" :alt="media.title">
+        <img :src="media.albumCover" :alt="media.title">
 
         <!-- Data -->
         <h5 class="mb-1">{{ media.title }}</h5>

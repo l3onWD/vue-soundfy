@@ -1,7 +1,7 @@
 <script>
 export default {
     props: {
-        track: {
+        song: {
             type: Object,
             default: null
         }
@@ -12,15 +12,15 @@ export default {
 
 
 <template>
-    <div v-if="track" class="player-details">
+    <div v-if="song" class="player-details">
 
         <!-- Cover -->
-        <img :src="`https://picsum.photos/id/${track.cover}/300/300`" :alt="track.title">
+        <img :src="song.albumCover" :alt="song.title">
 
-        <!-- Track Info -->
+        <!-- Song Info -->
         <div class="player-details-info">
-            <h5>{{ track.title }}</h5>
-            <span class="col-gray-700">{{ track.author }}</span>
+            <h5>{{ song.title }}</h5>
+            <span class="col-gray-700">{{ song.author }}</span>
         </div>
     </div>
 </template>
