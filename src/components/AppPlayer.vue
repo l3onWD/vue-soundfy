@@ -8,7 +8,7 @@ import PlayerDetails from './player/PlayerDetails.vue';
 import BaseButton from './base/BaseButton.vue';
 
 /*** DATA ***/
-import { mediaList } from '../data';
+import { songs } from '../data';
 
 
 export default {
@@ -16,9 +16,32 @@ export default {
 
     data: () => ({
         isVisible: true,
-        currentTrack: mediaList[0]
-    })
+        currentTrack: songs[0],
 
+        player: {
+            src: './src/assets/music/test-song-01.mp3',
+            audio: null,
+            currentTime: 0,
+            duration: 0,
+            isPlaying: false
+        }
+    }),
+    methods: {
+        play() {
+            if (this.player.audio.paused) {
+                this.player.audio.play();
+                this.player.duration = this.player.audio.duration;
+                this.player.isPlaying = true;
+            } else {
+                this.player.audio.pause();
+                this.player.isPlaying = false;
+            }
+        }
+    },
+    mounted() {
+        this.player.audio = new Audio(this.player.src);
+        this.player.audio.addEventListener('timeupdate', () => { this.player.currentTime = this.player.audio.currentTime })
+    }
 }
 </script>
 
@@ -32,7 +55,7 @@ export default {
             <div class="app-player-left">
 
                 <!-- Track Details -->
-                <PlayerDetails :track="currentTrack" />
+                <PlayerDetails :song="currentTrack" />
 
                 <!-- Favorite Button -->
                 <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
@@ -46,8 +69,9 @@ export default {
                     <li>
                         <BaseButton icon="backward-step" />
                     </li>
-                    <li>
-                        <BaseButton icon="play" size="lg" />
+                    <li @click="play">
+                        <BaseButton v-if="player.isPlaying" icon="pause" size="lg" />
+                        <BaseButton v-else icon="play" size="lg" />
                     </li>
                     <li>
                         <BaseButton icon="forward-step" />
@@ -55,7 +79,7 @@ export default {
                 </ul>
 
                 <!-- Progress Bar -->
-                <PlayerProgress />
+                <PlayerProgress :currentTime="player.currentTime" :duration="player.duration" />
 
             </div>
 

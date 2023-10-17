@@ -1,6 +1,26 @@
 <script>
 export default {
+    props: {
+        currentTime: Number,
+        duration: Number,
+    },
+    computed: {
+        currentTimeLabel() {
+            const minutes = Math.floor(this.currentTime / 60);
+            const seconds = Math.floor(this.currentTime % 60);
+            return minutes + ':' + (seconds < 10 ? `0${seconds}` : seconds);
+        },
 
+        durationLabel() {
+            const minutes = Math.floor(this.duration / 60);
+            const seconds = Math.floor(this.duration % 60);
+            return minutes + ':' + (seconds < 10 ? `0${seconds}` : seconds);
+        },
+
+        barWidth() {
+            return this.currentTime / this.duration * 100;
+        }
+    }
 
 }
 </script>
@@ -9,15 +29,15 @@ export default {
 <template>
     <div class="player-progress">
         <!-- Track Current Time -->
-        <span>0:00</span>
+        <span>{{ currentTimeLabel }}</span>
 
         <!-- Bar -->
         <div class="player-progress-bar">
-            <div class="value"></div>
+            <div class="value" :style="`width: ${barWidth}%`"></div>
         </div>
 
         <!-- Track Length -->
-        <span>2:30</span>
+        <span>{{ durationLabel }}</span>
     </div>
 </template>
 
@@ -51,7 +71,7 @@ export default {
             top: 0;
             left: 0;
             height: 2px;
-            width: 23%;
+            width: 0;
 
             background-color: $col-orange;
         }
