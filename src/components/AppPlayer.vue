@@ -16,31 +16,34 @@ export default {
 
     data: () => ({
         isVisible: true,
-        currentTrack: songs[0],
+        currentSong: songs[0],
+        audio: null,
 
         player: {
-            src: './src/assets/music/test-song-01.mp3',
-            audio: null,
             currentTime: 0,
-            duration: 0,
             isPlaying: false
         }
     }),
     methods: {
         play() {
-            if (this.player.audio.paused) {
-                this.player.audio.play();
-                this.player.duration = this.player.audio.duration;
+            if (this.audio.paused) {
+                this.audio.play();
                 this.player.isPlaying = true;
             } else {
-                this.player.audio.pause();
+                this.audio.pause();
                 this.player.isPlaying = false;
             }
         }
     },
     mounted() {
-        this.player.audio = new Audio(this.player.src);
-        this.player.audio.addEventListener('timeupdate', () => { this.player.currentTime = this.player.audio.currentTime })
+        this.audio = new Audio(this.currentSong.src);
+
+        this.audio.addEventListener('timeupdate', () => { this.player.currentTime = this.audio.currentTime });
+
+        this.audio.addEventListener('ended', () => {
+            this.player.currentTime = 0;
+            this.isPlaying = false;
+        });
     }
 }
 </script>
@@ -55,7 +58,7 @@ export default {
             <div class="app-player-left">
 
                 <!-- Track Details -->
-                <PlayerDetails :song="currentTrack" />
+                <PlayerDetails :song="currentSong" />
 
                 <!-- Favorite Button -->
                 <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
@@ -79,7 +82,7 @@ export default {
                 </ul>
 
                 <!-- Progress Bar -->
-                <PlayerProgress :currentTime="player.currentTime" :duration="player.duration" />
+                <PlayerProgress :currentTime="player.currentTime" :duration="currentSong.duration" />
 
             </div>
 
