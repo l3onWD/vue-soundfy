@@ -19,7 +19,7 @@ export default [
     },
     {
         id: 3,
-        title: 'Brano 3',
+        title: 'Woods of Imagination',
         author: 'nakaradaalexander',
         duration: 213,
         albumCover: 'https://picsum.photos/id/212/300/300',
