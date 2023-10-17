@@ -42,10 +42,14 @@ export default {
         }
     },
     mounted() {
+
+        // Set audio
         this.audio = new Audio();
 
+        // Current time update
         this.audio.addEventListener('timeupdate', () => { this.player.currentTime = this.audio.currentTime });
 
+        // Reset Audio on End
         this.audio.addEventListener('ended', () => {
             this.player.currentTime = 0;
             this.player.isPlaying = false;
