@@ -57,45 +57,41 @@ export default {
 
         <div class="container">
 
-            <!-- Left Panel -->
-            <div class="app-player-left">
 
-                <!-- Track Details -->
-                <PlayerDetails :song="store.song" />
+            <!-- Song Details -->
+            <PlayerDetails :song="store.song" />
 
+
+            <!-- Song Actions -->
+            <ul class="d-flex ms-1">
                 <!-- Favorite Button -->
-                <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
-            </div>
+                <li>
+                    <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
+                </li>
+            </ul>
 
 
-            <!-- Center Panel -->
-            <div class="app-player-center">
-                <!-- Main Controls -->
-                <ul>
-                    <li>
-                        <BaseButton icon="backward-step" />
-                    </li>
-                    <li>
-                        <BaseButton v-if="store.isPlaying" @click="store.isPlaying = false" icon="pause" size="lg" />
-                        <BaseButton v-else @click="store.isPlaying = true" icon="play" size="lg" />
-                    </li>
-                    <li>
-                        <BaseButton icon="forward-step" />
-                    </li>
-                </ul>
-
-                <!-- Progress Bar -->
-                <PlayerProgress :currentTime="currentTime" :duration="store.song?.duration" />
-
-            </div>
+            <!-- Progress Bar -->
+            <PlayerProgress :currentTime="currentTime" :duration="store.song?.duration" class="mx-md-4" />
 
 
-            <!-- Right Panel -->
-            <div class="app-player-right">
+            <!-- Song Controls -->
+            <ul class="d-flex ms-auto">
+                <li>
+                    <BaseButton icon="volume-high" size="lg" class="me-4" />
+                </li>
+                <li>
+                    <BaseButton icon="backward-step" />
+                </li>
+                <li>
+                    <BaseButton v-if="store.isPlaying" @click="store.isPlaying = false" icon="pause" size="lg" />
+                    <BaseButton v-else @click="store.isPlaying = true" icon="play" size="lg" />
+                </li>
+                <li>
+                    <BaseButton icon="forward-step" />
+                </li>
+            </ul>
 
-                <!-- Track Volume -->
-                <BaseButton icon="volume-high" size="lg" class="ms-auto" />
-            </div>
 
         </div>
 
@@ -120,51 +116,6 @@ export default {
 
         display: flex;
         align-items: center;
-
-        >* {
-            flex: 0 0 50%;
-        }
-
-        .app-player-left {
-            display: flex;
-        }
-
-        .app-player-center {
-            ul {
-                display: flex;
-                justify-content: end;
-                align-items: center;
-            }
-        }
-
-        .app-player-right {
-            display: none;
-        }
-    }
-}
-
-
-// MEDIA MD
-@media screen and (min-width: 768px) {
-    .app-player {
-        >.container {
-
-            >* {
-                flex: 0 0 20%;
-            }
-
-            .app-player-center {
-                flex-basis: 60%;
-
-                ul {
-                    justify-content: center;
-                }
-            }
-
-            .app-player-right {
-                display: flex;
-            }
-        }
     }
 }
 </style>
