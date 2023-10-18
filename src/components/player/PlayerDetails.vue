@@ -30,7 +30,8 @@ export default {
 @use '../../assets/scss/vars' as *;
 
 .player-details {
-    min-width: 100px;
+    width: 170px;
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
@@ -44,7 +45,22 @@ export default {
     }
 
     &-info {
+        position: relative;
+
         line-height: 1;
+        overflow: hidden;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+
+            background-image: linear-gradient(90deg, transparent 90%, $col-light);
+        }
+
+        >* {
+            white-space: nowrap;
+        }
 
         h5 {
             margin-bottom: 0.25rem;
