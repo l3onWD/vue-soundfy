@@ -19,8 +19,8 @@ export default {
 
         <!-- Song Info -->
         <div class="player-details-info">
-            <h5>{{ song.title }}</h5>
-            <span class="col-gray-700">{{ song.author }}</span>
+            <h5 :title="song.title">{{ song.title }}</h5>
+            <span :title="song.author" class="col-gray-700">{{ song.author }}</span>
         </div>
     </div>
 </template>
@@ -53,9 +53,9 @@ export default {
         &::after {
             content: '';
             position: absolute;
-            inset: 0;
+            inset: 0 0 0 90%;
 
-            background-image: linear-gradient(90deg, transparent 90%, $col-light);
+            background-image: linear-gradient(90deg, transparent 5%, $col-light);
         }
 
         >* {
