@@ -17,6 +17,11 @@ export default {
             default: null
         }
     },
+    computed: {
+        isPlaying() {
+            return this.media.id === store.currentSong?.id && store.playerIsPlaying;
+        }
+    },
     data: () => ({ store })
 
 }
@@ -34,8 +39,7 @@ export default {
             <!-- Media Actions -->
             <div class="media-card-actions">
                 <!-- Play/Pause -->
-                <BaseButton v-if="store.currentSong?.id === media.id && store.playerIsPlaying" icon="pause"
-                    class="btn-big btn-rounded btn-orange" />
+                <BaseButton v-if="isPlaying" icon="pause" class="btn-big btn-rounded btn-orange" />
                 <BaseButton v-else @click="store.currentSong = media" icon="play" class="btn-big btn-rounded btn-orange" />
             </div>
         </div>

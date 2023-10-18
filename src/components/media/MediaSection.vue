@@ -1,4 +1,8 @@
 <script>
+/* -----------------------------------------
+* RESOURCES
+-------------------------------------------*/
+/*** COMPONENTS ***/
 import MediaCard from './MediaCard.vue';
 
 
