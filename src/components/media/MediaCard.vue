@@ -75,7 +75,7 @@ export default {
             visibility: hidden;
             opacity: 0;
 
-            transition: 0.1s visibility, 0.1s opacity;
+            transition: 0.05s visibility, 0.05s opacity;
         }
 
         &:hover .media-card-actions {
