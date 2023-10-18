@@ -19,7 +19,10 @@ export default {
         store,
         audio: null,
         currentTime: 0,
-        volume: 1
+
+        // Volume custom v-model
+        volume: 1,
+        muted: false
     }),
     watch: {
         'store.song.src'(newSrc) {
@@ -35,8 +38,13 @@ export default {
                 else this.audio.pause();
             });
         },
+
+        // Volume custom v-model (more reactiveness)
         volume(newValue) {
             this.audio.volume = newValue;
+        },
+        muted(newValue) {
+            this.audio.muted = newValue;
         }
     },
     mounted() {
@@ -83,7 +91,7 @@ export default {
             <!-- Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <PlayerVolume v-model:volume="volume" class="me-4" />
+                    <PlayerVolume v-model:volume="volume" v-model:muted="muted" class="me-4" />
                 </li>
                 <li>
                     <BaseButton icon="backward-step" />
