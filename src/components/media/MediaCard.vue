@@ -34,8 +34,8 @@ export default {
             <!-- Media Actions -->
             <div class="media-card-actions">
                 <!-- Play/Pause -->
-                <BaseButton v-if="store.currentSong.id === media.id" icon="pause" size="3x" />
-                <BaseButton v-else @click="store.currentSong = media" icon="play" size="3x" />
+                <BaseButton v-if="store.currentSong?.id === media.id" icon="pause" class="btn-big btn-rounded btn-orange" />
+                <BaseButton v-else @click="store.currentSong = media" icon="play" class="btn-big btn-rounded btn-orange" />
             </div>
         </div>
 
@@ -72,11 +72,15 @@ export default {
             left: 50%;
             transform: translate(-50%, -50%);
 
-            display: none;
+            visibility: hidden;
+            opacity: 0;
+
+            transition: 0.1s visibility, 0.1s opacity;
         }
 
         &:hover .media-card-actions {
-            display: block;
+            visibility: visible;
+            opacity: 1;
         }
     }
 

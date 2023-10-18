@@ -25,6 +25,7 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/scss/vars' as *;
 
+
 button {
     padding: 0;
     width: 2rem;
@@ -38,6 +39,26 @@ button {
 
     &:hover {
         color: $col-orange;
+    }
+
+    &.btn-rounded {
+        border-radius: 50%;
+    }
+
+    &.btn-big {
+        width: 4rem;
+        height: 4rem;
+
+        font-size: 2.5rem;
+    }
+
+    &.btn-orange {
+        color: $col-gray-300;
+        background-color: $col-orange;
+
+        &:hover {
+            color: $col-light;
+        }
     }
 }
 </style>
