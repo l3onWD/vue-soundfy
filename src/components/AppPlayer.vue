@@ -3,16 +3,17 @@
 * RESOURCES
 -------------------------------------------*/
 /*** COMPONENTS ***/
-import PlayerProgress from './player/PlayerProgress.vue';
-import PlayerDetails from './player/PlayerDetails.vue';
-import BaseButton from './base/BaseButton.vue';
+import PlayerProgress from '@/components/player/PlayerProgress.vue';
+import PlayerDetails from '@/components/player/PlayerDetails.vue';
+import PlayerVolume from '@/components/player/PlayerVolume.vue';
+import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
 import { store } from '../data/store';
 
 
 export default {
-    components: { PlayerProgress, PlayerDetails, BaseButton },
+    components: { PlayerProgress, PlayerDetails, PlayerVolume, BaseButton },
 
     data: () => ({
         store,
@@ -78,7 +79,7 @@ export default {
             <!-- Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <BaseButton icon="volume-high" size="lg" class="me-4" />
+                    <PlayerVolume icon="volume-high" class="me-4" />
                 </li>
                 <li>
                     <BaseButton icon="backward-step" />
