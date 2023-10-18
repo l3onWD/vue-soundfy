@@ -2,11 +2,15 @@
 /* -----------------------------------------
 * RESOURCES
 -------------------------------------------*/
+/*** COMPONENTS ***/
+import BaseButton from '@/components/base/BaseButton.vue';
+
 /*** DATA ***/
 import { store } from '../../data/store';
 
 
 export default {
+    components: { BaseButton },
     props: {
         media: {
             type: Object,
@@ -22,8 +26,18 @@ export default {
 <template>
     <div v-if="media" @click="store.currentSong = media" class="media-card">
 
-        <!-- Cover -->
-        <img :src="media.albumCover" :alt="media.title">
+        <!-- Card Top -->
+        <div>
+            <!-- Album Cover -->
+            <img :src="media.albumCover" :alt="media.title">
+
+            <!-- Media Actions -->
+            <div class="media-card-actions">
+                <!-- Play/Pause -->
+                <BaseButton icon="play" size="3x" />
+                <BaseButton icon="pause" size="3x" />
+            </div>
+        </div>
 
         <!-- Data -->
         <h5 class="mb-1">{{ media.title }}</h5>
@@ -38,6 +52,7 @@ export default {
 
 .media-card {
     padding: 10px 5px;
+    position: relative;
 
     cursor: pointer;
 
@@ -47,6 +62,19 @@ export default {
 
         border: 1px solid $col-gray-700;
         object-fit: cover;
+    }
+
+    &-actions {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        display: none;
+    }
+
+    &:hover .media-card-actions {
+        display: block;
     }
 }
 </style>
