@@ -24,10 +24,10 @@ export default {
         <div class="container">
 
             <!-- Recently Played -->
-            <MediaSection title="Recently Played" :media="songs" />
+            <MediaSection title="Recently Played" :mediaList="songs" />
 
             <!-- More of what you like -->
-            <MediaSection title="More of what you like" :media="songs" />
+            <MediaSection title="More of what you like" :mediaList="songs" />
 
         </div>
     </main>

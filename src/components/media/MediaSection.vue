@@ -7,9 +7,9 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Media'
+            default: 'Media List'
         },
-        media: {
+        mediaList: {
             type: Array,
             default: []
         }
@@ -26,8 +26,8 @@ export default {
 
         <!-- Carousel -->
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
-            <div v-for="m in media" :key="m.id" class="col">
-                <MediaCard :media="m" />
+            <div v-for="media in mediaList" :key="media.id" class="col">
+                <MediaCard :media="media" />
             </div>
         </div>
 
