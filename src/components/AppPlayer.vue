@@ -95,7 +95,7 @@ export default {
                     <PlayerVolume v-model:volume="volume" v-model:muted="muted" class="me-4" />
                 </li>
                 <li>
-                    <BaseButton icon="backward-step" />
+                    <BaseButton @click="audio.currentTime = 0" icon="backward-step" />
                 </li>
                 <li>
                     <BaseButton v-if="store.isPlaying" @click="store.isPlaying = false" icon="pause" size="lg" />
