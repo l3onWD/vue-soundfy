@@ -18,7 +18,7 @@ export default {
         },
 
         barWidth() {
-            return this.currentTime / this.duration * 100;
+            return Math.min(this.currentTime / this.duration * 100, 100);
         }
     }
 
@@ -46,8 +46,6 @@ export default {
 @use '../../assets/scss/vars' as *;
 
 .player-progress {
-    width: 100%;
-    height: 100%;
 
     display: flex;
     align-items: center;
@@ -82,6 +80,9 @@ export default {
 // MEDIA MD
 @media screen and (min-width: 768px) {
     .player-progress {
+        width: 100%;
+        height: 100%;
+
         span {
             display: inline;
         }
