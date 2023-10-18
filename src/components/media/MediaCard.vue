@@ -34,7 +34,8 @@ export default {
             <!-- Media Actions -->
             <div class="media-card-actions">
                 <!-- Play/Pause -->
-                <BaseButton v-if="store.currentSong?.id === media.id" icon="pause" class="btn-big btn-rounded btn-orange" />
+                <BaseButton v-if="store.currentSong?.id === media.id && store.playerIsPlaying" icon="pause"
+                    class="btn-big btn-rounded btn-orange" />
                 <BaseButton v-else @click="store.currentSong = media" icon="play" class="btn-big btn-rounded btn-orange" />
             </div>
         </div>

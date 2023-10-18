@@ -17,27 +17,24 @@ export default {
     data: () => ({
         store,
         audio: null,
-        player: {
-            currentTime: 0,
-            isPlaying: false
-        }
+        currentTime: 0
     }),
     watch: {
         'store.currentSong.src'(newValue) {
             this.audio.src = newValue;
             this.audio.load();
-            this.player.currentTime = 0;
-            this.player.isPlaying = false;
+            this.currentTime = 0;
+            this.store.playerIsPlaying = false;
         }
     },
     methods: {
         play() {
             if (this.audio.paused) {
                 this.audio.play();
-                this.player.isPlaying = true;
+                this.store.playerIsPlaying = true;
             } else {
                 this.audio.pause();
-                this.player.isPlaying = false;
+                this.store.playerIsPlaying = false;
             }
         }
     },
@@ -47,12 +44,12 @@ export default {
         this.audio = new Audio();
 
         // Current time update
-        this.audio.addEventListener('timeupdate', () => { this.player.currentTime = this.audio.currentTime });
+        this.audio.addEventListener('timeupdate', () => { this.currentTime = this.audio.currentTime });
 
         // Reset Audio on End
         this.audio.addEventListener('ended', () => {
-            this.player.currentTime = 0;
-            this.player.isPlaying = false;
+            this.currentTime = 0;
+            this.store.playerIsPlaying = false;
         });
     }
 }
@@ -83,7 +80,7 @@ export default {
                         <BaseButton icon="backward-step" />
                     </li>
                     <li @click="play">
-                        <BaseButton v-if="player.isPlaying" icon="pause" size="lg" />
+                        <BaseButton v-if="store.playerIsPlaying" icon="pause" size="lg" />
                         <BaseButton v-else icon="play" size="lg" />
                     </li>
                     <li>
@@ -92,7 +89,7 @@ export default {
                 </ul>
 
                 <!-- Progress Bar -->
-                <PlayerProgress :currentTime="player.currentTime" :duration="store.currentSong?.duration" />
+                <PlayerProgress :currentTime="currentTime" :duration="store.currentSong?.duration" />
 
             </div>
 
