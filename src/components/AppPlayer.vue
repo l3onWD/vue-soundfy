@@ -84,7 +84,7 @@ export default {
             <!-- Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <PlayerVolume @volume-changed="changeVolume" :volume="audio.volume" class="me-4" />
+                    <PlayerVolume v-model:volume="audio.volume" class="me-4" />
                 </li>
                 <li>
                     <BaseButton icon="backward-step" />

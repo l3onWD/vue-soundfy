@@ -45,10 +45,9 @@ export default {
             const volume = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
 
             // Emit event
-            this.$emit('volume-changed', volume);
+            this.$emit('update:volume', volume);
         }
-    },
-    emits: ['volume-changed']
+    }
 
 }
 </script>
