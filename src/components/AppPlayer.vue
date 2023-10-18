@@ -18,7 +18,8 @@ export default {
     data: () => ({
         store,
         audio: null,
-        currentTime: 0
+        currentTime: 0,
+        volume: 1
     }),
     watch: {
         'store.song.src'(newSrc) {
@@ -33,11 +34,9 @@ export default {
                 if (newValue) this.audio.play();
                 else this.audio.pause();
             });
-        }
-    },
-    methods: {
-        changeVolume(value) {
-            this.audio.volume = value;
+        },
+        volume(newValue) {
+            this.audio.volume = newValue;
         }
     },
     mounted() {
@@ -84,7 +83,7 @@ export default {
             <!-- Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <PlayerVolume v-model:volume="audio.volume" class="me-4" />
+                    <PlayerVolume v-model:volume="volume" class="me-4" />
                 </li>
                 <li>
                     <BaseButton icon="backward-step" />

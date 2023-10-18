@@ -41,11 +41,11 @@ export default {
             const barBottom = rect.bottom - barGap;
             const barHeight = rect.height - barGap * 2;
 
-            // Calculate colume value by mouse position on container
-            const volume = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
+            // Calculate volume value by mouse position on container
+            const volumeValue = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
 
             // Emit event
-            this.$emit('update:volume', volume);
+            this.$emit('update:volume', volumeValue);
         }
     }
 
@@ -110,6 +110,7 @@ export default {
             position: relative;
 
             background-color: $col-orange;
+            transition: 0.01s linear height;
 
             .mark {
                 width: 8px;
