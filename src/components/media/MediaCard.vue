@@ -24,18 +24,18 @@ export default {
 
 
 <template>
-    <div v-if="media" @click="store.currentSong = media" class="media-card">
+    <div v-if="media" class="media-card">
 
         <!-- Card Top -->
-        <div>
+        <div class="media-card-top">
             <!-- Album Cover -->
             <img :src="media.albumCover" :alt="media.title">
 
             <!-- Media Actions -->
             <div class="media-card-actions">
                 <!-- Play/Pause -->
-                <BaseButton icon="play" size="3x" />
-                <BaseButton icon="pause" size="3x" />
+                <BaseButton v-if="store.currentSong.id === media.id" icon="pause" size="3x" />
+                <BaseButton v-else @click="store.currentSong = media" icon="play" size="3x" />
             </div>
         </div>
 
@@ -52,29 +52,33 @@ export default {
 
 .media-card {
     padding: 10px 5px;
-    position: relative;
 
     cursor: pointer;
 
-    img {
-        height: 100%;
-        width: 100%;
+    &-top {
+        position: relative;
 
-        border: 1px solid $col-gray-700;
-        object-fit: cover;
+        img {
+            height: 100%;
+            width: 100%;
+
+            border: 1px solid $col-gray-700;
+            object-fit: cover;
+        }
+
+        .media-card-actions {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            display: none;
+        }
+
+        &:hover .media-card-actions {
+            display: block;
+        }
     }
 
-    &-actions {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        display: none;
-    }
-
-    &:hover .media-card-actions {
-        display: block;
-    }
 }
 </style>
