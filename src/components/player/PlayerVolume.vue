@@ -25,6 +25,11 @@ export default {
         barHeight() {
             if (this.muted) return `height: 0;`;
             return `height: ${this.volume * 100}%;`
+        },
+        volumeIcon() {
+            if (this.muted || this.volume === 0) return 'volume-mute';
+            if (this.volume < 0.5) return 'volume-low';
+            return 'volume-high';
         }
     },
     methods: {
@@ -61,7 +66,7 @@ export default {
 <template>
     <div class="player-volume">
 
-        <BaseButton @click="$emit('update:muted', !muted)" icon="volume-high" size="lg" class="me-4" />
+        <BaseButton @click="$emit('update:muted', !muted)" :icon="volumeIcon" size="lg" class="me-4" />
 
         <div @mousedown="toggleActive" @mouseup="isActive = false" @mouseleave="isActive = false" @mousemove="updateVolume"
             class="player-volume-progress">
