@@ -41,6 +41,7 @@ export default {
 
         // Volume custom v-model (more reactiveness)
         volume(newValue) {
+            this.muted = false;
             this.audio.volume = newValue;
         },
         muted(newValue) {
