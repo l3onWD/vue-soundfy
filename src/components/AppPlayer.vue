@@ -20,22 +20,18 @@ export default {
         currentTime: 0
     }),
     watch: {
-        'store.currentSong.src'(newValue) {
-            this.audio.src = newValue;
-            this.audio.load();
+        'store.song.src'(newSrc) {
+            this.audio.pause();
+            this.audio.src = newSrc;
+            this.audio.play();
             this.currentTime = 0;
-            this.store.playerIsPlaying = false;
-        }
-    },
-    methods: {
-        play() {
-            if (this.audio.paused) {
-                this.audio.play();
-                this.store.playerIsPlaying = true;
-            } else {
-                this.audio.pause();
-                this.store.playerIsPlaying = false;
-            }
+            this.store.isPlaying = true;
+        },
+        'store.isPlaying'(newValue) {
+            this.$nextTick(() => {
+                if (newValue) this.audio.play();
+                else this.audio.pause();
+            });
         }
     },
     mounted() {
@@ -49,7 +45,7 @@ export default {
         // Reset Audio on End
         this.audio.addEventListener('ended', () => {
             this.currentTime = 0;
-            this.store.playerIsPlaying = false;
+            this.store.isPlaying = false;
         });
     }
 }
@@ -57,7 +53,7 @@ export default {
 
 
 <template>
-    <div v-if="store.currentSong" class="app-player">
+    <div v-if="store.song" class="app-player">
 
         <div class="container">
 
@@ -65,7 +61,7 @@ export default {
             <div class="app-player-left">
 
                 <!-- Track Details -->
-                <PlayerDetails :song="store.currentSong" />
+                <PlayerDetails :song="store.song" />
 
                 <!-- Favorite Button -->
                 <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
@@ -79,9 +75,9 @@ export default {
                     <li>
                         <BaseButton icon="backward-step" />
                     </li>
-                    <li @click="play">
-                        <BaseButton v-if="store.playerIsPlaying" icon="pause" size="lg" />
-                        <BaseButton v-else icon="play" size="lg" />
+                    <li>
+                        <BaseButton v-if="store.isPlaying" @click="store.isPlaying = false" icon="pause" size="lg" />
+                        <BaseButton v-else @click="store.isPlaying = true" icon="play" size="lg" />
                     </li>
                     <li>
                         <BaseButton icon="forward-step" />
@@ -89,7 +85,7 @@ export default {
                 </ul>
 
                 <!-- Progress Bar -->
-                <PlayerProgress :currentTime="currentTime" :duration="store.currentSong?.duration" />
+                <PlayerProgress :currentTime="currentTime" :duration="store.song?.duration" />
 
             </div>
 
