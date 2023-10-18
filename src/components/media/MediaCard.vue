@@ -45,6 +45,7 @@ export default {
         height: 100%;
         width: 100%;
 
+        border: 1px solid $col-gray-700;
         object-fit: cover;
     }
 }
