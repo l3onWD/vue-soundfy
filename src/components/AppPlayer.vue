@@ -35,6 +35,11 @@ export default {
             });
         }
     },
+    methods: {
+        changeVolume(value) {
+            this.audio.volume = value;
+        }
+    },
     mounted() {
 
         // Set audio
@@ -79,7 +84,7 @@ export default {
             <!-- Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <PlayerVolume icon="volume-high" class="me-4" />
+                    <PlayerVolume @volume-changed="changeVolume" :volume="audio.volume" class="me-4" />
                 </li>
                 <li>
                     <BaseButton icon="backward-step" />
