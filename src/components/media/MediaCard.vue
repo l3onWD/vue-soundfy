@@ -27,6 +27,7 @@ export default {
         play() {
             store.song = this.media;
             store.isPlaying = true;
+            store.nextUpList = [this.media];
         },
         pause() {
             store.isPlaying = false;
@@ -45,12 +46,25 @@ export default {
             <!-- Album Cover -->
             <img :src="media.albumCover" :alt="media.title">
 
-            <!-- Media Actions -->
-            <div class="media-card-actions">
+            <!-- Media Controls -->
+            <div class="media-card-controls">
                 <!-- Play/Pause -->
                 <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn-big btn-rounded btn-orange" />
                 <BaseButton v-else @click="play" icon="play" class="btn-big btn-rounded btn-orange" />
             </div>
+
+            <!-- Song Actions -->
+            <ul class="media-card-actions">
+                <!-- Like -->
+                <li>
+                    <BaseButton icon="heart" iconStyle="far" class="btn-light" title="Like" />
+                </li>
+                <!-- Add to Next Up Button -->
+                <li>
+                    <BaseButton icon="list" class="btn-light" title="Add to Next Up" />
+                </li>
+            </ul>
+
         </div>
 
         <!-- Data -->
@@ -72,15 +86,16 @@ export default {
     &-top {
         position: relative;
 
+        border: 1px solid $col-gray-700;
+
         img {
             height: 100%;
             width: 100%;
 
-            border: 1px solid $col-gray-700;
             object-fit: cover;
         }
 
-        .media-card-actions {
+        .media-card-controls {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -90,6 +105,25 @@ export default {
             opacity: 0;
 
             transition: 0.05s visibility, 0.05s opacity;
+        }
+
+        &:hover .media-card-controls {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .media-card-actions {
+            margin: 0.25rem;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
+            display: flex;
+            align-items: center;
+            background-color: rgba($color: $col-dark, $alpha: 0.5);
+            border-radius: 0.5rem;
+            visibility: hidden;
+            opacity: 0;
         }
 
         &:hover .media-card-actions {
