@@ -86,10 +86,11 @@ export default {
 
                 store.nextUpIndex = 0;
 
-                // Delayed pause (for watcher bypassing)
+                // Delayed stop (bypassing watcher)
                 setTimeout(() => {
                     this.store.isPlaying = false;
-                }, 100);
+                    this.audio.currentTime = 0;
+                }, 200);
             }
         },
 
