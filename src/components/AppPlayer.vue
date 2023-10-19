@@ -74,6 +74,23 @@ export default {
          */
         handleTimeMoved(newTime) {
             this.audio.currentTime = newTime;
+        },
+
+        /**
+         * Go to next Song or reset list
+         */
+        nextSong() {
+
+            // Increment index or reset and stop
+            if (++store.nextUpIndex >= store.nextUpList.length) {
+
+                store.nextUpIndex = 0;
+
+                // Delayed pause (for watcher bypassing)
+                setTimeout(() => {
+                    this.store.isPlaying = false;
+                }, 100);
+            }
         }
     },
 
@@ -86,10 +103,7 @@ export default {
         this.audio.addEventListener('timeupdate', () => { this.currentTime = this.audio.currentTime });
 
         // Reset Audio on End
-        this.audio.addEventListener('ended', () => {
-            this.currentTime = 0;
-            this.store.isPlaying = false;
-        });
+        this.audio.addEventListener('ended', this.nextSong);
     }
 }
 </script>
@@ -136,7 +150,7 @@ export default {
                     <BaseButton v-else @click="store.isPlaying = true" icon="play" size="lg" />
                 </li>
                 <li>
-                    <BaseButton icon="forward-step" />
+                    <BaseButton @click="nextSong" icon="forward-step" />
                 </li>
                 <li>
                     <BaseButton @click="audio.loop = !audio.loop" icon="repeat" :class="{ 'active': audio.loop }" />
