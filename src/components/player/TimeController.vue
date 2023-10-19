@@ -40,7 +40,7 @@ export default {
 
 
 <template>
-    <div class="track-controller">
+    <div class="time-controller">
         <!-- Track Current Time -->
         <span>{{ currentTimeLabel }}</span>
 
@@ -62,7 +62,7 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/scss/vars' as *;
 
-.track-controller {
+.time-controller {
 
     display: flex;
     align-items: center;
@@ -117,7 +117,7 @@ export default {
 
 // MEDIA MD
 @media screen and (min-width: 768px) {
-    .track-controller {
+    .time-controller {
         width: 100%;
         height: 100%;
 
