@@ -92,7 +92,7 @@ export default {
             <!-- Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <PlayerVolume v-model:volume="volume" v-model:muted="muted" class="me-4" />
+                    <PlayerVolume v-model:volume="volume" v-model:muted="muted" class="me-sm-4" />
                 </li>
                 <li>
                     <BaseButton @click="audio.currentTime = 0" icon="backward-step" />
