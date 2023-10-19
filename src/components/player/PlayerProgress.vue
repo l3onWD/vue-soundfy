@@ -20,6 +20,18 @@ export default {
         barWidth() {
             return Math.min(this.currentTime / this.duration * 100, 100);
         }
+    },
+    methods: {
+        updateCurrentTime(e) {
+
+            const rect = e.currentTarget.getBoundingClientRect();
+
+            // Calculate value by mouse position on container
+            const newValue = Math.min(Math.max(0, (e.x - rect.left) / rect.width), 1);
+
+            // Emit event
+            this.$emit('update:currentTime', newValue);
+        }
     }
 
 }
@@ -32,7 +44,7 @@ export default {
         <span>{{ currentTimeLabel }}</span>
 
         <!-- Bar -->
-        <div class="player-progress">
+        <div @click="updateCurrentTime" class="player-progress">
             <div class="player-progress-bar">
                 <div class="value" :style="`width: ${barWidth}%`"></div>
             </div>
