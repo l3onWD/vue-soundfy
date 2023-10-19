@@ -154,7 +154,7 @@ export default {
                 width: 8px;
                 height: 8px;
                 position: absolute;
-                top: -3px;
+                top: -4px;
                 left: -3px;
 
                 background-color: $col-orange;
