@@ -36,8 +36,13 @@ button {
     align-items: center;
     background-color: transparent;
     border: none;
+    color: $col-gray-900;
 
     &:hover {
+        color: $col-dark;
+    }
+
+    &.active {
         color: $col-orange;
     }
 
