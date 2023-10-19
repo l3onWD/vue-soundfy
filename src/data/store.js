@@ -1,7 +1,6 @@
 import { reactive } from "vue";
 
 export const store = reactive({
-    song: null,
     nextUpList: [],
     nextUpIndex: 0,
     isPlaying: false,

@@ -19,13 +19,12 @@ export default {
     },
     computed: {
         isPlaying() {
-            return this.media.src === store.song?.src && store.isPlaying;
+            return store.nextUpList.length && this.media.src === store.nextUpList[store.nextUpIndex].src && store.isPlaying;
         }
     },
     data: () => ({ store }),
     methods: {
         play() {
-            store.song = this.media;
             store.isPlaying = true;
             store.nextUpList = [this.media];
             store.nextUpIndex = 0;

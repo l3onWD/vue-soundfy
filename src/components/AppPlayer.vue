@@ -21,11 +21,17 @@ export default {
         currentTime: 0,
     }),
 
+    computed: {
+        currentSong() {
+            return store.nextUpList[store.nextUpIndex];
+        }
+    },
+
     watch: {
         /**
          * Song change watcher
          */
-        'store.song.src'(newSrc) {
+        'currentSong.src'(newSrc) {
             this.audio.pause();
             this.audio.src = newSrc;
             this.audio.play();
@@ -90,13 +96,13 @@ export default {
 
 
 <template>
-    <div v-if="store.song" class="app-player">
+    <div v-if="store.nextUpList.length" class="app-player">
 
         <div class="container">
 
 
             <!-- Song Details -->
-            <PlayerDetails :song="store.song" />
+            <PlayerDetails :song="currentSong" />
 
 
             <!-- Song Actions -->
@@ -113,7 +119,7 @@ export default {
 
 
             <!-- Time Control -->
-            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="store.song?.duration"
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentSong.duration"
                 class="mx-md-4" />
 
 
