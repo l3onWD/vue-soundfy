@@ -57,6 +57,14 @@ button {
         font-size: 2.5rem;
     }
 
+    &.btn-light {
+        color: $col-gray-700;
+
+        &:hover {
+            color: $col-light;
+        }
+    }
+
     &.btn-orange {
         color: $col-gray-300;
         background-color: $col-orange;
