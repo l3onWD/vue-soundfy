@@ -47,7 +47,9 @@ export default {
         <!-- Bar -->
         <div @click="updateCurrentTime" class="player-progress">
             <div class="player-progress-bar">
-                <div class="value" :style="`width: ${barWidth}%`"></div>
+                <div class="value" :style="`width: ${barWidth}%`">
+                    <div class="mark"></div>
+                </div>
             </div>
         </div>
 
@@ -88,9 +90,26 @@ export default {
             .value {
                 height: 2px;
                 width: 0;
+                position: relative;
 
                 background-color: $col-orange;
+
+                .mark {
+                    width: 8px;
+                    height: 8px;
+                    position: absolute;
+                    right: -4px;
+                    top: -3px;
+
+                    display: none;
+                    background-color: $col-orange;
+                    border-radius: 50%;
+                }
             }
+        }
+
+        &:hover .mark {
+            display: block;
         }
     }
 }
