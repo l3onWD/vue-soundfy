@@ -19,10 +19,6 @@ export default {
         store,
         audio: null,
         currentTime: 0,
-
-        // Volume custom v-model
-        volume: 1,
-        muted: false
     }),
     watch: {
         'store.song.src'(newSrc) {
@@ -30,7 +26,7 @@ export default {
             this.audio.src = newSrc;
             this.audio.play();
             this.currentTime = 0;
-            this.store.isPlaying = true;
+            store.isPlaying = true;
         },
         'store.isPlaying'(newValue) {
             this.$nextTick(() => {
@@ -38,13 +34,11 @@ export default {
                 else this.audio.pause();
             });
         },
-
-        // Volume custom v-model (more reactiveness)
         'store.volume'(newValue) {
-            this.muted = false;
+            store.muted = false;
             this.audio.volume = newValue;
         },
-        muted(newValue) {
+        'store.muted'(newValue) {
             this.audio.muted = newValue;
         }
     },
@@ -98,7 +92,7 @@ export default {
             <!-- Main Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <VolumeControl v-model:muted="muted" class="me-sm-4" />
+                    <VolumeControl class="me-sm-4" />
                 </li>
                 <li>
                     <BaseButton @click="audio.currentTime = 0" icon="backward-step" />

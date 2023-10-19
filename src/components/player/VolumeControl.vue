@@ -16,19 +16,12 @@ export default {
         isActive: false
     }),
 
-    props: {
-        muted: {
-            type: Boolean,
-            default: false
-        }
-    },
-
     computed: {
         /**
          * Update volume style value
          */
         barValue() {
-            if (this.muted) return '0';
+            if (store.muted) return '0';
             return `${store.volume * 100}%`;
         },
 
@@ -36,7 +29,7 @@ export default {
          * Update mute icon style
          */
         volumeIcon() {
-            if (this.muted || store.volume === 0) return 'volume-mute';
+            if (store.muted || store.volume === 0) return 'volume-mute';
             if (store.volume < 0.5) return 'volume-low';
             return 'volume-high';
         }
@@ -78,6 +71,10 @@ export default {
 
             // Calculate volume value by mouse position on container
             store.volume = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
+        },
+
+        toggleMute() {
+            store.muted = !store.muted;
         }
     }
 
@@ -89,7 +86,7 @@ export default {
     <div class="volume-control">
 
         <!-- Mute Button -->
-        <BaseButton @click="$emit('update:muted', !muted)" :icon="volumeIcon" size="lg" />
+        <BaseButton @click="toggleMute" :icon="volumeIcon" size="lg" />
 
         <!-- Volume Range Input -->
         <div @mousedown="activate" @mouseup="isActive = false" @mouseleave="isActive = false" @mousemove="updateVolume"
