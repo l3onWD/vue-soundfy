@@ -27,12 +27,13 @@ export default {
             const rect = e.currentTarget.getBoundingClientRect();
 
             // Calculate value by mouse position on container
-            const newValue = Math.min(Math.max(0, (e.x - rect.left) / rect.width), 1);
+            const newTime = Math.min(Math.max(0, (e.x - rect.left) / rect.width), 1) * this.duration;
 
             // Emit event
-            this.$emit('update:currentTime', newValue);
+            this.$emit('time-moved', newTime);
         }
-    }
+    },
+    emits: ['time-moved']
 
 }
 </script>
