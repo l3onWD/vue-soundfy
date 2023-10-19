@@ -40,7 +40,7 @@ export default {
         },
 
         // Volume custom v-model (more reactiveness)
-        volume(newValue) {
+        'store.volume'(newValue) {
             this.muted = false;
             this.audio.volume = newValue;
         },
@@ -98,7 +98,7 @@ export default {
             <!-- Main Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <VolumeControl v-model:volume="volume" v-model:muted="muted" class="me-sm-4" />
+                    <VolumeControl v-model:muted="muted" class="me-sm-4" />
                 </li>
                 <li>
                     <BaseButton @click="audio.currentTime = 0" icon="backward-step" />

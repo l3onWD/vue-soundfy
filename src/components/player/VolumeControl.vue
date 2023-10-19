@@ -5,6 +5,9 @@
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
 
+/*** DATA ***/
+import { store } from '@/data/store';
+
 
 export default {
     components: { BaseButton },
@@ -14,10 +17,6 @@ export default {
     }),
 
     props: {
-        volume: {
-            type: Number,
-            default: 1
-        },
         muted: {
             type: Boolean,
             default: false
@@ -30,15 +29,15 @@ export default {
          */
         barValue() {
             if (this.muted) return '0';
-            return `${this.volume * 100}%`;
+            return `${store.volume * 100}%`;
         },
 
         /**
          * Update mute icon style
          */
         volumeIcon() {
-            if (this.muted || this.volume === 0) return 'volume-mute';
-            if (this.volume < 0.5) return 'volume-low';
+            if (this.muted || store.volume === 0) return 'volume-mute';
+            if (store.volume < 0.5) return 'volume-low';
             return 'volume-high';
         }
     },
@@ -78,10 +77,7 @@ export default {
             const barHeight = rect.height - barGap * 2;
 
             // Calculate volume value by mouse position on container
-            const volumeValue = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
-
-            // Emit event
-            this.$emit('update:volume', volumeValue);
+            store.volume = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
         }
     }
 
