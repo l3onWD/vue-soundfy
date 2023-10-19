@@ -9,7 +9,7 @@ import PlayerDetails from '@/components/player/PlayerDetails.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
-import { store } from '../data/store';
+import { store } from '@/data/store';
 
 
 export default {
@@ -20,7 +20,11 @@ export default {
         audio: null,
         currentTime: 0,
     }),
+
     watch: {
+        /**
+         * Song change watcher
+         */
         'store.song.src'(newSrc) {
             this.audio.pause();
             this.audio.src = newSrc;
@@ -28,28 +32,48 @@ export default {
             this.currentTime = 0;
             store.isPlaying = true;
         },
+
+        /**
+         * Play/Pause watcher
+         */
         'store.isPlaying'(newValue) {
             this.$nextTick(() => {
                 if (newValue) this.audio.play();
                 else this.audio.pause();
             });
         },
+
+        /**
+         * Volume watcher
+         */
         'store.volume'(newValue) {
             store.muted = false;
             this.audio.volume = newValue;
         },
+
+        /**
+         * Muted toggler watcher
+         */
         'store.muted'(newValue) {
             this.audio.muted = newValue;
         }
     },
+
     methods: {
+
+        /**
+         * Update current time from Time Control Bar
+         * 
+         * @param {Number} newTime 
+         */
         handleTimeMoved(newTime) {
             this.audio.currentTime = newTime;
         }
     },
+
     mounted() {
 
-        // Set audio
+        // Create an audio instance
         this.audio = new Audio();
 
         // Current time update
