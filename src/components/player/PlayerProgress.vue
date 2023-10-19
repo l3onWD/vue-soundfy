@@ -27,13 +27,15 @@ export default {
 
 
 <template>
-    <div class="player-progress">
+    <div class="track-controller">
         <!-- Track Current Time -->
         <span>{{ currentTimeLabel }}</span>
 
         <!-- Bar -->
-        <div class="player-progress-bar">
-            <div class="value" :style="`width: ${barWidth}%`"></div>
+        <div class="player-progress">
+            <div class="player-progress-bar">
+                <div class="value" :style="`width: ${barWidth}%`"></div>
+            </div>
         </div>
 
         <!-- Track Length -->
@@ -45,7 +47,7 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/scss/vars' as *;
 
-.player-progress {
+.track-controller {
 
     display: flex;
     align-items: center;
@@ -55,23 +57,27 @@ export default {
         display: none;
     }
 
-    &-bar {
+    .player-progress {
+        padding-top: 0.75rem;
         width: 100%;
-        height: 2px;
         position: absolute;
         bottom: -1px;
         left: 0;
 
-        background-color: $col-gray-700;
+        cursor: pointer;
 
-        .value {
-            position: absolute;
-            top: 0;
-            left: 0;
+        &-bar {
+            width: 100%;
             height: 2px;
-            width: 0;
 
-            background-color: $col-orange;
+            background-color: $col-gray-700;
+
+            .value {
+                height: 2px;
+                width: 0;
+
+                background-color: $col-orange;
+            }
         }
     }
 }
@@ -79,7 +85,7 @@ export default {
 
 // MEDIA MD
 @media screen and (min-width: 768px) {
-    .player-progress {
+    .track-controller {
         width: 100%;
         height: 100%;
 
@@ -87,10 +93,16 @@ export default {
             display: inline;
         }
 
-        &-bar {
-            position: relative;
-            background-color: $col-gray-500;
+        .player-progress {
+            padding: 0.75rem 0;
+            position: static;
 
+
+            &-bar {
+                position: relative;
+                background-color: $col-gray-500;
+
+            }
         }
     }
 }
