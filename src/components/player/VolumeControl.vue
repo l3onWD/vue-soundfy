@@ -25,10 +25,17 @@ export default {
     },
 
     computed: {
+        /**
+         * Update volume style value
+         */
         barValue() {
             if (this.muted) return '0';
             return `${this.volume * 100}%`;
         },
+
+        /**
+         * Update mute icon style
+         */
         volumeIcon() {
             if (this.muted || this.volume === 0) return 'volume-mute';
             if (this.volume < 0.5) return 'volume-low';
@@ -37,22 +44,36 @@ export default {
     },
 
     methods: {
+
+        /**
+         * Activate component logic
+         * 
+         * @param {Object} e - event ref
+         */
         activate(e) {
 
+            // Check left click
             if (e.button !== 0) return;
 
             this.isActive = true;
             this.updateVolume(e);
         },
 
+        /**
+         * Calculate new volume value and emit a v-model update
+         * 
+         * @param {Object} e - event ref
+         */
         updateVolume(e) {
 
             // Check if mouse pressed
             if (!this.isActive) return;
 
-            // Calculate control container vertical position
+            // Get data
             const barGap = 11.5;// padding + border
             const rect = e.currentTarget.getBoundingClientRect();
+
+            // Calculate component vertical position with padding
             const barBottom = rect.bottom - barGap;
             const barHeight = rect.height - barGap * 2;
 
@@ -97,7 +118,7 @@ export default {
     position: relative;
 
     .volume-range {
-        padding: 0.75rem;
+        padding: 10px;
         height: 130px;
         position: absolute;
         bottom: 100%;
