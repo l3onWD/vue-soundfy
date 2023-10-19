@@ -4,8 +4,8 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import TimeControl from '@/components/player/TimeControl.vue';
+import VolumeControl from '@/components/player/VolumeControl.vue';
 import PlayerDetails from '@/components/player/PlayerDetails.vue';
-import PlayerVolume from '@/components/player/PlayerVolume.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
@@ -13,7 +13,7 @@ import { store } from '../data/store';
 
 
 export default {
-    components: { TimeControl, PlayerDetails, PlayerVolume, BaseButton },
+    components: { TimeControl, PlayerDetails, VolumeControl, BaseButton },
 
     data: () => ({
         store,
@@ -98,7 +98,7 @@ export default {
             <!-- Main Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
-                    <PlayerVolume v-model:volume="volume" v-model:muted="muted" class="me-sm-4" />
+                    <VolumeControl v-model:volume="volume" v-model:muted="muted" class="me-sm-4" />
                 </li>
                 <li>
                     <BaseButton @click="audio.currentTime = 0" icon="backward-step" />

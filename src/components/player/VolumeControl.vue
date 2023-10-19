@@ -8,9 +8,11 @@ import BaseButton from '@/components/base/BaseButton.vue';
 
 export default {
     components: { BaseButton },
+
     data: () => ({
         isActive: false
     }),
+
     props: {
         volume: {
             type: Number,
@@ -21,10 +23,11 @@ export default {
             default: false
         }
     },
+
     computed: {
-        barHeight() {
-            if (this.muted) return `height: 0;`;
-            return `height: ${this.volume * 100}%;`
+        barValue() {
+            if (this.muted) return '0';
+            return `${this.volume * 100}%`;
         },
         volumeIcon() {
             if (this.muted || this.volume === 0) return 'volume-mute';
@@ -32,14 +35,16 @@ export default {
             return 'volume-high';
         }
     },
+
     methods: {
-        toggleActive(e) {
+        activate(e) {
 
             if (e.button !== 0) return;
 
             this.isActive = true;
             this.updateVolume(e);
         },
+
         updateVolume(e) {
 
             // Check if mouse pressed
@@ -64,15 +69,17 @@ export default {
 
 
 <template>
-    <div class="player-volume">
+    <div class="volume-control">
 
+        <!-- Mute Button -->
         <BaseButton @click="$emit('update:muted', !muted)" :icon="volumeIcon" size="lg" />
 
-        <div @mousedown="toggleActive" @mouseup="isActive = false" @mouseleave="isActive = false" @mousemove="updateVolume"
-            class="player-volume-progress">
+        <!-- Volume Range Input -->
+        <div @mousedown="activate" @mouseup="isActive = false" @mouseleave="isActive = false" @mousemove="updateVolume"
+            class="volume-range">
 
-            <div class="player-volume-bar">
-                <div class="value" :style="barHeight">
+            <div class="volume-range-bar">
+                <div class="value" :style="{ 'height': barValue }">
                     <div class="mark"></div>
                 </div>
             </div>
@@ -86,10 +93,10 @@ export default {
 <style lang="scss" scoped>
 @use '../..//assets/scss/vars' as *;
 
-.player-volume {
+.volume-control {
     position: relative;
 
-    &-progress {
+    .volume-range {
         padding: 0.75rem;
         height: 130px;
         position: absolute;
@@ -103,11 +110,11 @@ export default {
         cursor: pointer;
     }
 
-    &:hover .player-volume-progress {
+    &:hover .volume-range {
         display: block;
     }
 
-    &-bar {
+    .volume-range-bar {
         height: 100%;
         width: 2px;
 
