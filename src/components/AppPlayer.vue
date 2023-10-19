@@ -48,6 +48,11 @@ export default {
             this.audio.muted = newValue;
         }
     },
+    methods: {
+        handleTimeMoved(newTime) {
+            this.audio.currentTime = newTime;
+        }
+    },
     mounted() {
 
         // Set audio
@@ -86,7 +91,8 @@ export default {
 
 
             <!-- Progress Bar -->
-            <PlayerProgress :currentTime="currentTime" :duration="store.song?.duration" class="mx-md-4" />
+            <PlayerProgress @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="store.song?.duration"
+                class="mx-md-4" />
 
 
             <!-- Song Controls -->
