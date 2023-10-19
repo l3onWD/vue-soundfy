@@ -28,6 +28,7 @@ export default {
             store.song = this.media;
             store.isPlaying = true;
             store.nextUpList = [this.media];
+            store.nextUpIndex = 0;
         },
         pause() {
             store.isPlaying = false;
@@ -61,7 +62,8 @@ export default {
                 </li>
                 <!-- Add to Next Up Button -->
                 <li>
-                    <BaseButton icon="list" class="btn-light" title="Add to Next Up" />
+                    <BaseButton @click="store.nextUpList.push(media)" icon="list" class="btn-light"
+                        title="Add to Next Up" />
                 </li>
             </ul>
 
