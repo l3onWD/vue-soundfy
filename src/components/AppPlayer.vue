@@ -3,7 +3,7 @@
 * RESOURCES
 -------------------------------------------*/
 /*** COMPONENTS ***/
-import TimeController from '@/components/player/TimeController.vue';
+import TimeControl from '@/components/player/TimeControl.vue';
 import PlayerDetails from '@/components/player/PlayerDetails.vue';
 import PlayerVolume from '@/components/player/PlayerVolume.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
@@ -13,7 +13,7 @@ import { store } from '../data/store';
 
 
 export default {
-    components: { TimeController, PlayerDetails, PlayerVolume, BaseButton },
+    components: { TimeControl, PlayerDetails, PlayerVolume, BaseButton },
 
     data: () => ({
         store,
@@ -90,12 +90,12 @@ export default {
             </ul>
 
 
-            <!-- Progress Bar -->
-            <TimeController @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="store.song?.duration"
+            <!-- Time Control -->
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="store.song?.duration"
                 class="mx-md-4" />
 
 
-            <!-- Song Controls -->
+            <!-- Main Song Controls -->
             <ul class="d-flex ms-auto">
                 <li>
                     <PlayerVolume v-model:volume="volume" v-model:muted="muted" class="me-sm-4" />
