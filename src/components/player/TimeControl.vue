@@ -47,8 +47,8 @@ export default {
         <span>{{ currentTimeLabel }}</span>
 
         <!-- Progress Bar -->
-        <div @click="updateCurrentTime" class="player-progress">
-            <div class="player-progress-bar">
+        <div @click="updateCurrentTime" class="time-progress">
+            <div class="time-progress-bar">
                 <div class="value" :style="`width: ${barWidth}%`">
                     <div class="mark"></div>
                 </div>
@@ -74,7 +74,7 @@ export default {
         display: none;
     }
 
-    .player-progress {
+    .time-progress {
         padding-top: 0.75rem;
         width: 100%;
         position: absolute;
@@ -127,7 +127,7 @@ export default {
             display: inline;
         }
 
-        .player-progress {
+        .time-progress {
             padding: 0.75rem 0;
             position: static;
 
