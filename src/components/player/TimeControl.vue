@@ -24,9 +24,10 @@ export default {
     methods: {
         updateCurrentTime(e) {
 
+            // Get component dimensions
             const rect = e.currentTarget.getBoundingClientRect();
 
-            // Calculate value by mouse position on container
+            // Calculate new time by mouse position on thr component
             const newTime = Math.min(Math.max(0, (e.x - rect.left) / rect.width), 1) * this.duration;
 
             // Emit event
@@ -40,11 +41,12 @@ export default {
 
 
 <template>
-    <div class="time-controller">
-        <!-- Track Current Time -->
+    <div class="time-control">
+
+        <!-- Song Current Time -->
         <span>{{ currentTimeLabel }}</span>
 
-        <!-- Bar -->
+        <!-- Progress Bar -->
         <div @click="updateCurrentTime" class="player-progress">
             <div class="player-progress-bar">
                 <div class="value" :style="`width: ${barWidth}%`">
@@ -53,7 +55,7 @@ export default {
             </div>
         </div>
 
-        <!-- Track Length -->
+        <!-- Song Length -->
         <span>{{ durationLabel }}</span>
     </div>
 </template>
@@ -62,8 +64,8 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/scss/vars' as *;
 
-.time-controller {
 
+.time-control {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -117,7 +119,7 @@ export default {
 
 // MEDIA MD
 @media screen and (min-width: 768px) {
-    .time-controller {
+    .time-control {
         width: 100%;
         height: 100%;
 
@@ -128,7 +130,6 @@ export default {
         .player-progress {
             padding: 0.75rem 0;
             position: static;
-
 
             &-bar {
                 position: relative;
