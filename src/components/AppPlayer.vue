@@ -100,10 +100,14 @@ export default {
 
 
             <!-- Song Actions -->
-            <ul class="d-flex ms-1">
+            <ul class="d-flex flex-column flex-sm-row ms-1">
                 <!-- Favorite Button -->
                 <li>
                     <BaseButton icon="heart" iconStyle="far" />
+                </li>
+                <!-- Next Up Button -->
+                <li>
+                    <BaseButton icon="list" />
                 </li>
             </ul>
 
