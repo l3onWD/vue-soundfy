@@ -80,7 +80,7 @@ export default {
             <ul class="d-flex ms-1">
                 <!-- Favorite Button -->
                 <li>
-                    <BaseButton icon="heart" iconStyle="far" class="col-gray-700" />
+                    <BaseButton icon="heart" iconStyle="far" />
                 </li>
             </ul>
 
