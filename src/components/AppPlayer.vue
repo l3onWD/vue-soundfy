@@ -91,7 +91,25 @@ export default {
                     this.store.isPlaying = false;
                 }, 100);
             }
-        }
+        },
+
+        /**
+         * Go to previous Song or restart song
+         */
+        prevSong() {
+
+            // Restart Song
+            if (this.audio.currentTime > 5) this.audio.currentTime = 0;
+
+            // Decrement index or restart first song
+            else if (--store.nextUpIndex < 0) {
+
+                store.nextUpIndex = 0;
+                this.audio.currentTime = 0;
+            }
+
+        },
+
     },
 
     mounted() {
@@ -143,7 +161,7 @@ export default {
                     <VolumeControl class="me-sm-4" />
                 </li>
                 <li>
-                    <BaseButton @click="audio.currentTime = 0" icon="backward-step" />
+                    <BaseButton @click="prevSong" icon="backward-step" />
                 </li>
                 <li>
                     <BaseButton v-if="store.isPlaying" @click="store.isPlaying = false" icon="pause" size="lg" />
