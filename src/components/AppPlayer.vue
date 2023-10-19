@@ -104,6 +104,9 @@ export default {
                 <li>
                     <BaseButton icon="forward-step" />
                 </li>
+                <li>
+                    <BaseButton @click="audio.loop = !audio.loop" icon="repeat" :class="{ 'col-orange': audio.loop }" />
+                </li>
             </ul>
 
 
