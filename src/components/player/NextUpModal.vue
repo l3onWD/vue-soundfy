@@ -28,6 +28,15 @@ export default {
             if (store.nextUpList.length <= 1) return;
 
             store.nextUpList.splice(index, 1);
+        },
+
+        clearList() {
+
+            if (store.nextUpList.length <= 1) return;
+
+            const currentSong = store.nextUpList[store.nextUpIndex];
+            store.nextUpList = [currentSong];
+            store.nextUpIndex = 0;
         }
     },
 
@@ -48,7 +57,7 @@ export default {
 
             <!-- Actions -->
             <div class="d-flex align-items-center">
-                <BaseButton label="clear" class="btn-outline-orange w-auto px-2 me-2" />
+                <BaseButton @click="clearList" label="clear" class="btn-outline-orange w-auto px-2 me-2" />
                 <BaseButton @click="$emit('close-modal')" icon="times" size="xl" />
             </div>
         </div>
