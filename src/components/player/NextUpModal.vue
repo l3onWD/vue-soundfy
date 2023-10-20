@@ -27,6 +27,7 @@ export default {
         removeSong(index) {
             if (store.nextUpList.length <= 1) return;
 
+            if (index < store.nextUpIndex) store.nextUpIndex--;
             store.nextUpList.splice(index, 1);
         },
 
@@ -68,7 +69,7 @@ export default {
                 class="d-flex justify-content-between align-items-center py-1">
 
                 <!-- Song Details -->
-                <MediaDetailsCard :song="song" />
+                <MediaDetailsCard :song="song" :class="{ 'col-gray-700': idx < store.nextUpIndex }" />
 
                 <!-- Actions -->
                 <div class="d-flex flex-grow-1">
