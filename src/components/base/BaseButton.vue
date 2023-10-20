@@ -36,6 +36,7 @@ button {
     align-items: center;
     background-color: transparent;
     border: none;
+    line-height: 1;
     color: $col-gray-900;
 
     &:hover {
@@ -71,6 +72,17 @@ button {
 
         &:hover {
             color: $col-light;
+        }
+    }
+
+    &.btn-outline-orange {
+        color: $col-gray-700;
+        border: 1px solid $col-gray-700;
+
+        &:hover {
+            color: $col-light;
+            background-color: $col-orange;
+            ;
         }
     }
 }
