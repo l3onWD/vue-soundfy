@@ -60,13 +60,13 @@ export default {
 
 
 <template>
-    <div class="d-flex justify-content-between align-items-center ">
+    <div class="nextup-item">
 
         <!-- Song Details -->
         <MediaDetailsCard :song="song" :class="{ 'col-gray-700': wasPlayed }" />
 
         <!-- Actions -->
-        <ul class="d-flex flex-grow-1">
+        <ul class="nextup-item-actions ms-1">
             <li>
                 <BaseButton v-if="isPlaying" @click="pause" icon="pause" />
                 <BaseButton v-else @click="play" icon="play" />
@@ -80,4 +80,14 @@ export default {
 </template>
 
 
-<style></style>
+<style lang="scss" scoped>
+.nextup-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-actions {
+        display: flex;
+    }
+}
+</style>

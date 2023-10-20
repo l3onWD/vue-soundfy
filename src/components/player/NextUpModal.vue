@@ -82,6 +82,7 @@ export default {
     border: 1px solid $col-gray-500;
     border-radius: 0.5rem;
     overflow: hidden;
+    box-shadow: 0 0 4px 8px rgba($color: #000, $alpha: 0.05);
 
     .nextup-header {
         padding: 0.5rem;
