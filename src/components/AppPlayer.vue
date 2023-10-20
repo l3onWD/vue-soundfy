@@ -3,9 +3,9 @@
 * RESOURCES
 -------------------------------------------*/
 /*** COMPONENTS ***/
+import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
 import TimeControl from '@/components/player/TimeControl.vue';
 import VolumeControl from '@/components/player/VolumeControl.vue';
-import PlayerDetails from '@/components/player/PlayerDetails.vue';
 import NextUpModal from '@/components/player/NextUpModal.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
@@ -14,7 +14,7 @@ import { store } from '@/data/store';
 
 
 export default {
-    components: { TimeControl, PlayerDetails, VolumeControl, BaseButton, NextUpModal },
+    components: { TimeControl, MediaDetailsCard, VolumeControl, BaseButton, NextUpModal },
 
     data: () => ({
         store,
@@ -136,24 +136,28 @@ export default {
         <div class="container">
 
 
-            <!-- Song Details -->
-            <PlayerDetails :song="currentSong" />
+            <!-- Song Info & Actions -->
+            <div class="d-flex justify-content-between">
+
+                <!-- Song Details -->
+                <MediaDetailsCard :song="currentSong" />
 
 
-            <!-- Song Actions -->
-            <ul class="d-flex flex-column flex-sm-row ms-1">
-                <!-- Favorite Button -->
-                <li>
-                    <BaseButton icon="heart" iconStyle="far" />
-                </li>
-                <!-- Next Up Button -->
-                <li class="position-relative">
-                    <BaseButton @click="nextUpModalActive = !nextUpModalActive" icon="list"
-                        :class="{ 'active': nextUpModalActive }" />
+                <!-- Song Actions -->
+                <ul class="d-flex flex-column flex-sm-row ms-1">
+                    <!-- Favorite Button -->
+                    <li>
+                        <BaseButton icon="heart" iconStyle="far" />
+                    </li>
+                    <!-- Next Up Button -->
+                    <li class="position-relative">
+                        <BaseButton @click="nextUpModalActive = !nextUpModalActive" icon="list"
+                            :class="{ 'active': nextUpModalActive }" />
 
-                    <NextUpModal :isActive="nextUpModalActive" @close-modal="nextUpModalActive = false" />
-                </li>
-            </ul>
+                        <NextUpModal :isActive="nextUpModalActive" @close-modal="nextUpModalActive = false" />
+                    </li>
+                </ul>
+            </div>
 
 
             <!-- Time Control -->
@@ -205,6 +209,10 @@ export default {
 
         display: flex;
         align-items: center;
+
+        >:first-child {
+            width: 210px;
+        }
     }
 }
 </style>
