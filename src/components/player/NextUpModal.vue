@@ -4,15 +4,14 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
-import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
-
+import NextUpListItem from '@/components/player/NextUpListItem.vue';
 
 /*** DATA ***/
 import { store } from '@/data/store';
 
 
 export default {
-    components: { BaseButton, MediaDetailsCard },
+    components: { BaseButton, NextUpListItem },
 
     data: () => ({ store }),
 
@@ -24,12 +23,6 @@ export default {
     },
 
     methods: {
-        removeSong(index) {
-            if (store.nextUpList.length <= 1) return;
-
-            if (index < store.nextUpIndex) store.nextUpIndex--;
-            store.nextUpList.splice(index, 1);
-        },
 
         clearList() {
 
@@ -65,16 +58,9 @@ export default {
 
         <!-- Songs -->
         <ul class="nextup-list">
-            <li v-for="(song, idx) in store.nextUpList" :key="song.id"
-                class="d-flex justify-content-between align-items-center py-1">
+            <li v-for="(song, idx) in store.nextUpList" :key="song.id" class="py-1">
 
-                <!-- Song Details -->
-                <MediaDetailsCard :song="song" :class="{ 'col-gray-700': idx < store.nextUpIndex }" />
-
-                <!-- Actions -->
-                <div class="d-flex flex-grow-1">
-                    <BaseButton @click="removeSong(idx)" icon="trash" />
-                </div>
+                <NextUpListItem :song="song" :listPosition="idx" />
 
             </li>
         </ul>
@@ -113,7 +99,6 @@ export default {
             background-color: $col-light;
         }
     }
-
 
 }
 
