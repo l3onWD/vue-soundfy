@@ -31,6 +31,10 @@ export default {
         },
         pause() {
             store.isPlaying = false;
+        },
+
+        addSong() {
+            if (!store.nextUpList.some(({ id }) => this.media.id === id)) store.nextUpList.push(this.media);
         }
     }
 
@@ -61,8 +65,7 @@ export default {
                 </li>
                 <!-- Add to Next Up Button -->
                 <li>
-                    <BaseButton @click="store.nextUpList.push(media)" icon="list" class="btn-light"
-                        title="Add to Next Up" />
+                    <BaseButton @click="addSong" icon="list" class="btn-light" title="Add to Next Up" />
                 </li>
             </ul>
 
