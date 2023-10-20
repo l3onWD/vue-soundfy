@@ -4,7 +4,7 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
-import PlayerDetails from '@/components/player/PlayerDetails.vue';
+import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
 
 
 /*** DATA ***/
@@ -12,7 +12,7 @@ import { store } from '@/data/store';
 
 
 export default {
-    components: { BaseButton, PlayerDetails },
+    components: { BaseButton, MediaDetailsCard },
 
     data: () => ({ store }),
 
@@ -67,11 +67,14 @@ export default {
             <li v-for="(song, idx) in store.nextUpList" :key="song.id"
                 class="d-flex justify-content-between align-items-center py-1">
 
-                <PlayerDetails :song="song" :class="{ 'col-gray-700': idx < store.nextUpIndex }" />
+                <!-- Song Details -->
+                <MediaDetailsCard :song="song" />
 
-                <div>
+                <!-- Actions -->
+                <div class="d-flex flex-grow-1">
                     <BaseButton @click="removeSong(idx)" icon="trash" />
                 </div>
+
             </li>
         </ul>
     </div>
@@ -104,7 +107,12 @@ export default {
 
     .nextup-list {
         padding: 0.5rem;
+
+        li:hover {
+            background-color: $col-light;
+        }
     }
+
 
 }
 
