@@ -12,16 +12,17 @@ export default {
 
 
 <template>
-    <div v-if="song" class="player-details">
+    <div v-if="song" class="media-details-card">
 
         <!-- Cover -->
         <img :src="song.albumCover" :alt="song.title">
 
         <!-- Song Info -->
-        <div class="player-details-info">
-            <h5 :title="song.title">{{ song.title }}</h5>
+        <div class="media-details-info">
+            <h6 class="mb-1" :title="song.title">{{ song.title }}</h6>
             <span :title="song.author" class="col-gray-700">{{ song.author }}</span>
         </div>
+
     </div>
 </template>
 
@@ -29,13 +30,16 @@ export default {
 <style lang="scss" scoped>
 @use '../../assets/scss/vars' as *;
 
-.player-details {
-    width: 170px;
-    flex-shrink: 0;
+.media-details-card {
+    width: 100%;
 
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    line-height: 1;
+    white-space: nowrap;
+
+    overflow: hidden;
 
     img {
         height: 35px;
@@ -44,29 +48,14 @@ export default {
         border: 1px solid $col-gray-700;
     }
 
-    &-info {
-        position: relative;
-
-        line-height: 1;
+    .media-details-info {
         overflow: hidden;
+        text-overflow: ellipsis;
 
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0 0 0 90%;
-
-            background-image: linear-gradient(90deg, transparent 5%, $col-light);
-        }
-
-        >* {
-            white-space: nowrap;
-        }
-
-        h5 {
-            margin-bottom: 0.25rem;
-            font-size: 1.1rem;
+        h6 {
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
-
 }
 </style>
