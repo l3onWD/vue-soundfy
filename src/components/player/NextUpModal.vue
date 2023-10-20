@@ -23,6 +23,14 @@ export default {
         }
     },
 
+    methods: {
+        removeSong(index) {
+            if (store.nextUpList.length <= 1) return;
+
+            store.nextUpList.splice(index, 1);
+        }
+    },
+
     emits: ['close-modal']
 
 }
@@ -53,7 +61,7 @@ export default {
                 <PlayerDetails :song="song" :class="{ 'col-gray-700': idx < store.nextUpIndex }" />
 
                 <div>
-                    <BaseButton @click="$emit('close-modal')" icon="trash" />
+                    <BaseButton @click="removeSong(idx)" icon="trash" />
                 </div>
             </li>
         </ul>
