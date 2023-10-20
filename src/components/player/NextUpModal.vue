@@ -94,6 +94,9 @@ export default {
 
     .nextup-list {
         padding: 0.5rem;
+        max-height: 210px;
+
+        overflow-y: auto;
 
         li:hover {
             background-color: $col-light;
