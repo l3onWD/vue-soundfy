@@ -137,7 +137,7 @@ export default {
 
 
             <!-- Song Info & Actions -->
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-shrink-0">
 
                 <!-- Song Details -->
                 <MediaDetailsCard :song="currentSong" />

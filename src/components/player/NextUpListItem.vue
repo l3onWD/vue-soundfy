@@ -15,6 +15,16 @@ export default {
 
     data: () => ({ store }),
 
+    computed: {
+        isPlaying() {
+            return store.nextUpList.length && this.song.src === store.nextUpList[store.nextUpIndex].src && store.isPlaying;
+        },
+
+        wasPlayed() {
+            return this.listPosition < store.nextUpIndex;
+        }
+    },
+
     props: {
         song: {
             type: Object,
@@ -33,7 +43,16 @@ export default {
 
             if (this.listPosition < store.nextUpIndex) store.nextUpIndex--;
             store.nextUpList.splice(this.listPosition, 1);
-        }
+        },
+
+        play() {
+            store.isPlaying = true;
+            store.nextUpIndex = this.listPosition;
+        },
+
+        pause() {
+            store.isPlaying = false;
+        },
     }
 
 }
@@ -44,10 +63,14 @@ export default {
     <div class="d-flex justify-content-between align-items-center ">
 
         <!-- Song Details -->
-        <MediaDetailsCard :song="song" :class="{ 'col-gray-700': listPosition < store.nextUpIndex }" />
+        <MediaDetailsCard :song="song" :class="{ 'col-gray-700': wasPlayed }" />
 
         <!-- Actions -->
         <ul class="d-flex flex-grow-1">
+            <li>
+                <BaseButton v-if="isPlaying" @click="pause" icon="pause" />
+                <BaseButton v-else @click="play" icon="play" />
+            </li>
             <li>
                 <BaseButton @click="removeSong" icon="trash" />
             </li>
