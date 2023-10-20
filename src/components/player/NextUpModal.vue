@@ -29,8 +29,15 @@ export default {
 
         <!-- Header -->
         <div class="nextup-header">
+
+            <!-- Title -->
             <h4 class="mb-0">Next up</h4>
-            <BaseButton @click="$emit('close-modal')" icon="times" size="xl" />
+
+            <!-- Actions -->
+            <div class="d-flex align-items-center">
+                <BaseButton label="clear" class="btn-outline-orange w-auto px-2 me-2" />
+                <BaseButton @click="$emit('close-modal')" icon="times" size="xl" />
+            </div>
         </div>
 
         <!-- Songs -->
