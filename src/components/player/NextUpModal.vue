@@ -4,20 +4,25 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
+import PlayerDetails from '@/components/player/PlayerDetails.vue';
+
 
 /*** DATA ***/
 import { store } from '@/data/store';
 
 
 export default {
-    components: { BaseButton },
+    components: { BaseButton, PlayerDetails },
+
     data: () => ({ store }),
+
     props: {
         isActive: {
             type: Boolean,
             default: false
         }
     },
+
     emits: ['close-modal']
 
 }
@@ -42,8 +47,14 @@ export default {
 
         <!-- Songs -->
         <ul class="nextup-list">
-            <li v-for="song in store.nextUpList" :key="song.id">
-                {{ song.title }}
+            <li v-for="(song, idx) in store.nextUpList" :key="song.id"
+                class="d-flex justify-content-between align-items-center py-1">
+
+                <PlayerDetails :song="song" :class="{ 'col-gray-700': idx < store.nextUpIndex }" />
+
+                <div>
+                    <BaseButton @click="$emit('close-modal')" icon="trash" />
+                </div>
             </li>
         </ul>
     </div>
