@@ -6,7 +6,7 @@
 import TimeControl from '@/components/player/TimeControl.vue';
 import VolumeControl from '@/components/player/VolumeControl.vue';
 import PlayerDetails from '@/components/player/PlayerDetails.vue';
-import NextUpList from '@/components/player/NextUpList.vue';
+import NextUpModal from '@/components/player/NextUpModal.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
@@ -14,13 +14,13 @@ import { store } from '@/data/store';
 
 
 export default {
-    components: { TimeControl, PlayerDetails, VolumeControl, BaseButton, NextUpList },
+    components: { TimeControl, PlayerDetails, VolumeControl, BaseButton, NextUpModal },
 
     data: () => ({
         store,
         audio: null,
         currentTime: 0,
-        nextUpListActive: false
+        nextUpModalActive: false
     }),
 
     computed: {
@@ -148,9 +148,9 @@ export default {
                 </li>
                 <!-- Next Up Button -->
                 <li class="position-relative">
-                    <BaseButton @click="nextUpListActive = !nextUpListActive" icon="list" />
+                    <BaseButton @click="nextUpModalActive = !nextUpModalActive" icon="list" />
 
-                    <NextUpList :isActive="nextUpListActive" @close-list="nextUpListActive = false" />
+                    <NextUpModal :isActive="nextUpModalActive" @close-modal="nextUpModalActive = false" />
                 </li>
             </ul>
 

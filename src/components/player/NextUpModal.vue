@@ -18,23 +18,23 @@ export default {
             default: false
         }
     },
-    emits: ['close-list']
+    emits: ['close-modal']
 
 }
 </script>
 
 
 <template>
-    <div v-if="isActive" class="nextup-list">
+    <div v-if="isActive" class="nextup-modal">
 
         <!-- Header -->
-        <div class="nextup-header mb-3">
+        <div class="nextup-header">
             <h4 class="mb-0">Next up</h4>
-            <BaseButton @click="$emit('close-list')" icon="times" size="xl" />
+            <BaseButton @click="$emit('close-modal')" icon="times" size="xl" />
         </div>
 
         <!-- Songs -->
-        <ul>
+        <ul class="nextup-list">
             <li v-for="song in store.nextUpList" :key="song.id">
                 {{ song.title }}
             </li>
@@ -47,27 +47,34 @@ export default {
 @use '../../assets/scss/vars' as *;
 
 
-.nextup-list {
+.nextup-modal {
     width: 250px;
-    padding: 1rem;
     position: absolute;
     bottom: 60px;
     left: -125px;
 
-    background-color: $col-light;
+    background-color: #fff;
     border: 1px solid $col-gray-500;
     border-radius: 0.5rem;
+    overflow: hidden;
 
     .nextup-header {
+        padding: 0.5rem;
+
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background-color: $col-light;
+    }
+
+    .nextup-list {
+        padding: 0.5rem;
     }
 
 }
 
 @media screen and (min-width: 576px) {
-    .nextup-list {
+    .nextup-modal {
         bottom: 50px;
     }
 }
