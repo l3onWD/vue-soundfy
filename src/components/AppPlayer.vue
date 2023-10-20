@@ -148,7 +148,8 @@ export default {
                 </li>
                 <!-- Next Up Button -->
                 <li class="position-relative">
-                    <BaseButton @click="nextUpModalActive = !nextUpModalActive" icon="list" />
+                    <BaseButton @click="nextUpModalActive = !nextUpModalActive" icon="list"
+                        :class="{ 'active': nextUpModalActive }" />
 
                     <NextUpModal :isActive="nextUpModalActive" @close-modal="nextUpModalActive = false" />
                 </li>
