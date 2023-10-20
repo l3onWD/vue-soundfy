@@ -6,7 +6,7 @@
 import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
 import TimeControl from '@/components/player/TimeControl.vue';
 import VolumeControl from '@/components/player/VolumeControl.vue';
-import NextUpModal from '@/components/player/NextUpModal.vue';
+import NextUpModal from '@/components/nextup/NextUpModal.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/

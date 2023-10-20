@@ -4,7 +4,7 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
-import NextUpListItem from '@/components/player/NextUpListItem.vue';
+import NextUpListItem from '@/components/nextup/NextUpListItem.vue';
 
 /*** DATA ***/
 import { store } from '@/data/store';
