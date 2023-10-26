@@ -7,6 +7,8 @@ import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
 import { store } from '../../data/store';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { mapActions } from 'pinia';
 
 
 export default {
@@ -25,9 +27,10 @@ export default {
     data: () => ({ store }),
     methods: {
         play() {
-            store.isPlaying = true;
-            store.nextUpList = [this.media];
-            store.nextUpIndex = 0;
+            // store.isPlaying = true;
+            // store.nextUpList = [this.media];
+            // store.nextUpIndex = 0;
+            this.fetchTrack(this.media.id);
         },
         pause() {
             store.isPlaying = false;
@@ -35,7 +38,9 @@ export default {
 
         addSong() {
             if (!store.nextUpList.some(({ id }) => this.media.id === id)) store.nextUpList.push(this.media);
-        }
+        },
+
+        ...mapActions(usePlayerStore, ['fetchTrack'])
     }
 
 }
