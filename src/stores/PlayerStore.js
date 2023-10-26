@@ -5,6 +5,7 @@ import axios from 'axios';
 export const usePlayerStore = defineStore('player', {
 
     state: () => ({
+        trackId: null,
         audioCtx: null,
         audioGain: null,
         audioSource: null,
@@ -24,7 +25,7 @@ export const usePlayerStore = defineStore('player', {
         fetchTrack(id) {
 
             console.log('FETCHING');
-
+            this.trackId = id;
             this.isLoading = true;
 
             if (this.audioCtx) this.stopTrack();
@@ -45,6 +46,7 @@ export const usePlayerStore = defineStore('player', {
                             this.audioSource.start(0);
 
                             this.isLoading = false;
+                            this.isPlaying = true;
                             console.log('DONE');
 
                         }),

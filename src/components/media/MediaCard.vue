@@ -8,7 +8,7 @@ import BaseButton from '@/components/base/BaseButton.vue';
 /*** DATA ***/
 import { store } from '../../data/store';
 import { usePlayerStore } from '@/stores/PlayerStore';
-import { mapActions } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 
 
 export default {
@@ -20,18 +20,26 @@ export default {
         }
     },
     computed: {
+        ...mapState(usePlayerStore, {
+            trackId: 'trackId',
+            playerIsPlaying: 'isPlaying'
+        }),
+
         isPlaying() {
-            return store.nextUpList.length && this.media.src === store.nextUpList[store.nextUpIndex].src && store.isPlaying;
+            return this.trackId === this.media.id && this.playerIsPlaying;
         }
     },
-    data: () => ({ store }),
+    data: () => ({ store, player: usePlayerStore() }),
     methods: {
+
         play() {
             // store.isPlaying = true;
             // store.nextUpList = [this.media];
             // store.nextUpIndex = 0;
+
             this.fetchTrack(this.media.id);
         },
+
         pause() {
             store.isPlaying = false;
         },
