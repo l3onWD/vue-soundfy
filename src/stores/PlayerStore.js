@@ -73,6 +73,22 @@ export const usePlayerStore = defineStore('player', {
             this.audioSource = null;
             this.audioGain = null;
             this.audioCtx.close();
+
+            this.isPlaying = false;
+        },
+
+        resumeTrack() {
+            this.audioCtx.resume();
+            this.isPlaying = true;
+
+            console.log('RESUMED');
+        },
+
+        pauseTrack() {
+            this.audioCtx.suspend();
+            this.isPlaying = false;
+
+            console.log('PAUSED');
         }
     },
 });

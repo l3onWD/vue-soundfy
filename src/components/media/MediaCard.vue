@@ -42,18 +42,20 @@ export default {
             // store.nextUpList = [this.media];
             // store.nextUpIndex = 0;
 
-            this.fetchTrack(this.media.id);
+            if (this.trackId === this.media.id) this.resumeTrack();
+            else this.fetchTrack(this.media.id);
         },
 
         pause() {
-            store.isPlaying = false;
+            // store.isPlaying = false;
+            this.pauseTrack();
         },
 
         addSong() {
             if (!store.nextUpList.some(({ id }) => this.media.id === id)) store.nextUpList.push(this.media);
         },
 
-        ...mapActions(usePlayerStore, ['fetchTrack'])
+        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack'])
     }
 
 }
