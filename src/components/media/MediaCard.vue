@@ -13,12 +13,16 @@ import { mapState, mapActions } from 'pinia';
 
 export default {
     components: { BaseButton },
+
+    data: () => ({ store }),
+
     props: {
         media: {
             type: Object,
             default: null
         }
     },
+
     computed: {
         ...mapState(usePlayerStore, {
             trackId: 'trackId',
@@ -26,41 +30,45 @@ export default {
             playerIsLoading: 'isLoading'
         }),
 
+
         isCurrentTrack() {
             return this.trackId === this.media.id;
         },
+
 
         isPlaying() {
             return this.isCurrentTrack && this.playerIsPlaying;
         },
 
+
         isLoading() {
             return this.isCurrentTrack && this.playerIsLoading;
         }
     },
-    data: () => ({ store }),
+
     methods: {
 
         ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
 
-        play() {
-            // store.isPlaying = true;
 
+        play() {
 
             if (this.isCurrentTrack) this.resumeTrack();
             else {
                 this.fetchTrack(this.media.id);
 
-                //!DEBUG
+                //TODO create a store for upList ########
+                // Reset upList and add this track
                 store.nextUpList = [this.media];
                 store.nextUpIndex = 0;
             }
         },
 
+
         pause() {
-            // store.isPlaying = false;
             this.pauseTrack();
         },
+
 
         addTrack() {
 
@@ -73,7 +81,6 @@ export default {
             // Add to list
             store.nextUpList.push(this.media);
         }
-
 
     }
 

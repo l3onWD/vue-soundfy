@@ -8,6 +8,8 @@ import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
 
 /*** DATA ***/
 import { store } from '@/data/store';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { mapState, mapActions } from 'pinia';
 
 
 export default {
@@ -15,18 +17,8 @@ export default {
 
     data: () => ({ store }),
 
-    computed: {
-        isPlaying() {
-            return store.nextUpList.length && this.song.src === store.nextUpList[store.nextUpIndex].src && store.isPlaying;
-        },
-
-        wasPlayed() {
-            return this.listPosition < store.nextUpIndex;
-        }
-    },
-
     props: {
-        song: {
+        track: {
             type: Object,
             required: true
         },
@@ -37,21 +29,61 @@ export default {
         }
     },
 
-    methods: {
-        removeSong() {
-            if (store.nextUpList.length <= 1) return;
+    computed: {
+        ...mapState(usePlayerStore, {
+            trackId: 'trackId',
+            playerIsPlaying: 'isPlaying',
+            playerIsLoading: 'isLoading'
+        }),
 
-            if (this.listPosition < store.nextUpIndex) store.nextUpIndex--;
+
+        isCurrentTrack() {
+            return this.trackId === this.track.id;
+        },
+
+
+        isPlaying() {
+            return this.isCurrentTrack && this.playerIsPlaying;
+        },
+
+
+        wasPlayed() {
+            return this.listPosition < store.nextUpIndex;
+        },
+
+
+        isLoading() {
+            return this.isCurrentTrack && this.playerIsLoading;
+        }
+    },
+
+    methods: {
+        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
+
+
+        removeTrack() {
+            // Check if list has more than 1 item
+            if (store.nextUpList.length < 1) return;
+
+            // Decrement index if a previous item is deleted
+            if (this.listPosition <= store.nextUpIndex) store.nextUpIndex--;
+
+            // Remove item
             store.nextUpList.splice(this.listPosition, 1);
         },
 
+
         play() {
-            store.isPlaying = true;
-            store.nextUpIndex = this.listPosition;
+            if (this.isCurrentTrack) this.resumeTrack();
+            else {
+                this.fetchTrack(this.track.id);
+                store.nextUpIndex = this.listPosition;
+            }
         },
 
+
         pause() {
-            store.isPlaying = false;
+            this.pauseTrack();
         },
     }
 
@@ -62,17 +94,19 @@ export default {
 <template>
     <div class="nextup-item">
 
-        <!-- Song Details -->
-        <MediaDetailsCard :song="song" :class="{ 'col-gray-700': wasPlayed }" />
+        <!-- Track Details -->
+        <MediaDetailsCard :track="track" :class="{ 'col-gray-700': wasPlayed }" />
 
         <!-- Actions -->
         <ul class="nextup-item-actions ms-1">
             <li>
-                <BaseButton v-if="isPlaying" @click="pause" icon="pause" />
-                <BaseButton v-else @click="play" icon="play" />
+                <BaseButton v-if="isPlaying" @click="pause" icon="pause" :class="{ 'btn-disabled': isLoading }"
+                    :disabled="isLoading" />
+                <BaseButton v-else @click="play" icon="play" :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
             </li>
             <li>
-                <BaseButton @click="removeSong" icon="trash" />
+                <BaseButton @click="removeTrack" icon="trash" :class="{ 'btn-disabled': isLoading || isCurrentTrack }"
+                    :disabled="isLoading" />
             </li>
         </ul>
 
