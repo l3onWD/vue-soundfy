@@ -22,11 +22,16 @@ export default {
     computed: {
         ...mapState(usePlayerStore, {
             trackId: 'trackId',
-            playerIsPlaying: 'isPlaying'
+            playerIsPlaying: 'isPlaying',
+            playerIsLoading: 'isLoading'
         }),
 
         isPlaying() {
             return this.trackId === this.media.id && this.playerIsPlaying;
+        },
+
+        isLoading() {
+            return this.trackId === this.media.id && this.playerIsLoading;
         }
     },
     data: () => ({ store, player: usePlayerStore() }),
@@ -65,9 +70,15 @@ export default {
 
             <!-- Media Controls -->
             <div class="media-card-controls">
-                <!-- Play/Pause -->
-                <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn-big btn-rounded btn-orange" />
-                <BaseButton v-else @click="play" icon="play" class="btn-big btn-rounded btn-orange" />
+                <div v-if="isLoading" class="text-white">
+                    <FontAwesomeIcon icon="fas fa-spinner" spin-pulse size="3x" />
+                </div>
+                <div v-else>
+                    <!-- Play/Pause -->
+                    <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn-big btn-rounded btn-orange" />
+                    <BaseButton v-else @click="play" icon="play" class="btn-big btn-rounded btn-orange" />
+                </div>
+
             </div>
 
             <!-- Song Actions -->
