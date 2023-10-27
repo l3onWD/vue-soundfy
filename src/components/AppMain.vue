@@ -7,7 +7,6 @@ import AppLoader from '@/components/AppLoader.vue';
 import MediaSection from './media/MediaSection.vue';
 
 /*** DATA ***/
-import { songs } from '../data';
 import axios from 'axios';
 
 const baseUri = 'http://127.0.0.1:8000/api';
