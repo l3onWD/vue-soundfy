@@ -127,8 +127,8 @@ export const usePlayerStore = defineStore('player', {
 
 
         resumeTrack() {
-            // Restart if ended or resume
-            if (this.isEnded) {
+            // Restart if closed or resume
+            if (this.audioCtx.state === 'closed') {
                 this.initAudio();
                 this.startAudio();
 
