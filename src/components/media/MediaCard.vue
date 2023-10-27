@@ -97,10 +97,12 @@ export default {
             <img :src="media.albumCover" :alt="media.title">
 
             <!-- Media Controls -->
-            <div class="media-card-controls">
-                <div v-if="isLoading" class="text-white">
-                    <FontAwesomeIcon icon="fas fa-spinner" spin-pulse size="3x" />
-                </div>
+            <div class="media-card-controls" :class="{ 'loading': isLoading }">
+
+                <!-- Loader -->
+                <FontAwesomeIcon v-if="isLoading" icon="fas fa-spinner" spin-pulse size="3x" class="text-white" />
+
+                <!-- Controls -->
                 <div v-else>
                     <!-- Play/Pause -->
                     <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn-big btn-rounded btn-orange" />
@@ -163,6 +165,7 @@ export default {
             transition: 0.05s visibility, 0.05s opacity;
         }
 
+        .media-card-controls.loading,
         &:hover .media-card-controls {
             visibility: visible;
             opacity: 1;
