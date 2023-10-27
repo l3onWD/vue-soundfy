@@ -29,7 +29,7 @@ export default {
 
         ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'isEnded', 'currentTime']),
 
-        currentSong() {
+        currentTrack() {
             return store.nextUpList[store.nextUpIndex];
         }
     },
@@ -37,7 +37,7 @@ export default {
     watch: {
 
         isEnded(ended) {
-            if (ended) this.nextSong();
+            if (ended) this.nextTrack();
         },
 
         /**
@@ -80,9 +80,9 @@ export default {
         },
 
         /**
-         * Go to next Song or reset list
+         * Go to next Track or reset list
          */
-        nextSong() {
+        nextTrack() {
 
             // Check if list is ended
             if (store.nextUpIndex >= store.nextUpList.length - 1) {
@@ -94,14 +94,14 @@ export default {
         },
 
         /**
-         * Go to previous Song or restart song
+         * Go to previous Track or restart Track
          */
-        prevSong() {
+        prevTrack() {
 
-            // Restart Song
+            // Restart Track
             if (this.currentTime > 5 || store.nextUpIndex === 0) this.seekTrack(0);
 
-            // Change to prev song
+            // Change to prev track
             else {
                 store.nextUpIndex--;
                 this.fetchTrack(store.nextUpList[store.nextUpIndex].id);
@@ -120,7 +120,7 @@ export default {
         // this.audio.addEventListener('timeupdate', () => { this.currentTime = this.audio.currentTime });
 
         // Reset Audio on End
-        // this.audio.addEventListener('ended', this.nextSong);
+        // this.audio.addEventListener('ended', this.nextTrack);
     }
 }
 </script>
@@ -132,14 +132,14 @@ export default {
         <div class="container">
 
 
-            <!-- Song Info & Actions -->
+            <!-- Track Info & Actions -->
             <div class="d-flex justify-content-between flex-shrink-0">
 
-                <!-- Song Details -->
-                <MediaDetailsCard :song="currentSong" />
+                <!-- Track Details -->
+                <MediaDetailsCard :track="currentTrack" />
 
 
-                <!-- Song Actions -->
+                <!-- Track Actions -->
                 <ul class="d-flex flex-column flex-sm-row ms-1">
                     <!-- Favorite Button -->
                     <li>
@@ -157,17 +157,17 @@ export default {
 
 
             <!-- Time Control -->
-            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentSong.duration"
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentTrack.duration"
                 class="mx-md-4" />
 
 
-            <!-- Main Song Controls -->
+            <!-- Main Track Controls -->
             <ul class="d-flex ms-auto">
                 <li>
                     <VolumeControl class="me-sm-4" />
                 </li>
                 <li>
-                    <BaseButton @click="prevSong" icon="backward-step" />
+                    <BaseButton @click="prevTrack" icon="backward-step" />
                 </li>
                 <li>
                     <BaseButton v-if="isPlaying" @click="pause" icon="pause" size="lg"
@@ -176,7 +176,7 @@ export default {
                         :disabled="isLoading" />
                 </li>
                 <li>
-                    <BaseButton @click="nextSong" icon="forward-step" />
+                    <BaseButton @click="nextTrack" icon="forward-step" />
                 </li>
                 <li>
                     <!-- <BaseButton @click="audio.loop = !audio.loop" icon="repeat" :class="{ 'active': audio.loop }" /> -->

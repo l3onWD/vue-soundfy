@@ -1,7 +1,7 @@
 <script>
 export default {
     props: {
-        song: {
+        track: {
             type: Object,
             default: null
         }
@@ -12,15 +12,15 @@ export default {
 
 
 <template>
-    <div v-if="song" class="media-details-card">
+    <div v-if="track" class="media-details-card">
 
         <!-- Cover -->
-        <img :src="song.albumCover" :alt="song.title">
+        <img :src="track.albumCover" :alt="track.title">
 
-        <!-- Song Info -->
+        <!-- Track Info -->
         <div class="media-details-info">
-            <h6 class="mb-1" :title="song.title">{{ song.title }}</h6>
-            <span :title="song.author" class="col-gray-700">{{ song.author }}</span>
+            <h6 class="mb-1" :title="track.title">{{ track.title }}</h6>
+            <span :title="track.author" class="col-gray-700">{{ track.author }}</span>
         </div>
 
     </div>

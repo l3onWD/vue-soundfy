@@ -43,7 +43,7 @@ export default {
 <template>
     <div class="time-control">
 
-        <!-- Song Current Time -->
+        <!-- Track Current Time -->
         <span>{{ currentTimeLabel }}</span>
 
         <!-- Progress Bar -->
@@ -55,7 +55,7 @@ export default {
             </div>
         </div>
 
-        <!-- Song Length -->
+        <!-- Track Length -->
         <span>{{ durationLabel }}</span>
     </div>
 </template>

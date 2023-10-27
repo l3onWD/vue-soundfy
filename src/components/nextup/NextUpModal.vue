@@ -28,8 +28,8 @@ export default {
 
             if (store.nextUpList.length <= 1) return;
 
-            const currentSong = store.nextUpList[store.nextUpIndex];
-            store.nextUpList = [currentSong];
+            const currentTrack = store.nextUpList[store.nextUpIndex];
+            store.nextUpList = [currentTrack];
             store.nextUpIndex = 0;
         }
     },
@@ -56,11 +56,11 @@ export default {
             </div>
         </div>
 
-        <!-- Songs -->
+        <!-- Tracks -->
         <ul class="nextup-list">
-            <li v-for="(song, idx) in store.nextUpList" :key="song.id" class="py-1">
+            <li v-for="(track, idx) in store.nextUpList" :key="track.id" class="py-1">
 
-                <NextUpListItem :song="song" :listPosition="idx" />
+                <NextUpListItem :track="track" :listPosition="idx" />
 
             </li>
         </ul>

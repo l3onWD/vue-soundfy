@@ -62,7 +62,7 @@ export default {
             this.pauseTrack();
         },
 
-        addSong() {
+        addTrack() {
 
             // Exit if already included
             if (store.nextUpList.some(({ id }) => this.media.id === id)) return;
@@ -102,7 +102,7 @@ export default {
 
             </div>
 
-            <!-- Song Actions -->
+            <!-- Track Actions -->
             <ul class="media-card-actions">
                 <!-- Like -->
                 <li>
@@ -110,7 +110,7 @@ export default {
                 </li>
                 <!-- Add to Next Up Button -->
                 <li>
-                    <BaseButton @click="addSong" icon="list" class="btn-light" title="Add to Next Up" />
+                    <BaseButton @click="addTrack" icon="list" class="btn-light" title="Add to Next Up" />
                 </li>
             </ul>
 
