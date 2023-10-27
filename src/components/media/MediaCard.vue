@@ -26,12 +26,16 @@ export default {
             playerIsLoading: 'isLoading'
         }),
 
+        isCurrentTrack() {
+            return this.trackId === this.media.id;
+        },
+
         isPlaying() {
-            return this.trackId === this.media.id && this.playerIsPlaying;
+            return this.isCurrentTrack && this.playerIsPlaying;
         },
 
         isLoading() {
-            return this.trackId === this.media.id && this.playerIsLoading;
+            return this.isCurrentTrack && this.playerIsLoading;
         }
     },
     data: () => ({ store, player: usePlayerStore() }),
@@ -42,7 +46,7 @@ export default {
             // store.nextUpList = [this.media];
             // store.nextUpIndex = 0;
 
-            if (this.trackId === this.media.id) this.resumeTrack();
+            if (this.isCurrentTrack) this.resumeTrack();
             else this.fetchTrack(this.media.id);
         },
 
