@@ -21,13 +21,13 @@ export default {
     data: () => ({
         store,
         audio: null,
-        currentTime: 0,
+        // currentTime: 0,
         nextUpModalActive: false
     }),
 
     computed: {
 
-        ...mapState(usePlayerStore, ['isPlaying', 'isLoading']),
+        ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'currentTime']),
 
         currentSong() {
             return store.nextUpList[store.nextUpIndex];
@@ -35,26 +35,6 @@ export default {
     },
 
     watch: {
-        /**
-         * Song change watcher
-         */
-        // 'currentSong.src'(newSrc) {
-        //     this.audio.pause();
-        //     this.audio.src = newSrc;
-        //     this.audio.play();
-        //     this.currentTime = 0;
-        //     store.isPlaying = true;
-        // },
-
-        /**
-         * Play/Pause watcher
-         */
-        // 'store.isPlaying'(newValue) {
-        //     this.$nextTick(() => {
-        //         if (newValue) this.audio.play();
-        //         else this.audio.pause();
-        //     });
-        // },
 
         /**
          * Volume watcher
@@ -84,13 +64,15 @@ export default {
         },
 
 
+
+
         /**
          * Update current time from Time Control Bar
          * 
          * @param {Number} newTime 
          */
         handleTimeMoved(newTime) {
-            this.audio.currentTime = newTime;
+            // this.audio.currentTime = newTime;
         },
 
         /**
@@ -98,17 +80,17 @@ export default {
          */
         nextSong() {
 
-            // Increment index or reset and stop
-            if (++store.nextUpIndex >= store.nextUpList.length) {
+            // // Increment index or reset and stop
+            // if (++store.nextUpIndex >= store.nextUpList.length) {
 
-                store.nextUpIndex = 0;
+            //     store.nextUpIndex = 0;
 
-                // Delayed stop (bypassing watcher)
-                setTimeout(() => {
-                    this.store.isPlaying = false;
-                    this.audio.currentTime = 0;
-                }, 200);
-            }
+            //     // Delayed stop (bypassing watcher)
+            //     setTimeout(() => {
+            //         this.store.isPlaying = false;
+            //         this.audio.currentTime = 0;
+            //     }, 200);
+            // }
         },
 
         /**
@@ -116,15 +98,15 @@ export default {
          */
         prevSong() {
 
-            // Restart Song
-            if (this.audio.currentTime > 5) this.audio.currentTime = 0;
+            // // Restart Song
+            // if (this.audio.currentTime > 5) this.audio.currentTime = 0;
 
-            // Decrement index or restart first song
-            else if (--store.nextUpIndex < 0) {
+            // // Decrement index or restart first song
+            // else if (--store.nextUpIndex < 0) {
 
-                store.nextUpIndex = 0;
-                this.audio.currentTime = 0;
-            }
+            //     store.nextUpIndex = 0;
+            //     this.audio.currentTime = 0;
+            // }
 
         },
 
@@ -133,13 +115,13 @@ export default {
     mounted() {
 
         // Create an audio instance
-        this.audio = new Audio();
+        // this.audio = new Audio();
 
         // Current time update
-        this.audio.addEventListener('timeupdate', () => { this.currentTime = this.audio.currentTime });
+        // this.audio.addEventListener('timeupdate', () => { this.currentTime = this.audio.currentTime });
 
         // Reset Audio on End
-        this.audio.addEventListener('ended', this.nextSong);
+        // this.audio.addEventListener('ended', this.nextSong);
     }
 }
 </script>
@@ -198,7 +180,8 @@ export default {
                     <BaseButton @click="nextSong" icon="forward-step" />
                 </li>
                 <li>
-                    <BaseButton @click="audio.loop = !audio.loop" icon="repeat" :class="{ 'active': audio.loop }" />
+                    <!-- <BaseButton @click="audio.loop = !audio.loop" icon="repeat" :class="{ 'active': audio.loop }" /> -->
+                    <BaseButton icon="repeat" />
                 </li>
             </ul>
 
