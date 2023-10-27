@@ -94,15 +94,14 @@ export default {
          */
         prevSong() {
 
-            // // Restart Song
-            // if (this.audio.currentTime > 5) this.audio.currentTime = 0;
+            // Restart Song
+            if (this.currentTime > 5 || store.nextUpIndex === 0) this.seekTrack(0);
 
-            // // Decrement index or restart first song
-            // else if (--store.nextUpIndex < 0) {
-
-            //     store.nextUpIndex = 0;
-            //     this.audio.currentTime = 0;
-            // }
+            // Change to prev song
+            else {
+                store.nextUpIndex--;
+                this.fetchTrack(store.nextUpList[store.nextUpIndex].id);
+            }
 
         },
 
