@@ -20,7 +20,6 @@ export const usePlayerStore = defineStore('player', {
 
         loop: false,
         volume: 1,
-        volumePrev: 1,
         muted: false
     }),
 
@@ -84,8 +83,7 @@ export const usePlayerStore = defineStore('player', {
         initAudio() {
             this.audioCtx = new AudioContext();
             this.audioGain = this.audioCtx.createGain();
-            this.audioGain.gain.value = 1;
-            this.volumeValuePrev = 1;
+            this.audioGain.gain.value = this.muted ? 0 : this.volume;
             this.audioGain.connect(this.audioCtx.destination);
         },
 
@@ -180,6 +178,30 @@ export const usePlayerStore = defineStore('player', {
 
         toggleTrackLoop() {
             this.loop = !this.loop;
+        },
+
+
+        setTrackVolume(value) {
+
+            this.volume = value;
+            this.muted = false;
+
+            if (this.audioGain.gain) {
+                this.audioGain.gain.value = value;
+            }
+        },
+
+        toggleTrackMuted() {
+            this.muted = !this.muted;
+
+            if (!this.audioGain.gain) return;
+
+            if (this.muted) {
+                this.audioGain.gain.value = 0;
+            } else {
+                this.audioGain.gain.value = this.volume;
+            }
+
         }
     },
 });

@@ -40,20 +40,6 @@ export default {
             if (ended) this.nextTrack();
         },
 
-        /**
-         * Volume watcher
-         */
-        'store.volume'(newValue) {
-            store.muted = false;
-            this.audio.volume = newValue;
-        },
-
-        /**
-         * Muted toggler watcher
-         */
-        'store.muted'(newValue) {
-            this.audio.muted = newValue;
-        }
     },
 
     methods: {

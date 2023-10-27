@@ -7,26 +7,36 @@ import BaseButton from '@/components/base/BaseButton.vue';
 import BaseVerticalRangeInput from '@/components/base/BaseVerticalRangeInput.vue';
 
 /*** DATA ***/
-import { store } from '@/data/store';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { mapState, mapActions } from 'pinia';
 
 
 export default {
     components: { BaseButton, BaseVerticalRangeInput },
 
-    data: () => ({
-        store
-    }),
+    data: () => ({ volume: 1 }),
 
     computed: {
+
+        ...mapState(usePlayerStore, ['muted']),
 
         /**
          * Update mute icon style
          */
         volumeIcon() {
-            if (store.muted || store.volume === 0) return 'volume-mute';
-            if (store.volume < 0.5) return 'volume-low';
+            if (this.muted || this.volume === 0) return 'volume-mute';
+            if (this.volume < 0.5) return 'volume-low';
             return 'volume-high';
         }
+    },
+
+    watch: {
+        volume(value) {
+            this.setTrackVolume(value);
+        }
+    },
+    methods: {
+        ...mapActions(usePlayerStore, ['setTrackVolume', 'toggleTrackMuted'])
     }
 
 }
@@ -37,11 +47,11 @@ export default {
     <div class="volume-control">
 
         <!-- Mute Button -->
-        <BaseButton @click="store.muted = !store.muted" :icon="volumeIcon" size="lg" />
+        <BaseButton @click="toggleTrackMuted" :icon="volumeIcon" size="lg" />
 
         <!-- Volume Range Input -->
         <div class="volume-range">
-            <BaseVerticalRangeInput v-model:value="store.volume" :disabled="store.muted" />
+            <BaseVerticalRangeInput v-model:value="volume" :disabled="muted" />
         </div>
 
     </div>
