@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const baseUri = 'http://127.0.0.1:8000/api/';
+const baseUri = 'http://127.0.0.1:8000/api';
 
 
 export const usePlayerStore = defineStore('player', {
@@ -45,7 +45,7 @@ export const usePlayerStore = defineStore('player', {
             if (this.audioCtx) this.stopTrack();
 
             // Fetch new track
-            axios.get(`${baseUri}tracks/${id}/stream`, { responseType: 'arraybuffer' })
+            axios.get(`${baseUri}/tracks/${id}/stream`, { responseType: 'arraybuffer' })
                 .then(({ data }) => {
 
                     // Abort if track changed during fetch

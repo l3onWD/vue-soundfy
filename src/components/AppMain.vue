@@ -62,8 +62,8 @@ export default {
             <!-- Loader -->
             <AppLoader v-if="isLoading" />
 
-            <!-- Recently Played -->
-            <MediaSection v-else title="Recently Played" :mediaList="tracks" />
+            <!-- All Tracks -->
+            <MediaSection v-else title="All Tracks" :mediaList="tracks" />
 
         </div>
     </main>
