@@ -3,17 +3,45 @@
 * RESOURCES
 -------------------------------------------*/
 /*** COMPONENTS ***/
+import AppLoader from '@/components/AppLoader.vue';
 import MediaSection from './media/MediaSection.vue';
 
 /*** DATA ***/
 import { songs } from '../data';
+import axios from 'axios';
+
+const baseUri = 'http://127.0.0.1:8000/api';
 
 
 export default {
-    components: { MediaSection },
-    data: () => ({
-        songs
-    })
+    components: { MediaSection, AppLoader },
+
+    data: () => ({ tracks: [], isLoading: false }),
+
+    methods: {
+        fetchTracks() {
+
+            this.isLoading = true;
+
+            axios.get(baseUri + '/tracks')
+                .then(({ data }) => {
+                    this.tracks = data;
+                    console.log(data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .then(() => {
+
+                    this.isLoading = false;
+
+                });
+        }
+    },
+
+    created() {
+        this.fetchTracks();
+    }
 
 }
 </script>
@@ -23,11 +51,11 @@ export default {
     <main class="app-main">
         <div class="container">
 
-            <!-- Recently Played -->
-            <MediaSection title="Recently Played" :mediaList="songs" />
+            <!-- Loader -->
+            <AppLoader v-if="isLoading" />
 
-            <!-- More of what you like -->
-            <MediaSection title="More of what you like" :mediaList="songs" />
+            <!-- Recently Played -->
+            <MediaSection v-else title="Recently Played" :mediaList="tracks" />
 
         </div>
     </main>
