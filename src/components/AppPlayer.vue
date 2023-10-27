@@ -27,7 +27,7 @@ export default {
 
     computed: {
 
-        ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'currentTime']),
+        ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'isEnded', 'currentTime']),
 
         currentSong() {
             return store.nextUpList[store.nextUpIndex];
@@ -35,6 +35,10 @@ export default {
     },
 
     watch: {
+
+        isEnded(ended) {
+            if (ended) this.nextSong();
+        },
 
         /**
          * Volume watcher
