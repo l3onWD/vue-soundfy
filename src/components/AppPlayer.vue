@@ -53,7 +53,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(usePlayerStore, ['resumeTrack', 'pauseTrack', 'seekTrack']),
+        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack', 'seekTrack', 'stopTrack']),
 
 
         play() {
@@ -80,17 +80,13 @@ export default {
          */
         nextSong() {
 
-            // // Increment index or reset and stop
-            // if (++store.nextUpIndex >= store.nextUpList.length) {
-
-            //     store.nextUpIndex = 0;
-
-            //     // Delayed stop (bypassing watcher)
-            //     setTimeout(() => {
-            //         this.store.isPlaying = false;
-            //         this.audio.currentTime = 0;
-            //     }, 200);
-            // }
+            // Check if list is ended
+            if (store.nextUpIndex >= store.nextUpList.length - 1) {
+                this.stopTrack();
+            } else {
+                store.nextUpIndex++;
+                this.fetchTrack(store.nextUpList[store.nextUpIndex].id);
+            }
         },
 
         /**
