@@ -18,6 +18,7 @@ export const usePlayerStore = defineStore('player', {
         audioSource: null,
         audioBuffer: null,
 
+        loop: false,
         volume: 1,
         volumePrev: 1,
         muted: false
@@ -165,9 +166,20 @@ export const usePlayerStore = defineStore('player', {
 
             // Ended reached
             if (this.currentTime >= this.audioBuffer.duration) {
-                this.stopTrack();
-                this.isEnded = true;
+
+                // Check if loop is active
+                if (this.loop) {
+                    this.seekTrack(0);
+                } else {
+                    this.stopTrack();
+                    this.isEnded = true;
+                }
             }
+        },
+
+
+        toggleTrackLoop() {
+            this.loop = !this.loop;
         }
     },
 });

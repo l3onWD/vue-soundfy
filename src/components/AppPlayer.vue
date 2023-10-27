@@ -27,7 +27,7 @@ export default {
 
     computed: {
 
-        ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'isEnded', 'currentTime']),
+        ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'isEnded', 'currentTime', 'loop']),
 
         currentTrack() {
             return store.nextUpList[store.nextUpIndex];
@@ -57,7 +57,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack', 'seekTrack', 'stopTrack']),
+        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack', 'seekTrack', 'stopTrack', 'toggleTrackLoop']),
 
 
         play() {
@@ -179,8 +179,7 @@ export default {
                     <BaseButton @click="nextTrack" icon="forward-step" />
                 </li>
                 <li>
-                    <!-- <BaseButton @click="audio.loop = !audio.loop" icon="repeat" :class="{ 'active': audio.loop }" /> -->
-                    <BaseButton icon="repeat" />
+                    <BaseButton @click="toggleTrackLoop" icon="repeat" :class="{ 'active': loop }" />
                 </li>
             </ul>
 
