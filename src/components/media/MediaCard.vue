@@ -7,35 +7,81 @@ import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
 import { store } from '../../data/store';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { mapState, mapActions } from 'pinia';
 
 
 export default {
     components: { BaseButton },
+
+    data: () => ({ store }),
+
     props: {
         media: {
             type: Object,
             default: null
         }
     },
+
     computed: {
-        isPlaying() {
-            return store.nextUpList.length && this.media.src === store.nextUpList[store.nextUpIndex].src && store.isPlaying;
-        }
-    },
-    data: () => ({ store }),
-    methods: {
-        play() {
-            store.isPlaying = true;
-            store.nextUpList = [this.media];
-            store.nextUpIndex = 0;
-        },
-        pause() {
-            store.isPlaying = false;
+        ...mapState(usePlayerStore, {
+            trackId: 'trackId',
+            playerIsPlaying: 'isPlaying',
+            playerIsLoading: 'isLoading'
+        }),
+
+
+        isCurrentTrack() {
+            return this.trackId === this.media.id;
         },
 
-        addSong() {
-            if (!store.nextUpList.some(({ id }) => this.media.id === id)) store.nextUpList.push(this.media);
+
+        isPlaying() {
+            return this.isCurrentTrack && this.playerIsPlaying;
+        },
+
+
+        isLoading() {
+            return this.isCurrentTrack && this.playerIsLoading;
         }
+    },
+
+    methods: {
+
+        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
+
+
+        play() {
+
+            if (this.isCurrentTrack) this.resumeTrack();
+            else {
+                this.fetchTrack(this.media.id);
+
+                //TODO create a store for upList ########
+                // Reset upList and add this track
+                store.nextUpList = [this.media];
+                store.nextUpIndex = 0;
+            }
+        },
+
+
+        pause() {
+            this.pauseTrack();
+        },
+
+
+        addTrack() {
+
+            // Exit if already included
+            if (store.nextUpList.some(({ id }) => this.media.id === id)) return;
+
+            // Play if empty
+            if (!store.nextUpList.length) this.fetchTrack(this.media.id);
+
+            // Add to list
+            store.nextUpList.push(this.media);
+        }
+
     }
 
 }
@@ -52,12 +98,18 @@ export default {
 
             <!-- Media Controls -->
             <div class="media-card-controls">
-                <!-- Play/Pause -->
-                <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn-big btn-rounded btn-orange" />
-                <BaseButton v-else @click="play" icon="play" class="btn-big btn-rounded btn-orange" />
+                <div v-if="isLoading" class="text-white">
+                    <FontAwesomeIcon icon="fas fa-spinner" spin-pulse size="3x" />
+                </div>
+                <div v-else>
+                    <!-- Play/Pause -->
+                    <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn-big btn-rounded btn-orange" />
+                    <BaseButton v-else @click="play" icon="play" class="btn-big btn-rounded btn-orange" />
+                </div>
+
             </div>
 
-            <!-- Song Actions -->
+            <!-- Track Actions -->
             <ul class="media-card-actions">
                 <!-- Like -->
                 <li>
@@ -65,7 +117,7 @@ export default {
                 </li>
                 <!-- Add to Next Up Button -->
                 <li>
-                    <BaseButton @click="addSong" icon="list" class="btn-light" title="Add to Next Up" />
+                    <BaseButton @click="addTrack" icon="list" class="btn-light" title="Add to Next Up" />
                 </li>
             </ul>
 
