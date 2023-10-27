@@ -1,16 +1,12 @@
 <script>
 export default {
 
-    props: {
-        isVisible: Boolean
-    }
-
 }
 </script>
 
 
 <template>
-    <div v-if="isVisible" class="app-loader">
+    <div class="app-loader">
         <FontAwesomeIcon icon="fas fa-spinner" spin-pulse size="5x" />
     </div>
 </template>
