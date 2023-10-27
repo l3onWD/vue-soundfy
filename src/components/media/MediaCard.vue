@@ -38,16 +38,21 @@ export default {
             return this.isCurrentTrack && this.playerIsLoading;
         }
     },
-    data: () => ({ store, player: usePlayerStore() }),
+    data: () => ({ store }),
     methods: {
 
         play() {
             // store.isPlaying = true;
-            // store.nextUpList = [this.media];
-            // store.nextUpIndex = 0;
+
 
             if (this.isCurrentTrack) this.resumeTrack();
-            else this.fetchTrack(this.media.id);
+            else {
+                this.fetchTrack(this.media.id);
+
+                //!DEBUG
+                store.nextUpList = [this.media];
+                store.nextUpIndex = 0;
+            }
         },
 
         pause() {

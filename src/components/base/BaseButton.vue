@@ -66,6 +66,14 @@ button {
         }
     }
 
+    &.btn-disabled {
+        color: $col-gray-700;
+
+        &:hover {
+            color: $col-gray-700;
+        }
+    }
+
     &.btn-orange {
         color: $col-gray-300;
         background-color: $col-orange;
