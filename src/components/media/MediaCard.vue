@@ -41,6 +41,8 @@ export default {
     data: () => ({ store }),
     methods: {
 
+        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
+
         play() {
             // store.isPlaying = true;
 
@@ -61,10 +63,18 @@ export default {
         },
 
         addSong() {
-            if (!store.nextUpList.some(({ id }) => this.media.id === id)) store.nextUpList.push(this.media);
-        },
 
-        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack'])
+            // Exit if already included
+            if (store.nextUpList.some(({ id }) => this.media.id === id)) return;
+
+            // Play if empty
+            if (!store.nextUpList.length) this.fetchTrack(this.media.id);
+
+            // Add to list
+            store.nextUpList.push(this.media);
+        }
+
+
     }
 
 }
