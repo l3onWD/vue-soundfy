@@ -11,6 +11,8 @@ import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
 import { store } from '@/data/store';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { mapState, mapActions } from 'pinia';
 
 
 export default {
@@ -24,6 +26,9 @@ export default {
     }),
 
     computed: {
+
+        ...mapState(usePlayerStore, ['isPlaying', 'isLoading']),
+
         currentSong() {
             return store.nextUpList[store.nextUpIndex];
         }
@@ -33,23 +38,23 @@ export default {
         /**
          * Song change watcher
          */
-        'currentSong.src'(newSrc) {
-            this.audio.pause();
-            this.audio.src = newSrc;
-            this.audio.play();
-            this.currentTime = 0;
-            store.isPlaying = true;
-        },
+        // 'currentSong.src'(newSrc) {
+        //     this.audio.pause();
+        //     this.audio.src = newSrc;
+        //     this.audio.play();
+        //     this.currentTime = 0;
+        //     store.isPlaying = true;
+        // },
 
         /**
          * Play/Pause watcher
          */
-        'store.isPlaying'(newValue) {
-            this.$nextTick(() => {
-                if (newValue) this.audio.play();
-                else this.audio.pause();
-            });
-        },
+        // 'store.isPlaying'(newValue) {
+        //     this.$nextTick(() => {
+        //         if (newValue) this.audio.play();
+        //         else this.audio.pause();
+        //     });
+        // },
 
         /**
          * Volume watcher
@@ -68,6 +73,16 @@ export default {
     },
 
     methods: {
+        ...mapActions(usePlayerStore, ['resumeTrack', 'pauseTrack']),
+
+        play() {
+            this.resumeTrack();
+        },
+
+        pause() {
+            this.pauseTrack();
+        },
+
 
         /**
          * Update current time from Time Control Bar
@@ -174,8 +189,10 @@ export default {
                     <BaseButton @click="prevSong" icon="backward-step" />
                 </li>
                 <li>
-                    <BaseButton v-if="store.isPlaying" @click="store.isPlaying = false" icon="pause" size="lg" />
-                    <BaseButton v-else @click="store.isPlaying = true" icon="play" size="lg" />
+                    <BaseButton v-if="isPlaying" @click="pause" icon="pause" size="lg"
+                        :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
+                    <BaseButton v-else @click="play" icon="play" size="lg" :class="{ 'btn-disabled': isLoading }"
+                        :disabled="isLoading" />
                 </li>
                 <li>
                     <BaseButton @click="nextSong" icon="forward-step" />
