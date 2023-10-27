@@ -25,8 +25,16 @@ export default {
 
             axios.get(baseUri + '/tracks')
                 .then(({ data }) => {
-                    this.tracks = data;
-                    console.log(data);
+
+                    // Map with media props
+                    this.tracks = data.map(track => ({
+                        id: track.id,
+                        title: track.title,
+                        author: track.album.author.name,
+                        src: track.src,
+                        duration: track.duration,
+                        albumCover: track.album.cover
+                    }));
                 })
                 .catch(err => {
                     console.log(err);
