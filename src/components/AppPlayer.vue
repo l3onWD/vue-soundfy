@@ -53,17 +53,17 @@ export default {
     },
 
     methods: {
-        ...mapActions(usePlayerStore, ['resumeTrack', 'pauseTrack']),
+        ...mapActions(usePlayerStore, ['resumeTrack', 'pauseTrack', 'seekTrack']),
+
 
         play() {
             this.resumeTrack();
         },
 
+
         pause() {
             this.pauseTrack();
         },
-
-
 
 
         /**
@@ -72,7 +72,7 @@ export default {
          * @param {Number} newTime 
          */
         handleTimeMoved(newTime) {
-            // this.audio.currentTime = newTime;
+            this.seekTrack(newTime, !this.isPlaying);
         },
 
         /**

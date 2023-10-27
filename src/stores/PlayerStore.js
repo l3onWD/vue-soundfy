@@ -10,6 +10,7 @@ export const usePlayerStore = defineStore('player', {
         isPlaying: false,
         isEnded: false,
         currentTime: 0,
+        startedAt: 0,
         trackProgressId: null,
 
         audioCtx: null,
@@ -88,15 +89,19 @@ export const usePlayerStore = defineStore('player', {
         },
 
 
-        startAudio() {
+        startAudio(offset = 0, paused = false) {
             this.audioSource = this.audioCtx.createBufferSource();
             this.audioSource.buffer = this.audioBuffer;
             this.audioSource.connect(this.audioGain);
-            this.audioSource.start(0);
+            this.audioSource.start(0, offset);
+            this.currentTime = offset;
+            this.startedAt = offset;
 
             this.isLoading = false;
-            this.isPlaying = true;
             this.isEnded = false;
+
+            if (paused) this.pauseTrack();
+            else this.isPlaying = true;
 
             this.trackProgressId = setInterval(this.updateTime, 200);
         },
@@ -113,6 +118,7 @@ export const usePlayerStore = defineStore('player', {
             this.audioCtx.close();
 
             this.currentTime = 0;
+            this.startedAt = 0;
             this.isPlaying = false;
             clearInterval(this.trackProgressId);
 
@@ -129,11 +135,11 @@ export const usePlayerStore = defineStore('player', {
                 console.log('RESTARTED');
             } else {
                 this.audioCtx.resume();
+                this.isPlaying = true;
 
                 console.log('RESUMED');
             }
 
-            this.isPlaying = true;
         },
 
 
@@ -145,10 +151,17 @@ export const usePlayerStore = defineStore('player', {
         },
 
 
+        seekTrack(offset, paused) {
+            this.stopTrack();
+            this.initAudio();
+            this.startAudio(offset, paused);
+        },
+
+
         updateTime() {
 
             // Update current time
-            this.currentTime = this.audioCtx.currentTime;
+            this.currentTime = this.audioCtx.currentTime + this.startedAt;
 
             // Ended reached
             if (this.currentTime >= this.audioBuffer.duration) {
