@@ -33,12 +33,25 @@ export const usePlayerStore = defineStore('player', {
             axios.get(`http://127.0.0.1:8000/api/tracks/${id}/stream`, { responseType: 'arraybuffer' })
                 .then(({ data }) => {
 
-                    console.log('BUFFERING');
+
+                    // Abort if track changed during fetch
+                    if (id !== this.trackId) {
+                        console.log('ABORTED');
+                        return;
+                    }
 
                     this.initAudio();
 
+                    console.log('BUFFERING');
+
                     this.audioCtx.decodeAudioData(data,
                         buffer => {
+
+                            // Abort if track changed during buffering
+                            if (id !== this.trackId) {
+                                console.log('ABORTED');
+                                return;
+                            }
 
                             this.audioSource = this.audioCtx.createBufferSource();
                             this.audioSource.buffer = buffer;
@@ -68,6 +81,9 @@ export const usePlayerStore = defineStore('player', {
         },
 
         stopTrack() {
+            // Check if track changed and source wasn't initialized
+            if (!this.audioSource) return;
+
             this.audioSource.disconnect();
             this.audioGain.disconnect()
             this.audioSource = null;
