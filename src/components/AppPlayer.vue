@@ -76,6 +76,8 @@ export default {
          * @param {Number} newTime 
          */
         handleTimeMoved(newTime) {
+            if (this.isLoading) return;
+
             this.seekTrack(newTime, !this.isPlaying);
         },
 
@@ -157,7 +159,7 @@ export default {
 
 
             <!-- Time Control -->
-            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentTrack.duration"
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentTrack.duration" loading
                 class="mx-md-4" />
 
 
