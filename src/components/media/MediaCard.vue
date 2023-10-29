@@ -6,15 +6,13 @@
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
-import { store } from '../../data/store';
-import { usePlayerStore } from '@/stores/PlayerStore';
 import { mapState, mapActions } from 'pinia';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
     components: { BaseButton },
-
-    data: () => ({ store }),
 
     props: {
         media: {
@@ -24,11 +22,15 @@ export default {
     },
 
     computed: {
+
         ...mapState(usePlayerStore, {
             trackId: 'trackId',
             playerIsPlaying: 'isPlaying',
             playerIsLoading: 'isLoading'
         }),
+
+
+        ...mapState(useNextUpStore, ['totalTracks']),
 
 
         isCurrentTrack() {
@@ -49,6 +51,8 @@ export default {
     methods: {
 
         ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
+        ...mapActions(useNextUpStore, ['addTrack', 'setTracks']),
+
 
 
         play() {
@@ -57,10 +61,8 @@ export default {
             else {
                 this.fetchTrack(this.media.id);
 
-                //TODO create a store for upList ########
                 // Reset upList and add this track
-                store.nextUpList = [this.media];
-                store.nextUpIndex = 0;
+                this.setTracks([this.media]);
             }
         },
 
@@ -70,16 +72,11 @@ export default {
         },
 
 
-        addTrack() {
+        addToNextUp() {
 
-            // Exit if already included
-            if (store.nextUpList.some(({ id }) => this.media.id === id)) return;
+            const isAdded = this.addTrack(this.media);
 
-            // Play if empty
-            if (!store.nextUpList.length) this.fetchTrack(this.media.id);
-
-            // Add to list
-            store.nextUpList.push(this.media);
+            if (isAdded && this.totalTracks === 1) this.fetchTrack(this.media.id);
         }
 
     }
@@ -119,7 +116,7 @@ export default {
                 </li>
                 <!-- Add to Next Up Button -->
                 <li>
-                    <BaseButton @click="addTrack" icon="list" class="btn-light" title="Add to Next Up" />
+                    <BaseButton @click="addToNextUp" icon="list" class="btn-light" title="Add to Next Up" />
                 </li>
             </ul>
 
