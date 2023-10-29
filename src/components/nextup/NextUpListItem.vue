@@ -7,7 +7,6 @@ import BaseButton from '@/components/base/BaseButton.vue';
 import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
 
 /*** DATA ***/
-import { mapState, mapActions } from 'pinia';
 import { usePlayerStore } from '@/stores/PlayerStore';
 import { useNextUpStore } from '@/stores/NextUpStore';
 
@@ -16,6 +15,7 @@ export default {
     components: { BaseButton, MediaDetailsCard },
 
     data: () => ({
+        player: usePlayerStore(),
         nextUp: useNextUpStore()
     }),
 
@@ -33,20 +33,13 @@ export default {
 
     computed: {
 
-        ...mapState(usePlayerStore, {
-            trackId: 'trackId',
-            playerIsPlaying: 'isPlaying',
-            playerIsLoading: 'isLoading'
-        }),
-
-
         isCurrentTrack() {
-            return this.trackId === this.track.id;
+            return this.player.trackId === this.track.id;
         },
 
 
         isPlaying() {
-            return this.isCurrentTrack && this.playerIsPlaying;
+            return this.isCurrentTrack && this.player.isPlaying;
         },
 
 
@@ -56,26 +49,23 @@ export default {
 
 
         isLoading() {
-            return this.isCurrentTrack && this.playerIsLoading;
+            return this.isCurrentTrack && this.player.isLoading;
         }
     },
 
     methods: {
 
-        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
-
-
         play() {
-            if (this.isCurrentTrack) this.resumeTrack();
+            if (this.isCurrentTrack) this.player.resumeTrack();
             else {
-                this.fetchTrack(this.track.id);
+                this.player.fetchTrack(this.track.id);
                 this.nextUp.goTo(this.listPosition);
             }
         },
 
 
         pause() {
-            this.pauseTrack();
+            this.player.pauseTrack();
         },
     }
 

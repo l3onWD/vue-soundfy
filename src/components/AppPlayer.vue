@@ -20,34 +20,27 @@ export default {
 
     data: () => ({
         nextUpModalActive: false,
+        player: usePlayerStore(),
         nextUp: useNextUpStore()
     }),
 
-    computed: {
-
-        ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'isEnded', 'currentTime', 'loop']),
-
-    },
-
     watch: {
 
-        isEnded(ended) {
+        'player.isEnded'(ended) {
             if (ended) this.goNextTrack();
         },
 
     },
 
     methods: {
-        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack', 'seekTrack', 'stopTrack', 'toggleTrackLoop']),
-
 
         play() {
-            this.resumeTrack();
+            this.player.resumeTrack();
         },
 
 
         pause() {
-            this.pauseTrack();
+            this.player.pauseTrack();
         },
 
 
@@ -57,10 +50,11 @@ export default {
          * @param {Number} newTime 
          */
         handleTimeMoved(newTime) {
-            if (this.isLoading) return;
+            if (this.player.isLoading) return;
 
-            this.seekTrack(newTime, !this.isPlaying);
+            this.player.seekTrack(newTime, !this.player.isPlaying);
         },
+
 
         /**
          * Go to next Track or reset list
@@ -69,12 +63,13 @@ export default {
 
             // Check if list is ended
             if (!this.nextUp.nextTrack) {
-                this.stopTrack();
+                this.player.stopTrack();
             } else {
-                this.fetchTrack(this.nextUp.nextTrack.id);
+                this.player.fetchTrack(this.nextUp.nextTrack.id);
                 this.nextUp.goTo('next');
             }
         },
+
 
         /**
          * Go to previous Track or restart Track
@@ -82,11 +77,11 @@ export default {
         goPrevTrack() {
 
             // Restart Track
-            if (this.currentTime > 5 || !this.nextUp.prevTrack) this.seekTrack(0);
+            if (this.player.currentTime > 5 || !this.nextUp.prevTrack) this.player.seekTrack(0);
 
             // Change to prev track
             else {
-                this.fetchTrack(this.prevTrack.id);
+                this.player.fetchTrack(this.nextUp.prevTrack.id);
                 this.nextUp.goTo('prev');
             }
 
@@ -128,8 +123,8 @@ export default {
 
 
             <!-- Time Control -->
-            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="nextUp.currentTrack.duration"
-                loading class="mx-md-4" />
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="player.currentTime"
+                :duration="nextUp.currentTrack.duration" loading class="mx-md-4" />
 
 
             <!-- Main Track Controls -->
@@ -141,16 +136,16 @@ export default {
                     <BaseButton @click="goPrevTrack" icon="backward-step" />
                 </li>
                 <li>
-                    <BaseButton v-if="isPlaying" @click="pause" icon="pause" size="lg"
-                        :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
-                    <BaseButton v-else @click="play" icon="play" size="lg" :class="{ 'btn-disabled': isLoading }"
-                        :disabled="isLoading" />
+                    <BaseButton v-if="player.isPlaying" @click="pause" icon="pause" size="lg"
+                        :class="{ 'btn-disabled': player.isLoading }" :disabled="player.isLoading" />
+                    <BaseButton v-else @click="play" icon="play" size="lg" :class="{ 'btn-disabled': player.isLoading }"
+                        :disabled="player.isLoading" />
                 </li>
                 <li>
                     <BaseButton @click="goNextTrack" icon="forward-step" />
                 </li>
                 <li>
-                    <BaseButton @click="toggleTrackLoop" icon="repeat" :class="{ 'active': loop }" />
+                    <BaseButton @click="player.toggleTrackLoop" icon="repeat" :class="{ 'active': player.loop }" />
                 </li>
             </ul>
 
