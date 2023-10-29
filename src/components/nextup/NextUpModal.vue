@@ -23,7 +23,7 @@ export default {
     },
 
     computed: {
-        ...mapState(useNextUpStore, ['nextUpList', 'currentTrack', 'totalTracks']),
+        ...mapState(useNextUpStore, ['nextUpList', 'totalTracks']),
 
     },
 
