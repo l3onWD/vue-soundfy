@@ -7,7 +7,6 @@ import BaseButton from '@/components/base/BaseButton.vue';
 import NextUpListItem from '@/components/nextup/NextUpListItem.vue';
 
 /*** DATA ***/
-import { store } from '@/data/store';
 import { mapState, mapActions } from 'pinia';
 import { useNextUpStore } from '@/stores/NextUpStore';
 

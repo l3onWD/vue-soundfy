@@ -7,15 +7,13 @@ import BaseButton from '@/components/base/BaseButton.vue';
 import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
 
 /*** DATA ***/
-import { store } from '@/data/store';
-import { usePlayerStore } from '@/stores/PlayerStore';
 import { mapState, mapActions } from 'pinia';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
     components: { BaseButton, MediaDetailsCard },
-
-    data: () => ({ store }),
 
     props: {
         track: {
@@ -30,11 +28,15 @@ export default {
     },
 
     computed: {
+
         ...mapState(usePlayerStore, {
             trackId: 'trackId',
             playerIsPlaying: 'isPlaying',
             playerIsLoading: 'isLoading'
         }),
+
+
+        ...mapState(useNextUpStore, ['nextUpIndex', 'totalTracks']),
 
 
         isCurrentTrack() {
@@ -48,7 +50,7 @@ export default {
 
 
         wasPlayed() {
-            return this.listPosition < store.nextUpIndex;
+            return this.listPosition < this.nextUpIndex;
         },
 
 
@@ -58,26 +60,18 @@ export default {
     },
 
     methods: {
+
         ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
 
 
-        removeTrack() {
-            // Check if list has more than 1 item
-            if (store.nextUpList.length < 1) return;
-
-            // Decrement index if a previous item is deleted
-            if (this.listPosition <= store.nextUpIndex) store.nextUpIndex--;
-
-            // Remove item
-            store.nextUpList.splice(this.listPosition, 1);
-        },
+        ...mapActions(useNextUpStore, ['removeTrack', 'goTo']),
 
 
         play() {
             if (this.isCurrentTrack) this.resumeTrack();
             else {
                 this.fetchTrack(this.track.id);
-                store.nextUpIndex = this.listPosition;
+                this.goTo(this.listPosition);
             }
         },
 
@@ -105,8 +99,8 @@ export default {
                 <BaseButton v-else @click="play" icon="play" :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
             </li>
             <li>
-                <BaseButton @click="removeTrack" icon="trash" :class="{ 'btn-disabled': isLoading || isCurrentTrack }"
-                    :disabled="isLoading" />
+                <BaseButton @click="removeTrack(listPosition)" icon="trash"
+                    :class="{ 'btn-disabled': isLoading || isCurrentTrack }" :disabled="isLoading" />
             </li>
         </ul>
 

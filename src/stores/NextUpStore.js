@@ -58,6 +58,7 @@ export const useNextUpStore = defineStore('nextUp', {
         goTo(dir) {
             if (dir === 'next' && this.nextTrack) this.nextUpIndex++;
             else if (dir === 'prev' && this.prevTrack) this.nextUpIndex--;
+            else if (typeof dir === 'number') this.nextUpIndex = dir;
         }
 
     }
