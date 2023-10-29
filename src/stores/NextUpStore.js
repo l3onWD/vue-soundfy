@@ -4,33 +4,33 @@ import { defineStore } from 'pinia';
 export const useNextUpStore = defineStore('nextUp', {
 
     state: () => ({
-        nextUpList: [],
-        nextUpIndex: 0
+        tracks: [],
+        currentIndex: 0
     }),
 
     getters: {
-        totalTracks: (state) => state.nextUpList.length,
-        prevTrack: (state) => state.nextUpIndex === 0 ? null : state.nextUpList[state.nextUpIndex - 1],
-        currentTrack: (state) => state.totalTracks ? state.nextUpList[state.nextUpIndex] : null,
-        nextTrack: (state) => state.nextUpIndex === state.totalTracks - 1 ? null : state.nextUpList[state.nextUpIndex + 1],
+        totalTracks: (state) => state.tracks.length,
+        prevTrack: (state) => state.currentIndex === 0 ? null : state.tracks[state.currentIndex - 1],
+        currentTrack: (state) => state.totalTracks ? state.tracks[state.currentIndex] : null,
+        nextTrack: (state) => state.currentIndex === state.totalTracks - 1 ? null : state.tracks[state.currentIndex + 1],
     },
 
     actions: {
 
         addTrack(track) {
             // Exit if already included
-            if (this.nextUpList.some(({ id }) => track.id === id)) return false;
+            if (this.tracks.some(({ id }) => track.id === id)) return false;
 
             // Add to list
-            this.nextUpList.push(track);
+            this.tracks.push(track);
 
             return true;
         },
 
 
         setTracks(tracks) {
-            this.nextUpList = tracks;
-            this.nextUpIndex = 0;
+            this.tracks = tracks;
+            this.currentIndex = 0;
         },
 
 
@@ -38,8 +38,8 @@ export const useNextUpStore = defineStore('nextUp', {
 
             if (this.totalTracks <= 1) return;
 
-            this.nextUpList = [this.currentTrack];
-            this.nextUpIndex = 0;
+            this.tracks = [this.currentTrack];
+            this.currentIndex = 0;
         },
 
 
@@ -48,17 +48,17 @@ export const useNextUpStore = defineStore('nextUp', {
             if (this.totalTracks < 1 || index < 0 || index >= this.totalTracks) return;
 
             // Decrement index if a previous item is deleted
-            if (index <= this.nextUpIndex) this.nextUpIndex--;
+            if (index <= this.currentIndex) this.currentIndex--;
 
             // Remove item
-            this.nextUpList.splice(index, 1);
+            this.tracks.splice(index, 1);
         },
 
 
         goTo(dir) {
-            if (dir === 'next' && this.nextTrack) this.nextUpIndex++;
-            else if (dir === 'prev' && this.prevTrack) this.nextUpIndex--;
-            else if (typeof dir === 'number') this.nextUpIndex = dir;
+            if (dir === 'next' && this.nextTrack) this.currentIndex++;
+            else if (dir === 'prev' && this.prevTrack) this.currentIndex--;
+            else if (typeof dir === 'number') this.currentIndex = dir;
         }
 
     }
