@@ -32,7 +32,7 @@ export default {
     watch: {
 
         isEnded(ended) {
-            if (ended) this.nextTrack();
+            if (ended) this.goNextTrack();
         },
 
     },
