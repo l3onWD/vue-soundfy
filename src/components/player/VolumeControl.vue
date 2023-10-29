@@ -8,23 +8,23 @@ import BaseVerticalRangeInput from '@/components/base/BaseVerticalRangeInput.vue
 
 /*** DATA ***/
 import { usePlayerStore } from '@/stores/PlayerStore';
-import { mapState, mapActions } from 'pinia';
 
 
 export default {
     components: { BaseButton, BaseVerticalRangeInput },
 
-    data: () => ({ volume: 1 }),
+    data: () => ({
+        volume: 1,
+        player: usePlayerStore()
+    }),
 
     computed: {
-
-        ...mapState(usePlayerStore, ['muted']),
 
         /**
          * Update mute icon style
          */
         volumeIcon() {
-            if (this.muted || this.volume === 0) return 'volume-mute';
+            if (this.player.muted || this.volume === 0) return 'volume-mute';
             if (this.volume < 0.5) return 'volume-low';
             return 'volume-high';
         }
@@ -32,12 +32,9 @@ export default {
 
     watch: {
         volume(value) {
-            this.setTrackVolume(value);
+            this.player.setTrackVolume(value);
         }
     },
-    methods: {
-        ...mapActions(usePlayerStore, ['setTrackVolume', 'toggleTrackMuted'])
-    }
 
 }
 </script>
@@ -47,11 +44,11 @@ export default {
     <div class="volume-control">
 
         <!-- Mute Button -->
-        <BaseButton @click="toggleTrackMuted" :icon="volumeIcon" size="lg" />
+        <BaseButton @click="player.toggleTrackMuted" :icon="volumeIcon" size="lg" />
 
         <!-- Volume Range Input -->
         <div class="volume-range">
-            <BaseVerticalRangeInput v-model:value="volume" :disabled="muted" />
+            <BaseVerticalRangeInput v-model:value="volume" :disabled="player.muted" />
         </div>
 
     </div>
