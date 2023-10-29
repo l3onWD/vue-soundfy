@@ -17,6 +17,12 @@ export const useNextUpStore = defineStore('nextUp', {
 
     actions: {
 
+        /**
+         * Add track to list
+         * 
+         * @param {Object} track - a track object
+         * @returns {Boolean} - success
+         */
         addTrack(track) {
             // Exit if already included
             if (this.tracks.some(({ id }) => track.id === id)) return false;
@@ -28,21 +34,35 @@ export const useNextUpStore = defineStore('nextUp', {
         },
 
 
+        /**
+         * Set the tracks list
+         * 
+         * @param {Array} tracks - An array of tracks objects
+         */
         setTracks(tracks) {
             this.tracks = tracks;
             this.currentIndex = 0;
         },
 
 
+        /**
+         * Clear all tracks, current track exluded
+         */
         clearAllTracks() {
 
+            // Check if ther's at least 2 tracks
             if (this.totalTracks <= 1) return;
 
-            this.tracks = [this.currentTrack];
-            this.currentIndex = 0;
+            // Take only the current track
+            this.setTracks([this.currentTrack])
         },
 
 
+        /**
+         * Remove a track by is position
+         * 
+         * @param {Number} index - position
+         */
         removeTrack(index) {
             // Check if list has more than 1 item and indexs is valid
             if (this.totalTracks < 1 || index < 0 || index >= this.totalTracks) return;
@@ -55,6 +75,11 @@ export const useNextUpStore = defineStore('nextUp', {
         },
 
 
+        /**
+         * Move to a new track
+         * 
+         * @param {*} dir - direction or track position
+         */
         goTo(dir) {
             if (dir === 'next' && this.nextTrack) this.currentIndex++;
             else if (dir === 'prev' && this.prevTrack) this.currentIndex--;
