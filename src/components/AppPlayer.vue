@@ -10,18 +10,15 @@ import NextUpModal from '@/components/nextup/NextUpModal.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
-import { store } from '@/data/store';
-import { usePlayerStore } from '@/stores/PlayerStore';
 import { mapState, mapActions } from 'pinia';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
     components: { TimeControl, MediaDetailsCard, VolumeControl, BaseButton, NextUpModal },
 
     data: () => ({
-        store,
-        audio: null,
-        // currentTime: 0,
         nextUpModalActive: false
     }),
 
@@ -29,9 +26,7 @@ export default {
 
         ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'isEnded', 'currentTime', 'loop']),
 
-        currentTrack() {
-            return store.nextUpList[store.nextUpIndex];
-        }
+        ...mapState(useNextUpStore, ['prevTrack', 'currentTrack', 'nextTrack', 'totalTracks']),
     },
 
     watch: {
@@ -44,6 +39,8 @@ export default {
 
     methods: {
         ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack', 'seekTrack', 'stopTrack', 'toggleTrackLoop']),
+
+        ...mapActions(useNextUpStore, ['goTo']),
 
 
         play() {
@@ -70,52 +67,40 @@ export default {
         /**
          * Go to next Track or reset list
          */
-        nextTrack() {
+        goNextTrack() {
 
             // Check if list is ended
-            if (store.nextUpIndex >= store.nextUpList.length - 1) {
+            if (!this.nextTrack) {
                 this.stopTrack();
             } else {
-                store.nextUpIndex++;
-                this.fetchTrack(store.nextUpList[store.nextUpIndex].id);
+                this.fetchTrack(this.nextTrack.id);
+                this.goTo('next');
             }
         },
 
         /**
          * Go to previous Track or restart Track
          */
-        prevTrack() {
+        goPrevTrack() {
 
             // Restart Track
-            if (this.currentTime > 5 || store.nextUpIndex === 0) this.seekTrack(0);
+            if (this.currentTime > 5 || !this.prevTrack) this.seekTrack(0);
 
             // Change to prev track
             else {
-                store.nextUpIndex--;
-                this.fetchTrack(store.nextUpList[store.nextUpIndex].id);
+                this.fetchTrack(this.prevTrack.id);
+                this.goTo('prev');
             }
 
         },
 
-    },
-
-    mounted() {
-
-        // Create an audio instance
-        // this.audio = new Audio();
-
-        // Current time update
-        // this.audio.addEventListener('timeupdate', () => { this.currentTime = this.audio.currentTime });
-
-        // Reset Audio on End
-        // this.audio.addEventListener('ended', this.nextTrack);
     }
 }
 </script>
 
 
 <template>
-    <div v-if="store.nextUpList.length" class="app-player">
+    <div v-if="totalTracks" class="app-player">
 
         <div class="container">
 
@@ -155,7 +140,7 @@ export default {
                     <VolumeControl class="me-sm-4" />
                 </li>
                 <li>
-                    <BaseButton @click="prevTrack" icon="backward-step" />
+                    <BaseButton @click="goPrevTrack" icon="backward-step" />
                 </li>
                 <li>
                     <BaseButton v-if="isPlaying" @click="pause" icon="pause" size="lg"
@@ -164,7 +149,7 @@ export default {
                         :disabled="isLoading" />
                 </li>
                 <li>
-                    <BaseButton @click="nextTrack" icon="forward-step" />
+                    <BaseButton @click="goNextTrack" icon="forward-step" />
                 </li>
                 <li>
                     <BaseButton @click="toggleTrackLoop" icon="repeat" :class="{ 'active': loop }" />
