@@ -30,7 +30,7 @@ export default {
                         id: track.id,
                         title: track.title,
                         author: track.album.author.name,
-                        src: track.src,
+                        file_name: track.file_name,
                         duration: track.duration,
                         albumCover: track.album.cover
                     }));
