@@ -8,12 +8,12 @@ import NextUpListItem from '@/components/nextup/NextUpListItem.vue';
 
 /*** DATA ***/
 import { store } from '@/data/store';
+import { mapState, mapActions } from 'pinia';
+import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
     components: { BaseButton, NextUpListItem },
-
-    data: () => ({ store }),
 
     props: {
         isActive: {
@@ -22,16 +22,15 @@ export default {
         }
     },
 
+    computed: {
+        ...mapState(useNextUpStore, ['nextUpList', 'currentTrack', 'totalTracks']),
+
+    },
+
     methods: {
 
-        clearList() {
+        ...mapActions(useNextUpStore, ['clearAllTracks']),
 
-            if (store.nextUpList.length <= 1) return;
-
-            const currentTrack = store.nextUpList[store.nextUpIndex];
-            store.nextUpList = [currentTrack];
-            store.nextUpIndex = 0;
-        }
     },
 
     emits: ['close-modal']
@@ -51,14 +50,14 @@ export default {
 
             <!-- Actions -->
             <div class="d-flex align-items-center">
-                <BaseButton @click="clearList" label="clear" class="btn-outline-orange w-auto px-2 me-2" />
+                <BaseButton @click="clearAllTracks" label="clear" class="btn-outline-orange w-auto px-2 me-2" />
                 <BaseButton @click="$emit('close-modal')" icon="times" size="xl" />
             </div>
         </div>
 
         <!-- Tracks -->
         <ul class="nextup-list">
-            <li v-for="(track, idx) in store.nextUpList" :key="track.id" class="py-1">
+            <li v-for="(track, idx) in nextUpList" :key="track.id" class="py-1">
 
                 <NextUpListItem :track="track" :listPosition="idx" />
 

@@ -36,7 +36,7 @@ export const useNextUpStore = defineStore('nextUp', {
 
         clearAllTracks() {
 
-            if (this.nextUpList.length <= 1) return;
+            if (this.totalTracks <= 1) return;
 
             this.nextUpList = [this.currentTrack];
             this.nextUpIndex = 0;
