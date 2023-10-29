@@ -7,29 +7,23 @@ import BaseButton from '@/components/base/BaseButton.vue';
 import NextUpListItem from '@/components/nextup/NextUpListItem.vue';
 
 /*** DATA ***/
-import { mapState, mapActions } from 'pinia';
 import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
     components: { BaseButton, NextUpListItem },
 
+
+    data: () => ({
+        nextUp: useNextUpStore()
+    }),
+
+
     props: {
         isActive: {
             type: Boolean,
             default: false
         }
-    },
-
-    computed: {
-        ...mapState(useNextUpStore, ['nextUpList']),
-
-    },
-
-    methods: {
-
-        ...mapActions(useNextUpStore, ['clearAllTracks']),
-
     },
 
     emits: ['close-modal']
@@ -49,14 +43,14 @@ export default {
 
             <!-- Actions -->
             <div class="d-flex align-items-center">
-                <BaseButton @click="clearAllTracks" label="clear" class="btn-outline-orange w-auto px-2 me-2" />
+                <BaseButton @click="nextUp.clearAllTracks" label="clear" class="btn-outline-orange w-auto px-2 me-2" />
                 <BaseButton @click="$emit('close-modal')" icon="times" size="xl" />
             </div>
         </div>
 
         <!-- Tracks -->
         <ul class="nextup-list">
-            <li v-for="(track, idx) in nextUpList" :key="track.id" class="py-1">
+            <li v-for="(track, idx) in nextUp.tracks" :key="track.id" class="py-1">
 
                 <NextUpListItem :track="track" :listPosition="idx" />
 

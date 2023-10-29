@@ -15,6 +15,10 @@ import { useNextUpStore } from '@/stores/NextUpStore';
 export default {
     components: { BaseButton, MediaDetailsCard },
 
+    data: () => ({
+        nextUp: useNextUpStore()
+    }),
+
     props: {
         track: {
             type: Object,
@@ -36,9 +40,6 @@ export default {
         }),
 
 
-        ...mapState(useNextUpStore, ['nextUpIndex']),
-
-
         isCurrentTrack() {
             return this.trackId === this.track.id;
         },
@@ -50,7 +51,7 @@ export default {
 
 
         wasPlayed() {
-            return this.listPosition < this.nextUpIndex;
+            return this.listPosition < this.nextUp.currentIndex;
         },
 
 
@@ -64,14 +65,11 @@ export default {
         ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
 
 
-        ...mapActions(useNextUpStore, ['removeTrack', 'goTo']),
-
-
         play() {
             if (this.isCurrentTrack) this.resumeTrack();
             else {
                 this.fetchTrack(this.track.id);
-                this.goTo(this.listPosition);
+                this.nextUp.goTo(this.listPosition);
             }
         },
 
@@ -99,7 +97,7 @@ export default {
                 <BaseButton v-else @click="play" icon="play" :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
             </li>
             <li>
-                <BaseButton @click="removeTrack(listPosition)" icon="trash"
+                <BaseButton @click="nextUp.removeTrack(listPosition)" icon="trash"
                     :class="{ 'btn-disabled': isLoading || isCurrentTrack }" :disabled="isLoading" />
             </li>
         </ul>

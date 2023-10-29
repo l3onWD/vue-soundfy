@@ -19,14 +19,14 @@ export default {
     components: { TimeControl, MediaDetailsCard, VolumeControl, BaseButton, NextUpModal },
 
     data: () => ({
-        nextUpModalActive: false
+        nextUpModalActive: false,
+        nextUp: useNextUpStore()
     }),
 
     computed: {
 
         ...mapState(usePlayerStore, ['isPlaying', 'isLoading', 'isEnded', 'currentTime', 'loop']),
 
-        ...mapState(useNextUpStore, ['prevTrack', 'currentTrack', 'nextTrack', 'totalTracks']),
     },
 
     watch: {
@@ -39,8 +39,6 @@ export default {
 
     methods: {
         ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack', 'seekTrack', 'stopTrack', 'toggleTrackLoop']),
-
-        ...mapActions(useNextUpStore, ['goTo']),
 
 
         play() {
@@ -70,11 +68,11 @@ export default {
         goNextTrack() {
 
             // Check if list is ended
-            if (!this.nextTrack) {
+            if (!this.nextUp.nextTrack) {
                 this.stopTrack();
             } else {
-                this.fetchTrack(this.nextTrack.id);
-                this.goTo('next');
+                this.fetchTrack(this.nextUp.nextTrack.id);
+                this.nextUp.goTo('next');
             }
         },
 
@@ -84,12 +82,12 @@ export default {
         goPrevTrack() {
 
             // Restart Track
-            if (this.currentTime > 5 || !this.prevTrack) this.seekTrack(0);
+            if (this.currentTime > 5 || !this.nextUp.prevTrack) this.seekTrack(0);
 
             // Change to prev track
             else {
                 this.fetchTrack(this.prevTrack.id);
-                this.goTo('prev');
+                this.nextUp.goTo('prev');
             }
 
         },
@@ -100,7 +98,7 @@ export default {
 
 
 <template>
-    <div v-if="totalTracks" class="app-player">
+    <div v-if="nextUp.totalTracks" class="app-player">
 
         <div class="container">
 
@@ -109,7 +107,7 @@ export default {
             <div class="d-flex justify-content-between flex-shrink-0">
 
                 <!-- Track Details -->
-                <MediaDetailsCard :track="currentTrack" />
+                <MediaDetailsCard :track="nextUp.currentTrack" />
 
 
                 <!-- Track Actions -->
@@ -130,8 +128,8 @@ export default {
 
 
             <!-- Time Control -->
-            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentTrack.duration" loading
-                class="mx-md-4" />
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="nextUp.currentTrack.duration"
+                loading class="mx-md-4" />
 
 
             <!-- Main Track Controls -->

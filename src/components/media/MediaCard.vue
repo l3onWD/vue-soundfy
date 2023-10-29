@@ -6,13 +6,17 @@
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
-import { mapState, mapActions } from 'pinia';
 import { usePlayerStore } from '@/stores/PlayerStore';
 import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
     components: { BaseButton },
+
+    data: () => ({
+        player: usePlayerStore(),
+        nextUp: useNextUpStore()
+    }),
 
     props: {
         media: {
@@ -23,60 +27,45 @@ export default {
 
     computed: {
 
-        ...mapState(usePlayerStore, {
-            trackId: 'trackId',
-            playerIsPlaying: 'isPlaying',
-            playerIsLoading: 'isLoading'
-        }),
-
-
-        ...mapState(useNextUpStore, ['totalTracks']),
-
-
         isCurrentTrack() {
-            return this.trackId === this.media.id;
+            return this.player.trackId === this.media.id;
         },
 
 
         isPlaying() {
-            return this.isCurrentTrack && this.playerIsPlaying;
+            return this.isCurrentTrack && this.player.isPlaying;
         },
 
 
         isLoading() {
-            return this.isCurrentTrack && this.playerIsLoading;
+            return this.isCurrentTrack && this.player.isLoading;
         }
     },
 
     methods: {
 
-        ...mapActions(usePlayerStore, ['fetchTrack', 'resumeTrack', 'pauseTrack']),
-        ...mapActions(useNextUpStore, ['addTrack', 'setTracks']),
-
-
-
         play() {
 
-            if (this.isCurrentTrack) this.resumeTrack();
+            if (this.isCurrentTrack) this.player.resumeTrack();
             else {
-                this.fetchTrack(this.media.id);
+                this.player.fetchTrack(this.media.id);
 
                 // Reset upList and add this track
-                this.setTracks([this.media]);
+                this.nextUp.setTracks([this.media]);
             }
         },
 
 
         pause() {
-            this.pauseTrack();
+            this.player.pauseTrack();
         },
 
 
         addToNextUp() {
 
-            const isAdded = this.addTrack(this.media);
+            const isAdded = this.nextUp.addTrack(this.media);
 
-            if (isAdded && this.totalTracks === 1) this.fetchTrack(this.media.id);
+            if (isAdded && this.nextUp.totalTracks === 1) this.player.fetchTrack(this.media.id);
         }
 
     }
