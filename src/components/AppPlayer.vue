@@ -10,7 +10,6 @@ import NextUpModal from '@/components/nextup/NextUpModal.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
-import { mapState, mapActions } from 'pinia';
 import { usePlayerStore } from '@/stores/PlayerStore';
 import { useNextUpStore } from '@/stores/NextUpStore';
 

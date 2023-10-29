@@ -13,11 +13,9 @@ import { useNextUpStore } from '@/stores/NextUpStore';
 export default {
     components: { BaseButton, NextUpListItem },
 
-
     data: () => ({
         nextUp: useNextUpStore()
     }),
-
 
     props: {
         isActive: {
