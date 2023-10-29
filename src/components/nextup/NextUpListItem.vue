@@ -36,7 +36,7 @@ export default {
         }),
 
 
-        ...mapState(useNextUpStore, ['nextUpIndex', 'totalTracks']),
+        ...mapState(useNextUpStore, ['nextUpIndex']),
 
 
         isCurrentTrack() {

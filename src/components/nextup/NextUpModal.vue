@@ -22,7 +22,7 @@ export default {
     },
 
     computed: {
-        ...mapState(useNextUpStore, ['nextUpList', 'totalTracks']),
+        ...mapState(useNextUpStore, ['nextUpList']),
 
     },
 
