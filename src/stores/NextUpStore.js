@@ -18,17 +18,15 @@ export const useNextUpStore = defineStore('nextUp', {
     actions: {
 
         /**
-         * Add track to list
+         * Add tracks to list
          * 
-         * @param {Object} track - a track object
+         * @param {Array} tracks - tracks to add
          * @returns {Boolean} - success
          */
-        addTrack(track) {
-            // Exit if already included
-            if (this.tracks.some(({ id }) => track.id === id)) return false;
+        addTracks(tracks) {
 
             // Add to list
-            this.tracks.push(track);
+            this.tracks.push(...tracks);
 
             return true;
         },
@@ -40,7 +38,8 @@ export const useNextUpStore = defineStore('nextUp', {
          * @param {Array} tracks - An array of tracks objects
          */
         setTracks(tracks) {
-            this.tracks = tracks;
+            this.tracks = [];
+            this.tracks.push(...tracks);
             this.currentIndex = 0;
         },
 
