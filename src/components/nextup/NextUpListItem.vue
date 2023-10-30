@@ -34,7 +34,7 @@ export default {
     computed: {
 
         isCurrentTrack() {
-            return this.player.trackId === this.track.id;
+            return this.nextUp.currentIndex === this.listPosition;
         },
 
 
