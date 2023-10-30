@@ -15,39 +15,31 @@ const baseUri = 'http://127.0.0.1:8000/api';
 export default {
     components: { MediaSection, AppLoader },
 
-    data: () => ({ tracks: [], isLoading: false }),
+    data: () => ({ playlists: [], isLoading: false }),
 
     methods: {
-        fetchTracks() {
+        fetchPlaylists() {
 
             this.isLoading = true;
 
-            axios.get(baseUri + '/tracks')
+            axios.get(baseUri + '/playlists/our-picks')
                 .then(({ data }) => {
-
-                    // Map with media props
-                    this.tracks = data.map(track => ({
-                        id: track.id,
-                        title: track.title,
-                        author: track.album.author.name,
-                        file_name: track.file_name,
-                        duration: track.duration,
-                        albumCover: track.album.cover
-                    }));
+                    console.log(data);
+                    this.playlists = data;
                 })
                 .catch(err => {
+
                     console.log(err);
                 })
                 .then(() => {
 
                     this.isLoading = false;
-
                 });
         }
     },
 
     created() {
-        this.fetchTracks();
+        this.fetchPlaylists();
     }
 
 }
@@ -62,7 +54,7 @@ export default {
             <AppLoader v-if="isLoading" />
 
             <!-- All Tracks -->
-            <MediaSection v-else title="All Tracks" :mediaList="tracks" />
+            <MediaSection v-else title="Our Picks" :mediaList="playlists" />
 
         </div>
     </main>
