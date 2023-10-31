@@ -48,10 +48,10 @@ export default {
 
             if (this.isCurrentTrack) this.player.resumeTrack();
             else {
-                this.player.fetchTrack(this.media.id);
+                this.player.fetchTrack(this.media.tracks[0].id);
 
                 // Reset upList and add this track
-                this.nextUp.setTracks([this.media]);
+                this.nextUp.setTracks(this.media.tracks);
             }
         },
 
@@ -63,9 +63,11 @@ export default {
 
         addToNextUp() {
 
-            const isAdded = this.nextUp.addTrack(this.media);
+            const wasEmpty = !this.nextUp.totalTracks;
 
-            if (isAdded && this.nextUp.totalTracks === 1) this.player.fetchTrack(this.media.id);
+            this.nextUp.addTracks(this.media.tracks);
+
+            if (wasEmpty) this.player.fetchTrack(this.media.tracks[0].id);
         }
 
     }
