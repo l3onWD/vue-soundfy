@@ -2,6 +2,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
+// Router
+import { router } from './router';
+
 // Pinia
 import { createPinia } from 'pinia'
 
@@ -19,5 +22,6 @@ library.add(faHouse, faSearch, faBook, faPlay, faBackwardStep, faForwardStep, fa
 const app = createApp(App);
 const pinia = createPinia();
 app.use(pinia);
+app.use(router);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.mount('#app');
