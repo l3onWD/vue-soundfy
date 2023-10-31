@@ -15,12 +15,12 @@ export default {
     <div v-if="track" class="media-details-card">
 
         <!-- Cover -->
-        <img :src="track.albumCover" :alt="track.title">
+        <img :src="track.album.cover" :alt="track.title">
 
         <!-- Track Info -->
         <div class="media-details-info">
             <h6 class="mb-1" :title="track.title">{{ track.title }}</h6>
-            <span :title="track.author" class="col-gray-700">{{ track.author }}</span>
+            <span :title="track.author" class="col-gray-700">{{ track.album.author.name }}</span>
         </div>
 
     </div>
