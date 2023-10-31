@@ -27,18 +27,19 @@ export default {
 
     computed: {
 
-        isCurrentTrack() {
-            return this.player.trackId === this.media.id;
+        isActive() {
+            if (!this.nextUp.currentTrack) return false;
+            return this.media.tracks.some(({ sourceUid }) => this.nextUp.currentTrack.sourceUid === sourceUid);
         },
 
 
         isPlaying() {
-            return this.isCurrentTrack && this.player.isPlaying;
+            return this.isActive && this.player.isPlaying;
         },
 
 
         isLoading() {
-            return this.isCurrentTrack && this.player.isLoading;
+            return this.isActive && this.player.isLoading;
         }
     },
 
@@ -46,7 +47,7 @@ export default {
 
         play() {
 
-            if (this.isCurrentTrack) this.player.resumeTrack();
+            if (this.isActive) this.player.resumeTrack();
             else {
                 this.player.fetchTrack(this.media.tracks[0].id);
 
