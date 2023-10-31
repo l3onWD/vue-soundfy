@@ -15,7 +15,7 @@ const baseUri = 'http://127.0.0.1:8000/api';
 export default {
     components: { MediaSection, AppLoader },
 
-    data: () => ({ playlists: [], isLoading: false }),
+    data: () => ({ playlists: [], albums: [], isLoading: false }),
 
     methods: {
         fetchPlaylists() {
@@ -51,11 +51,48 @@ export default {
 
                     this.isLoading = false;
                 });
-        }
+        },
+
+        fetchAlbums() {
+
+            this.isLoading = true;
+
+            axios.get(baseUri + '/albums/random')
+                .then(({ data }) => {
+
+                    console.log(data);
+
+                    this.albums = data.map(album => {
+
+                        // Calculate Unique ID for grouping all kinds of media
+                        const uid = `album-${album.id}`;
+
+                        return {
+                            id: album.id,
+                            kind: 'album',// Kind of media
+                            uid,
+                            cover: album.cover,
+                            title: album.title,
+                            tracks: album.tracks.map(track => ({ ...track, sourceUid: uid })),
+                            author: album.author.name
+                        }
+                    });
+
+                })
+                .catch(err => {
+
+                    console.log(err);
+                })
+                .then(() => {
+
+                    this.isLoading = false;
+                });
+        },
     },
 
     created() {
         this.fetchPlaylists();
+        this.fetchAlbums();
     }
 
 }
@@ -69,8 +106,13 @@ export default {
             <!-- Loader -->
             <AppLoader v-if="isLoading" />
 
-            <!-- All Tracks -->
-            <MediaSection v-else title="Our Picks" :mediaList="playlists" />
+            <div v-else>
+                <!-- Our Picks Playlists -->
+                <MediaSection title="Our Picks" :mediaList="playlists" />
+
+                <!-- Random Albums -->
+                <MediaSection title="Random Albums" :mediaList="albums" />
+            </div>
 
         </div>
     </main>
