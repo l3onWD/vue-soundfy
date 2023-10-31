@@ -78,7 +78,7 @@ export default {
 
 
 <template>
-    <div v-if="media" class="media-card">
+    <div v-if="media" class="media-card" :class="{ 'active': isActive }">
 
         <!-- Card Top -->
         <div class="media-card-top">
@@ -86,7 +86,7 @@ export default {
             <img :src="media.cover" :alt="media.title">
 
             <!-- Media Controls -->
-            <div class="media-card-controls" :class="{ 'loading': isLoading }">
+            <div class="media-card-controls">
 
                 <!-- Loader -->
                 <FontAwesomeIcon v-if="isLoading" icon="fas fa-spinner" spin-pulse size="3x" class="text-white" />
@@ -154,12 +154,6 @@ export default {
             transition: 0.05s visibility, 0.05s opacity;
         }
 
-        .media-card-controls.loading,
-        &:hover .media-card-controls {
-            visibility: visible;
-            opacity: 1;
-        }
-
         .media-card-actions {
             margin: 0.25rem;
             position: absolute;
@@ -178,6 +172,12 @@ export default {
             visibility: visible;
             opacity: 1;
         }
+    }
+
+    &.active .media-card-controls,
+    .media-card-top:hover .media-card-controls {
+        visibility: visible;
+        opacity: 1;
     }
 
 }
