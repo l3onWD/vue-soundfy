@@ -4,7 +4,7 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import AppLoader from '@/components/AppLoader.vue';
-import MediaSection from './media/MediaSection.vue';
+import MediaSection from '@/components/media/MediaSection.vue';
 
 /*** DATA ***/
 import axios from 'axios';
@@ -15,84 +15,56 @@ const baseUri = 'http://127.0.0.1:8000/api';
 export default {
     components: { MediaSection, AppLoader },
 
-    data: () => ({ playlists: [], albums: [], isLoading: false }),
+    data: () => ({
+        ourPicksPlaylists: [],
+        randomAlbums: [],
+        randomTracks: [],
+        isLoading: false
+    }),
 
     methods: {
-        fetchPlaylists() {
+
+        fetchApi(endpoint, success) {
 
             this.isLoading = true;
 
-            axios.get(baseUri + '/playlists/our-picks')
-                .then(({ data }) => {
-
-                    this.playlists = data.map(playlist => {
-
-                        // Calculate Unique ID for grouping all kinds of media
-                        const uid = `playlist-${playlist.id}`;
-
-                        return {
-                            id: playlist.id,
-                            kind: 'playlist',// Kind of media
-                            uid,
-                            cover: playlist.cover,
-                            title: playlist.title,
-                            tracks: playlist.tracks.map(track => ({ ...track, sourceUid: uid })),
-                            author: playlist.user.name
-                        }
-                    });
-
-                    console.log(this.playlists);
-                })
-                .catch(err => {
-
-                    console.log(err);
-                })
-                .then(() => {
-
-                    this.isLoading = false;
-                });
+            axios.get(baseUri + endpoint)
+                .then(({ data }) => { success(data) })
+                .catch(err => { console.log(err) })
+                .then(() => { this.isLoading = false });
         },
 
-        fetchAlbums() {
+        remapMedia(mediaList, type) {
 
-            this.isLoading = true;
+            return mediaList.map(media => {
 
-            axios.get(baseUri + '/albums/random')
-                .then(({ data }) => {
+                // Calculate Unique ID for grouping all media type
+                const uid = `${type}-${media.id}`;
 
-                    console.log(data);
+                // Calculate tracks based on media type
+                const tracks = type === 'track' ?
+                    [{ ...media, sourceUid: uid }] :
+                    media.tracks.map(track => ({ ...track, sourceUid: uid }));
 
-                    this.albums = data.map(album => {
 
-                        // Calculate Unique ID for grouping all kinds of media
-                        const uid = `album-${album.id}`;
-
-                        return {
-                            id: album.id,
-                            kind: 'album',// Kind of media
-                            uid,
-                            cover: album.cover,
-                            title: album.title,
-                            tracks: album.tracks.map(track => ({ ...track, sourceUid: uid })),
-                            author: album.author.name
-                        }
-                    });
-
-                })
-                .catch(err => {
-
-                    console.log(err);
-                })
-                .then(() => {
-
-                    this.isLoading = false;
-                });
-        },
+                return {
+                    id: media.id,
+                    uid,
+                    cover: media.cover,
+                    title: media.title,
+                    tracks,
+                    author: media.author
+                }
+            });
+        }
     },
 
     created() {
-        this.fetchPlaylists();
-        this.fetchAlbums();
+
+        // Get all sections data
+        this.fetchApi('/playlists/our-picks', (data) => { this.ourPicksPlaylists = this.remapMedia(data, 'playlist') });
+        this.fetchApi('/albums/random', (data) => { this.randomAlbums = this.remapMedia(data, 'album') });
+        this.fetchApi('/tracks/random', (data) => { this.randomTracks = this.remapMedia(data, 'track') });
     }
 
 }
@@ -108,10 +80,13 @@ export default {
 
             <div v-else>
                 <!-- Our Picks Playlists -->
-                <MediaSection title="Our Picks" :mediaList="playlists" />
+                <MediaSection title="Our Picks" :mediaList="ourPicksPlaylists" />
 
                 <!-- Random Albums -->
-                <MediaSection title="Random Albums" :mediaList="albums" />
+                <MediaSection title="Random Albums" :mediaList="randomAlbums" />
+
+                <!-- Random Tracks -->
+                <MediaSection title="Random Tracks" :mediaList="randomTracks" />
             </div>
 
         </div>
