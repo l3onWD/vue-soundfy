@@ -21,14 +21,11 @@ export const useNextUpStore = defineStore('nextUp', {
          * Add tracks to list
          * 
          * @param {Array} tracks - tracks to add
-         * @returns {Boolean} - success
          */
         addTracks(tracks) {
 
             // Add to list
             this.tracks.push(...tracks);
-
-            return true;
         },
 
 
