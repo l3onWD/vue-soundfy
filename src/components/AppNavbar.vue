@@ -11,17 +11,17 @@ export default {
         <div class="container">
 
             <!-- Logo -->
-            <a href="#" class="d-none d-md-inline-block me-4">
+            <RouterLink :to="{ name: 'home' }" class="d-none d-md-inline-block me-4">
                 <img src="../assets/img/logo.svg" alt="Logo" class="logo">
-            </a>
+            </RouterLink>
 
             <!-- Main Menù -->
             <ul>
                 <li>
-                    <a href="#" class="active">
+                    <RouterLink :to="{ name: 'home' }">
                         <FontAwesomeIcon icon="fas fa-house" size="lg" class="d-md-none" />
                         Home
-                    </a>
+                    </RouterLink>
                 </li>
                 <li>
                     <a href="#">
