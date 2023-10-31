@@ -80,7 +80,7 @@ export default {
         <!-- Card Top -->
         <div class="media-card-top">
             <!-- Album Cover -->
-            <img :src="media.albumCover" :alt="media.title">
+            <img :src="media.cover" :alt="media.title">
 
             <!-- Media Controls -->
             <div class="media-card-controls" :class="{ 'loading': isLoading }">

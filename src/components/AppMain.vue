@@ -24,8 +24,19 @@ export default {
 
             axios.get(baseUri + '/playlists/our-picks')
                 .then(({ data }) => {
-                    console.log(data);
-                    this.playlists = data;
+
+                    this.playlists = data.map(playlist => {
+                        return {
+                            id: playlist.id,
+                            kind: 'playlist',
+                            cover: playlist.cover,
+                            title: playlist.title,
+                            tracks: playlist.tracks,
+                            author: playlist.user.name
+                        }
+                    });
+
+                    console.log(this.playlists);
                 })
                 .catch(err => {
 
