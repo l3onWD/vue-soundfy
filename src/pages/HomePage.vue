@@ -34,15 +34,15 @@ export default {
                 .then(() => { this.isLoading-- });
         },
 
-        remapMedia(mediaList, type) {
+        remapMedia(mediaList, kind) {
 
             return mediaList.map(media => {
 
-                // Calculate Unique ID for grouping all media type
-                const uid = `${type}-${media.id}`;
+                // Calculate Unique ID for grouping all media kind
+                const uid = `${kind}-${media.id}`;
 
-                // Calculate tracks based on media type
-                const tracks = type === 'track' ?
+                // Calculate tracks based on media kind
+                const tracks = kind === 'track' ?
                     [{ ...media, sourceUid: uid }] :
                     media.tracks.map(track => ({ ...track, sourceUid: uid }));
 
@@ -50,6 +50,7 @@ export default {
                 return {
                     id: media.id,
                     uid,
+                    kind,
                     cover: media.cover,
                     title: media.title,
                     tracks,

@@ -78,7 +78,8 @@ export default {
 
 
 <template>
-    <div v-if="media" class="media-card" :class="{ 'active': isActive }">
+    <div v-if="media" class="media-card" :class="{ 'active': isActive }"
+        @click="$router.push({ name: `${media.kind}-detail`, params: { id: media.id } })">
 
         <!-- Card Top -->
         <div class="media-card-top">
