@@ -19,19 +19,19 @@ export default {
         ourPicksPlaylists: [],
         randomAlbums: [],
         randomTracks: [],
-        isLoading: false
+        isLoading: 0
     }),
 
     methods: {
 
         fetchApi(endpoint, success) {
 
-            this.isLoading = true;
+            this.isLoading++;
 
             axios.get(baseUri + endpoint)
                 .then(({ data }) => { success(data) })
                 .catch(err => { console.log(err) })
-                .then(() => { this.isLoading = false });
+                .then(() => { this.isLoading-- });
         },
 
         remapMedia(mediaList, type) {
@@ -61,7 +61,7 @@ export default {
 
     created() {
 
-        // Get all sections data
+        // Get all sections data and remap values
         this.fetchApi('/playlists/our-picks', (data) => { this.ourPicksPlaylists = this.remapMedia(data, 'playlist') });
         this.fetchApi('/albums/random', (data) => { this.randomAlbums = this.remapMedia(data, 'album') });
         this.fetchApi('/tracks/random', (data) => { this.randomTracks = this.remapMedia(data, 'track') });
