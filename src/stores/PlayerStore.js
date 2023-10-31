@@ -237,7 +237,7 @@ export const usePlayerStore = defineStore('player', {
             this.volume = value;
             this.muted = false;
 
-            if (this.audioGain.gain) {
+            if (this.audioGain) {
                 this.audioGain.gain.value = value;
             }
         },
@@ -251,7 +251,7 @@ export const usePlayerStore = defineStore('player', {
             this.muted = !this.muted;
 
             // Check if Audio Gain exist
-            if (!this.audioGain.gain) return;
+            if (!this.audioGain) return;
 
             // Set Audio Gain value
             if (this.muted) {
