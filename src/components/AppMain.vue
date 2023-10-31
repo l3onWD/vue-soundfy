@@ -26,12 +26,17 @@ export default {
                 .then(({ data }) => {
 
                     this.playlists = data.map(playlist => {
+
+                        // Calculate Unique ID for grouping all kinds of media
+                        const uid = `playlist-${playlist.id}`;
+
                         return {
                             id: playlist.id,
-                            kind: 'playlist',
+                            kind: 'playlist',// Kind of media
+                            uid,
                             cover: playlist.cover,
                             title: playlist.title,
-                            tracks: playlist.tracks,
+                            tracks: playlist.tracks.map(track => ({ ...track, sourceUid: uid })),
                             author: playlist.user.name
                         }
                     });
