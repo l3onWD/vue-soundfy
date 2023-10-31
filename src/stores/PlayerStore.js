@@ -114,7 +114,7 @@ export const usePlayerStore = defineStore('player', {
 
             // Set track vars
             this.currentTime = offset;
-            this.startedAt = offset;
+            this.startedAt = offset - this.audioCtx.currentTime;
 
             // Set track state
             this.isLoading = false;
