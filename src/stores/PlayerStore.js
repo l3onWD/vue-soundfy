@@ -8,7 +8,7 @@ export const usePlayerStore = defineStore('player', {
 
     state: () => ({
 
-        trackId: null,
+        track: null,
         currentTime: 0,
         startedAt: 0,
         volume: 1,
@@ -34,22 +34,22 @@ export const usePlayerStore = defineStore('player', {
         /**
          * Fetch and buffer tracks from API
          * 
-         * @param {Number} id - track id
+         * @param {Object} track - track to fetch
          */
-        fetchTrack(id) {
+        fetchTrack(track) {
 
-            this.trackId = id;
+            this.track = track;
             this.isLoading = true;
 
             // Stop previous track
             if (this.audioCtx) this.stopTrack();
 
             // Fetch new track
-            axios.get(`${baseUri}/tracks/${id}/stream`, { responseType: 'arraybuffer' })
+            axios.get(`${baseUri}/tracks/${track.id}/stream`, { responseType: 'arraybuffer' })
                 .then(({ data }) => {
 
                     // Abort if track changed during fetch
-                    if (id !== this.trackId) return;
+                    if (this.isTrackChaged(track)) return;
 
                     // Initialize audio context and volume
                     this.initAudio();
@@ -59,7 +59,7 @@ export const usePlayerStore = defineStore('player', {
                         buffer => {
 
                             // Abort if track changed during buffering
-                            if (id !== this.trackId) return;
+                            if (this.isTrackChaged(track)) return;
 
                             // Set audio buffer and start track
                             this.audioBuffer = buffer;
@@ -73,6 +73,18 @@ export const usePlayerStore = defineStore('player', {
                 .catch(err => {
                     console.log(err);
                 })
+        },
+
+
+        /**
+         * Check il track is changed
+         * used for abort fetching
+         * 
+         * @param {Object} track - fetching track
+         * @returns {Boolean}
+         */
+        isTrackChaged(track) {
+            return track.id !== this.track.id || track.sourceUid !== this.track.sourceUid;
         },
 
 

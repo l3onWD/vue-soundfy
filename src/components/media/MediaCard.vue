@@ -49,7 +49,7 @@ export default {
 
             if (this.isActive) this.player.resumeTrack();
             else {
-                this.player.fetchTrack(this.media.tracks[0].id);
+                this.player.fetchTrack(this.media.tracks[0]);
 
                 // Reset upList and add this track
                 this.nextUp.setTracks(this.media.tracks);
@@ -68,7 +68,7 @@ export default {
 
             this.nextUp.addTracks(this.media.tracks);
 
-            if (wasEmpty) this.player.fetchTrack(this.media.tracks[0].id);
+            if (wasEmpty) this.player.fetchTrack(this.media.tracks[0]);
         }
 
     }

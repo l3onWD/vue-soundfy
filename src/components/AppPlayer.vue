@@ -64,7 +64,7 @@ export default {
             if (!this.nextUp.nextTrack) {
                 this.player.stopTrack();
             } else {
-                this.player.fetchTrack(this.nextUp.nextTrack.id);
+                this.player.fetchTrack(this.nextUp.nextTrack);
                 this.nextUp.goTo('next');
             }
         },
@@ -80,7 +80,7 @@ export default {
 
             // Change to prev track
             else {
-                this.player.fetchTrack(this.nextUp.prevTrack.id);
+                this.player.fetchTrack(this.nextUp.prevTrack);
                 this.nextUp.goTo('prev');
             }
 
