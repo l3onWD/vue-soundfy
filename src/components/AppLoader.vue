@@ -7,7 +7,7 @@ export default {
 
 <template>
     <div class="app-loader">
-        <FontAwesomeIcon icon="fas fa-spinner" spin-pulse size="5x" />
+        <FontAwesomeIcon icon="fas fa-spinner" spin-pulse size="4x" />
     </div>
 </template>
 
@@ -22,6 +22,5 @@ export default {
     align-items: center;
     color: #fff;
     background-color: rgba($color: #000, $alpha: 0.8);
-    z-index: 1;
 }
 </style>
