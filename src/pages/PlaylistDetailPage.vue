@@ -17,7 +17,7 @@ export default {
     components: { AppLoader, BaseButton },
 
     data: () => ({
-        media: null,
+        playlist: null,
         isLoading: 0
     }),
 
@@ -25,7 +25,7 @@ export default {
         totlaDuration() {
 
             // Get total duration
-            const totlSecs = this.media.tracks.reduce((tot, { duration }) => tot += duration, 0);
+            const totlSecs = this.playlist.tracks.reduce((tot, { duration }) => tot += duration, 0);
 
             // Format time
             const hours = Math.floor(totlSecs / 3600);
@@ -53,7 +53,7 @@ export default {
     created() {
 
         // Get playlist
-        this.fetchApi(`/playlists/${this.$route.params.id}`, (data) => { this.media = data });
+        this.fetchApi(`/playlists/${this.$route.params.id}`, (data) => { this.playlist = data });
     }
 
 }
@@ -68,57 +68,82 @@ export default {
     <div v-else class="playlist-detail">
 
         <!-- Content Top -->
-        <div class="playlist-top mb-3">
+        <div class="playlist-top">
 
             <div class="row">
 
-                <div class="col-12 col-md-8 mb-3">
+                <!-- Main Info -->
+                <div class="col-12 col-md-8 mb-3 mb-md-0">
 
-                    <!-- Page navigation -->
-                    <nav class="mb-2">
-                        <ul>
-                            <li>
-                                <BaseButton @click="$router.back()" icon="arrow-left" title="Back" size="xl"
-                                    class="btn-light" />
-                            </li>
-                        </ul>
-                    </nav>
+                    <div class="d-flex flex-column justify-content-between h-100">
 
-                    <!-- Media data -->
-                    <h2 class="mb-1">{{ media.title }}</h2>
-                    <span class="col-gray-700 fs-5">{{ media.author }}</span>
+                        <div class="d-flex align-items-baseline">
 
-                    <!-- Length Info -->
-                    <div class="playlist-length d-none d-md-flex">
-                        <h2 class="mb-0">{{ media.tracks.length }}</h2>
-                        <h6 class="mb-0">TRACKS</h6>
-                        <span>{{ totlaDuration }}</span>
+                            <!-- Back Button -->
+                            <BaseButton @click="$router.back()" icon="arrow-left" title="Back" size="xl"
+                                class="btn-light me-3" />
+
+                            <!-- Playlist data -->
+                            <div class="flex-grow-1">
+                                <h2 class="mb-1">{{ playlist.title }}</h2>
+                                <span class="col-gray-700 fs-5">{{ playlist.author }}</span>
+                            </div>
+
+                            <!-- Playlist Actions -->
+                            <div class="d-flex align-items-center">
+                                <BaseButton icon="heart" size="lg" iconStyle="far" title="Like" class="btn-light me-1" />
+                                <BaseButton icon="list" size="lg" title="Add to Next Up" class="btn-light me-1" />
+                                <BaseButton icon="play" size="lg" class="btn-light" />
+                            </div>
+                        </div>
+
+                        <!-- Length Info -->
+                        <div class="playlist-length d-none d-md-flex">
+                            <h2 class="mb-0">{{ playlist.tracks.length }}</h2>
+                            <h6 class="mb-0">TRACKS</h6>
+                            <span>{{ totlaDuration }}</span>
+                        </div>
                     </div>
 
                 </div>
 
                 <!-- Cover -->
                 <div class="col-12 col-md-4">
-                    <img :src="media.cover" :alt="media.title" class="playlist-cover">
+                    <img :src="playlist.cover" :alt="playlist.title" class="playlist-cover">
                 </div>
 
             </div>
         </div>
 
-        <!-- Tracks -->
-        <ul class="track-list p-3">
-            <li v-for="(track, idx) in media.tracks" :key="track.id">
 
-                <img :src="track.album.cover" :alt="track.title">
+        <div class="playlist-bottom p-3">
 
-                <span class="mx-3">{{ (idx + 1) }}</span>
+            <!-- Tracks -->
+            <h4>Tracks</h4>
 
-                <div>
-                    <h6 class="mb-0">{{ track.title }}</h6>
-                    <span>{{ track.album.author.name }}</span>
-                </div>
-            </li>
-        </ul>
+            <ul class="track-list">
+                <li v-for="(track, idx) in playlist.tracks" :key="track.id">
+
+                    <div class="d-flex align-items-center flex-grow-1">
+
+                        <img :src="track.album.cover" :alt="track.title">
+
+                        <span class="mx-3">{{ (idx + 1) }}</span>
+
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">{{ track.title }}</h6>
+                            <span>{{ track.album.author.name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <BaseButton icon="heart" iconStyle="far" title="Like" />
+                        <BaseButton icon="list" title="Add to Next Up" />
+                        <BaseButton icon="play" />
+                    </div>
+                </li>
+            </ul>
+        </div>
 
     </div>
 </template>
@@ -134,7 +159,6 @@ export default {
 
     .playlist-top {
         padding: 1rem;
-        position: relative;
 
         color: $col-light;
         background-image: linear-gradient(130deg, $col-gray-900 20%, $col-dark);
@@ -143,9 +167,6 @@ export default {
             padding: 0.5rem;
             width: 100px;
             height: 100px;
-            position: absolute;
-            left: 15px;
-            bottom: 15px;
 
             display: flex;
             flex-direction: column;
@@ -171,6 +192,7 @@ export default {
             padding: 0.5rem 0;
 
             display: flex;
+            justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid $col-gray-300;
 
