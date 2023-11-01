@@ -78,13 +78,14 @@ export default {
 
 
 <template>
-    <div v-if="media" class="media-card" :class="{ 'active': isActive }"
-        @click="$router.push({ name: `${media.kind}-detail`, params: { id: media.id } })">
+    <div v-if="media" class="media-card" :class="{ 'active': isActive }">
 
         <!-- Card Top -->
         <div class="media-card-top">
             <!-- Album Cover -->
-            <img :src="media.cover" :alt="media.title">
+            <RouterLink :to="{ name: `${media.kind}-detail`, params: { id: media.id } }">
+                <img :src="media.cover" :alt="media.title">
+            </RouterLink>
 
             <!-- Media Controls -->
             <div class="media-card-controls">
@@ -116,7 +117,11 @@ export default {
         </div>
 
         <!-- Data -->
-        <h5 class="mb-1">{{ media.title }}</h5>
+        <h5 class="mb-1">
+            <RouterLink :to="{ name: `${media.kind}-detail`, params: { id: media.id } }">
+                {{ media.title }}
+            </RouterLink>
+        </h5>
         <span class="col-gray-700">{{ media.author }}</span>
     </div>
 </template>
@@ -128,8 +133,6 @@ export default {
 
 .media-card {
     padding: 10px 5px;
-
-    cursor: pointer;
 
     &-top {
         position: relative;
