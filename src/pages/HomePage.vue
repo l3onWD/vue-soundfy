@@ -34,38 +34,46 @@ export default {
                 .then(() => { this.isLoading-- });
         },
 
-        remapMedia(mediaList, kind) {
+        setUid(media, kind) {
 
-            return mediaList.map(media => {
+            // Calculate Unique ID for grouping all media kind
+            const uid = `${kind}-${media.id}`;
 
-                // Calculate Unique ID for grouping all media kind
-                const uid = `${kind}-${media.id}`;
-
-                // Calculate tracks based on media kind
-                const tracks = kind === 'track' ?
-                    [{ ...media, sourceUid: uid }] :
-                    media.tracks.map(track => ({ ...track, sourceUid: uid }));
+            // Calculate tracks based on media kind
+            const tracks = kind === 'track' ?
+                [{ ...media, sourceUid: uid }] :
+                media.tracks.map(track => ({ ...track, sourceUid: uid }));
 
 
-                return {
-                    id: media.id,
-                    uid,
-                    kind,
-                    cover: media.cover,
-                    title: media.title,
-                    tracks,
-                    author: media.author
-                }
-            });
+            return {
+                id: media.id,
+                uid,
+                kind,
+                cover: media.cover,
+                title: media.title,
+                tracks,
+                author: media.author
+            }
         }
     },
 
     created() {
 
-        // Get all sections data and remap values
-        this.fetchApi('/playlists/our-picks', (data) => { this.ourPicksPlaylists = this.remapMedia(data, 'playlist') });
-        this.fetchApi('/albums/random', (data) => { this.randomAlbums = this.remapMedia(data, 'album') });
-        this.fetchApi('/tracks/random', (data) => { this.randomTracks = this.remapMedia(data, 'track') });
+        // Get all sections data and set UID to all media
+        // Our picks Playlists
+        this.fetchApi('/playlists/our-picks', (mediaList) => {
+            this.ourPicksPlaylists = mediaList.map(media => this.setUid(media, 'playlist'));
+        });
+
+        // Random Albums
+        this.fetchApi('/albums/random', (mediaList) => {
+            this.randomAlbums = mediaList.map(media => this.setUid(media, 'album'));
+        });
+
+        // Random Tracks
+        this.fetchApi('/tracks/random', (mediaList) => {
+            this.randomTracks = mediaList.map(media => this.setUid(media, 'track'));
+        });
     }
 
 }
