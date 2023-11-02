@@ -6,15 +6,17 @@
 import AppLoader from '@/components/AppLoader.vue';
 import MediaDetail from '@/components/media/MediaDetail.vue';
 import TrackList from '@/components/tracks/TrackList.vue';
+import TrackDetail from '@/components/tracks/TrackDetail.vue';
 
 /*** DATA ***/
 import axios from 'axios';
+import * as Utils from '@/utils/';
 const baseUri = 'http://127.0.0.1:8000/api';
 
 
 export default {
 
-    components: { AppLoader, MediaDetail, TrackList },
+    components: { AppLoader, MediaDetail, TrackList, TrackDetail },
 
     data: () => ({
         media: null,
@@ -24,6 +26,14 @@ export default {
     computed: {
         mediaType() {
             return this.$route.fullPath.split('/')[1].slice(0, -1);
+        },
+
+        durationString() {
+            return Utils.formatTime(this.media.duration);
+        },
+
+        releaseDateString() {
+            return Utils.formatDate(this.media.album.release_date);
         }
     },
 
@@ -69,6 +79,10 @@ export default {
 
             <!-- Tracks -->
             <TrackList v-if="mediaType != 'track'" :tracks="media.tracks" />
+
+            <!-- Track Info -->
+            <TrackDetail v-else :track="media" />
+
         </div>
 
     </div>

@@ -8,6 +8,7 @@ const router = createRouter({
     linkExactActiveClass: 'active',
     routes: [
         { path: '/', name: 'home', component: HomePage },
+
         { path: '/playlists/:id', name: 'playlist-detail', component: MediaDetailPage },
         { path: '/albums/:id', name: 'album-detail', component: MediaDetailPage },
         { path: '/tracks/:id', name: 'track-detail', component: MediaDetailPage },
