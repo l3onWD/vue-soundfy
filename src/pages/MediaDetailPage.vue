@@ -23,7 +23,7 @@ export default {
 
     computed: {
         mediaType() {
-            return 'playlist';
+            return this.$route.fullPath.split('/')[1].slice(0, -1);
         }
     },
 
@@ -43,7 +43,7 @@ export default {
     created() {
 
         // Get media
-        this.fetchApi(`/${this.mediaType}s/${this.$route.params.id}`, (data) => { this.media = data });
+        this.fetchApi(this.$route.fullPath, (data) => { this.media = data });
     }
 
 }
@@ -61,14 +61,14 @@ export default {
         <div class="detail-top p-3">
 
             <!-- Detail -->
-            <MediaDetail :media="media" />
+            <MediaDetail :media="media" :type="mediaType" />
         </div>
 
         <!-- Content Bottom -->
         <div class="detail-bottom p-3">
 
             <!-- Tracks -->
-            <TrackList :tracks="media.tracks" />
+            <TrackList v-if="mediaType != 'track'" :tracks="media.tracks" />
         </div>
 
     </div>
