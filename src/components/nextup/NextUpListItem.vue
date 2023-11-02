@@ -59,6 +59,8 @@ export default {
             if (this.isCurrentTrack) this.player.resumeTrack();
             else {
                 this.player.fetchTrack(this.track);
+
+                // Update index to this track
                 this.nextUp.goTo(this.listPosition);
             }
         },

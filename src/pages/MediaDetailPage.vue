@@ -98,7 +98,7 @@ export default {
             <TrackList v-if="mediaType != 'track'" :tracks="media.tracks" />
 
             <!-- Track Info -->
-            <TrackDetail v-else :track="media" />
+            <TrackDetail v-else :track="media.tracks[0]" />
 
         </div>
 

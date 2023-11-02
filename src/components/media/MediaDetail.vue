@@ -6,12 +6,19 @@
 import BaseButton from '@/components/base/BaseButton.vue';
 
 /*** DATA ***/
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { useNextUpStore } from '@/stores/NextUpStore';
 import * as Utils from '@/utils/';
 
 
 export default {
 
     components: { BaseButton },
+
+    data: () => ({
+        player: usePlayerStore(),
+        nextUp: useNextUpStore()
+    }),
 
     props: {
         media: {
@@ -25,6 +32,22 @@ export default {
     },
 
     computed: {
+
+        isActive() {
+            if (!this.nextUp.currentTrack) return false;
+            return this.media.tracks.some(({ sourceUid }) => this.nextUp.currentTrack.sourceUid === sourceUid);
+        },
+
+
+        isPlaying() {
+            return this.isActive && this.player.isPlaying;
+        },
+
+
+        isLoading() {
+            return this.isActive && this.player.isLoading;
+        },
+
         totalDurationString() {
 
             // Get total duration
@@ -32,6 +55,25 @@ export default {
 
             // Return time string
             return Utils.formatTime(totlSecs);
+        }
+    },
+
+    methods: {
+
+        play() {
+
+            if (this.isLoading) return;
+
+            if (this.isActive) {
+
+                this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
+
+            } else {
+                this.player.fetchTrack(this.media.tracks[0]);
+
+                // Reset upList and add this track
+                this.nextUp.setTracks(this.media.tracks);
+            }
         }
     }
 
@@ -61,10 +103,18 @@ export default {
 
                     <!-- Actions -->
                     <div class="d-flex align-items-center">
+
                         <BaseButton icon="heart" iconStyle="far" iconSize="lg" title="Like"
                             class="btn btn-ui btn-light me-1" />
+
+                        <!-- Add to next up -->
                         <BaseButton icon="list" iconSize="lg" title="Add to Next Up" class="btn btn-ui btn-light me-1" />
-                        <BaseButton icon="play" iconSize="lg" class="btn btn-ui btn-light" />
+
+                        <!-- Play/Pause -->
+                        <BaseButton v-if="isLoading" icon="spinner" iconSize="lg"
+                            class="btn btn-ui btn-light fa-spin-pulse" />
+                        <BaseButton v-else @click="play" :icon="isPlaying ? 'pause' : 'play'" iconSize="lg"
+                            class="btn btn-ui btn-light" />
                     </div>
                 </div>
 
