@@ -10,7 +10,6 @@ import TrackDetail from '@/components/tracks/TrackDetail.vue';
 
 /*** DATA ***/
 import axios from 'axios';
-import * as Utils from '@/utils/';
 const baseUri = 'http://127.0.0.1:8000/api';
 
 
@@ -40,13 +39,38 @@ export default {
                 .then(({ data }) => { success(data) })
                 .catch(err => { console.log(err) })
                 .then(() => { this.isLoading-- });
+        },
+
+        setUid(media, kind) {
+
+            // Calculate Unique ID for grouping all media kind
+            const uid = `${kind}-${media.id}`;
+
+            // Calculate tracks based on media kind
+            const tracks = kind === 'track' ?
+                [{ ...media, sourceUid: uid }] :
+                media.tracks.map(track => ({ ...track, sourceUid: uid }));
+
+
+            return {
+                id: media.id,
+                uid,
+                kind,
+                cover: media.cover,
+                title: media.title,
+                tracks,
+                author: media.author
+            }
         }
     },
 
     created() {
 
         // Get media
-        this.fetchApi(this.$route.fullPath, (data) => { this.media = data });
+        this.fetchApi(this.$route.fullPath, (data) => {
+
+            this.media = this.setUid(data, this.mediaType);
+        });
     }
 
 }
