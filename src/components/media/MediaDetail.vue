@@ -50,7 +50,8 @@ export default {
                 <div class="d-flex align-items-baseline">
 
                     <!-- Back Button -->
-                    <BaseButton @click="$router.back()" icon="arrow-left" title="Back" size="xl" class="btn-light me-3" />
+                    <BaseButton @click="$router.back()" icon="arrow-left" title="Back" iconSize="lg"
+                        class="btn btn-ui btn-light me-3" />
 
                     <!-- Main data -->
                     <div class="flex-grow-1">
@@ -60,9 +61,10 @@ export default {
 
                     <!-- Actions -->
                     <div class="d-flex align-items-center">
-                        <BaseButton icon="heart" size="lg" iconStyle="far" title="Like" class="btn-light me-1" />
-                        <BaseButton icon="list" size="lg" title="Add to Next Up" class="btn-light me-1" />
-                        <BaseButton icon="play" size="lg" class="btn-light" />
+                        <BaseButton icon="heart" iconStyle="far" iconSize="lg" title="Like"
+                            class="btn btn-ui btn-light me-1" />
+                        <BaseButton icon="list" iconSize="lg" title="Add to Next Up" class="btn btn-ui btn-light me-1" />
+                        <BaseButton icon="play" iconSize="lg" class="btn btn-ui btn-light" />
                     </div>
                 </div>
 

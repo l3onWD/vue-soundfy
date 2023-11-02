@@ -44,7 +44,7 @@ export default {
     <div class="volume-control">
 
         <!-- Mute Button -->
-        <BaseButton @click="player.toggleTrackMuted" :icon="volumeIcon" size="lg" />
+        <BaseButton @click="player.toggleTrackMuted" :icon="volumeIcon" iconSize="lg" class="btn btn-ui" />
 
         <!-- Volume Range Input -->
         <div class="volume-range">

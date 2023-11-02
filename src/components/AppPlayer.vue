@@ -108,11 +108,11 @@ export default {
                 <ul class="d-flex flex-column flex-sm-row ms-1">
                     <!-- Favorite Button -->
                     <li>
-                        <BaseButton icon="heart" iconStyle="far" />
+                        <BaseButton icon="heart" iconStyle="far" class="btn btn-ui" />
                     </li>
                     <!-- Next Up Button -->
                     <li class="position-relative">
-                        <BaseButton @click="nextUpModalActive = !nextUpModalActive" icon="list"
+                        <BaseButton @click="nextUpModalActive = !nextUpModalActive" icon="list" class="btn btn-ui"
                             :class="{ 'active': nextUpModalActive }" />
 
                         <NextUpModal :isActive="nextUpModalActive" @close-modal="nextUpModalActive = false" />
@@ -132,19 +132,20 @@ export default {
                     <VolumeControl class="me-sm-4" />
                 </li>
                 <li>
-                    <BaseButton @click="goPrevTrack" icon="backward-step" />
+                    <BaseButton @click="goPrevTrack" icon="backward-step" class="btn btn-ui" />
                 </li>
                 <li>
-                    <BaseButton v-if="player.isPlaying" @click="pause" icon="pause" size="lg"
+                    <BaseButton v-if="player.isPlaying" @click="pause" icon="pause" iconSize="lg" class="btn btn-ui"
                         :class="{ 'btn-disabled': player.isLoading }" :disabled="player.isLoading" />
-                    <BaseButton v-else @click="play" icon="play" size="lg" :class="{ 'btn-disabled': player.isLoading }"
-                        :disabled="player.isLoading" />
+                    <BaseButton v-else @click="play" icon="play" iconSize="lg" class="btn btn-ui"
+                        :class="{ 'btn-disabled': player.isLoading }" :disabled="player.isLoading" />
                 </li>
                 <li>
-                    <BaseButton @click="goNextTrack" icon="forward-step" />
+                    <BaseButton @click="goNextTrack" icon="forward-step" class="btn btn-ui" />
                 </li>
                 <li>
-                    <BaseButton @click="player.toggleTrackLoop" icon="repeat" :class="{ 'active': player.loop }" />
+                    <BaseButton @click="player.toggleTrackLoop" icon="repeat" class="btn btn-ui"
+                        :class="{ 'active': player.loop }" />
                 </li>
             </ul>
 

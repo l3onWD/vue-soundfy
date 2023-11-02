@@ -40,9 +40,9 @@ export default {
             </div>
 
             <div class="d-flex align-items-center">
-                <BaseButton icon="heart" iconStyle="far" title="Like" />
-                <BaseButton icon="list" title="Add to Next Up" />
-                <BaseButton icon="play" />
+                <BaseButton icon="heart" iconStyle="far" title="Like" class="btn btn-ui" />
+                <BaseButton icon="list" title="Add to Next Up" class="btn btn-ui" />
+                <BaseButton icon="play" class="btn btn-ui" />
             </div>
         </li>
     </ul>

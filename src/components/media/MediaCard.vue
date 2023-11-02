@@ -96,8 +96,10 @@ export default {
                 <!-- Controls -->
                 <div v-else>
                     <!-- Play/Pause -->
-                    <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn-big btn-rounded btn-orange" />
-                    <BaseButton v-else @click="play" icon="play" class="btn-big btn-rounded btn-orange" />
+                    <BaseButton v-if="isPlaying" @click="pause" icon="pause" iconSize="2xl"
+                        class="btn btn-ui btn-lg btn-orange rounded-circle" />
+                    <BaseButton v-else @click="play" icon="play" iconSize="2xl"
+                        class="btn btn-ui btn-lg btn-orange rounded-circle" />
                 </div>
 
             </div>
@@ -106,11 +108,11 @@ export default {
             <ul class="media-card-actions">
                 <!-- Like -->
                 <li>
-                    <BaseButton icon="heart" iconStyle="far" class="btn-light" title="Like" />
+                    <BaseButton icon="heart" iconStyle="far" class="btn btn-ui btn-light" title="Like" />
                 </li>
                 <!-- Add to Next Up Button -->
                 <li>
-                    <BaseButton @click="addToNextUp" icon="list" class="btn-light" title="Add to Next Up" />
+                    <BaseButton @click="addToNextUp" icon="list" class="btn btn-ui btn-light" title="Add to Next Up" />
                 </li>
             </ul>
 

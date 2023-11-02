@@ -41,8 +41,9 @@ export default {
 
             <!-- Actions -->
             <div class="d-flex align-items-center">
-                <BaseButton @click="nextUp.clearAllTracks" label="clear" class="btn-outline-orange w-auto px-2 me-2" />
-                <BaseButton @click="$emit('close-modal')" icon="times" size="xl" />
+                <BaseButton @click="nextUp.clearAllTracks" label="clear" class="btn btn-outline-orange me-2">clear
+                </BaseButton>
+                <BaseButton @click="$emit('close-modal')" icon="times" iconSize="xl" class="btn btn-ui" />
             </div>
         </div>
 

@@ -82,12 +82,13 @@ export default {
         <!-- Actions -->
         <ul class="nextup-item-actions ms-1">
             <li>
-                <BaseButton v-if="isPlaying" @click="pause" icon="pause" :class="{ 'btn-disabled': isLoading }"
+                <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn btn-ui"
+                    :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
+                <BaseButton v-else @click="play" icon="play" class="btn btn-ui" :class="{ 'btn-disabled': isLoading }"
                     :disabled="isLoading" />
-                <BaseButton v-else @click="play" icon="play" :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
             </li>
             <li>
-                <BaseButton @click="nextUp.removeTrack(listPosition)" icon="trash"
+                <BaseButton @click="nextUp.removeTrack(listPosition)" icon="trash" class="btn btn-ui"
                     :class="{ 'btn-disabled': isLoading || isCurrentTrack }" :disabled="isLoading" />
             </li>
         </ul>
