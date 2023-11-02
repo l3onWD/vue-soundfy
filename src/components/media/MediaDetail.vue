@@ -5,6 +5,9 @@
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
 
+/*** DATA ***/
+import * as Utils from '@/utils/';
+
 
 export default {
 
@@ -27,13 +30,8 @@ export default {
             // Get total duration
             const totlSecs = this.media.tracks.reduce((tot, { duration }) => tot += duration, 0);
 
-            // Format time
-            const hours = Math.floor(totlSecs / 3600);
-            const minutes = Math.floor(totlSecs / 60);
-            const seconds = Math.floor(totlSecs % 60);
-
             // Return time string
-            return hours + ':' + (minutes < 10 ? `0${minutes}` : minutes) + ':' + (seconds < 10 ? `0${seconds}` : seconds);
+            return Utils.formatTime(totlSecs);
         }
     }
 
