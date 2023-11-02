@@ -1,0 +1,85 @@
+/* -----------------------------------------
+* BUTTON
+-------------------------------------------*/
+@use '../vars' as *;
+
+
+.btn {
+    padding: 0.25rem 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    color: $col-gray-900;
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    line-height: 1;
+
+
+    // State
+    &:hover {
+        color: $col-dark;
+    }
+
+    &.active {
+        color: $col-orange;
+    }
+
+    &.btn-disabled {
+        color: $col-gray-700;
+
+        &:hover {
+            color: $col-gray-700;
+        }
+    }
+
+    // Type
+    &.btn-ui {
+        padding: 0;
+        width: 28px;
+        height: 28px;
+
+        &.btn-sm {
+            width: 24px;
+            height: 24px;
+        }
+
+        &.btn-lg {
+            width: 56px;
+            height: 56px;
+        }
+
+    }
+
+    // Color
+    &.btn-light {
+        color: $col-gray-700;
+
+        &:hover {
+            color: $col-light;
+        }
+    }
+
+    &.btn-orange {
+        color: $col-gray-500;
+        background-color: $col-orange;
+
+        &:hover {
+            color: $col-light;
+            background-color: $col-darkorange;
+        }
+    }
+
+    &.btn-outline-orange {
+        color: $col-gray-700;
+        border: 1px solid $col-gray-700;
+
+        &:hover {
+            color: $col-light;
+            background-color: $col-orange;
+            ;
+        }
+    }
+}
