@@ -17,9 +17,15 @@ export default {
     components: { AppLoader, MediaDetail, TrackList },
 
     data: () => ({
-        playlist: null,
+        media: null,
         isLoading: 0
     }),
+
+    computed: {
+        mediaType() {
+            return 'playlist';
+        }
+    },
 
     methods: {
 
@@ -36,8 +42,8 @@ export default {
 
     created() {
 
-        // Get playlist
-        this.fetchApi(`/playlists/${this.$route.params.id}`, (data) => { this.playlist = data });
+        // Get media
+        this.fetchApi(`/${this.mediaType}s/${this.$route.params.id}`, (data) => { this.media = data });
     }
 
 }
@@ -49,20 +55,20 @@ export default {
     <AppLoader v-if="isLoading" />
 
     <!-- Page Content -->
-    <div v-else class="playlist-detail pb-4">
+    <div v-else class="detail pb-4">
 
         <!-- Content Top -->
-        <div class="playlist-top p-3">
+        <div class="detail-top p-3">
 
             <!-- Detail -->
-            <MediaDetail :media="playlist" />
+            <MediaDetail :media="media" />
         </div>
 
         <!-- Content Bottom -->
-        <div class="playlist-bottom p-3">
+        <div class="detail-bottom p-3">
 
             <!-- Tracks -->
-            <TrackList :tracks="playlist.tracks" />
+            <TrackList :tracks="media.tracks" />
         </div>
 
     </div>
@@ -73,9 +79,9 @@ export default {
 @use '../assets/scss/vars' as *;
 
 
-.playlist-detail {
+.detail {
 
-    .playlist-top {
+    .detail-top {
         color: $col-light;
         background-image: linear-gradient(130deg, $col-gray-900 20%, $col-dark);
     }
