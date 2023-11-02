@@ -24,16 +24,9 @@ export default {
     }),
 
     computed: {
+
         mediaType() {
             return this.$route.fullPath.split('/')[1].slice(0, -1);
-        },
-
-        durationString() {
-            return Utils.formatTime(this.media.duration);
-        },
-
-        releaseDateString() {
-            return Utils.formatDate(this.media.album.release_date);
         }
     },
 
@@ -90,7 +83,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .detail {

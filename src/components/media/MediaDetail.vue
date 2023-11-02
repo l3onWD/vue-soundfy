@@ -25,7 +25,7 @@ export default {
     },
 
     computed: {
-        totalDuration() {
+        totalDurationString() {
 
             // Get total duration
             const totlSecs = this.media.tracks.reduce((tot, { duration }) => tot += duration, 0);
@@ -72,7 +72,7 @@ export default {
                 <div v-if="type != 'track'" class="media-length d-none d-md-flex">
                     <h2 class="mb-0">{{ media.tracks.length }}</h2>
                     <h6 class="mb-0">TRACKS</h6>
-                    <span>{{ totalDuration }}</span>
+                    <span>{{ totalDurationString }}</span>
                 </div>
             </div>
 

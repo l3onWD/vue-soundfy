@@ -64,6 +64,3 @@ export default {
         </div>
     </div>
 </template>
-
-
-<style></style>
