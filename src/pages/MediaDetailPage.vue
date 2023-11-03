@@ -34,7 +34,6 @@ export default {
 
             handler() {
                 this.fetchApi(this.$route.fullPath, (data) => {
-                    console.log(data);
                     this.media = this.setUid(data, this.mediaType);
                 });
             },

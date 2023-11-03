@@ -19,7 +19,11 @@ export default {
 
         <!-- Track Info -->
         <div class="media-details-info">
-            <h6 class="mb-1" :title="track.title">{{ track.title }}</h6>
+            <h6 class="mb-1" :title="track.title">
+                <RouterLink :to="{ name: `track-detail`, params: { id: track.id } }">
+                    {{ track.title }}
+                </RouterLink>
+            </h6>
             <span :title="track.author" class="col-gray-700">{{ track.album.author.name }}</span>
         </div>
 
