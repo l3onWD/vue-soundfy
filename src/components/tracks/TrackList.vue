@@ -3,13 +3,12 @@
 * RESOURCES
 -------------------------------------------*/
 /*** COMPONENTS ***/
-import BaseButton from '@/components/base/BaseButton.vue';
-import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
+import TrackListItem from '@/components/tracks/TrackListItem.vue';
 
 
 export default {
 
-    components: { BaseButton, TrackDetailCard },
+    components: { TrackListItem },
 
     props: {
         tracks: {
@@ -28,15 +27,8 @@ export default {
     <ul class="track-list">
         <li v-for="(track, idx) in tracks" :key="track.id">
 
-            <span class="me-3">{{ (idx + 1) }}</span>
+            <TrackListItem :track="track" :listPosition="idx" />
 
-            <TrackDetailCard :track="track" />
-
-            <div class="d-flex align-items-center">
-                <BaseButton icon="heart" iconStyle="far" title="Like" class="btn btn-ui" />
-                <BaseButton icon="list" title="Add to Next Up" class="btn btn-ui" />
-                <BaseButton icon="play" class="btn btn-ui" />
-            </div>
         </li>
     </ul>
 </template>
@@ -51,21 +43,11 @@ export default {
     li {
         padding: 0.5rem 0;
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         border-bottom: 1px solid $col-gray-300;
 
         &:first-child {
             border-top: 1px solid $col-gray-300;
         }
-    }
-
-    img {
-        width: auto;
-        height: 40px;
-
-        object-fit: cover;
     }
 }
 </style>
