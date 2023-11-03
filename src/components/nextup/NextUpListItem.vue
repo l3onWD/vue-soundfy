@@ -4,7 +4,7 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
-import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
+import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
 
 /*** DATA ***/
 import { usePlayerStore } from '@/stores/PlayerStore';
@@ -12,7 +12,7 @@ import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
-    components: { BaseButton, MediaDetailsCard },
+    components: { BaseButton, TrackDetailCard },
 
     data: () => ({
         player: usePlayerStore(),
@@ -80,7 +80,7 @@ export default {
     <div class="nextup-item">
 
         <!-- Track Details -->
-        <MediaDetailsCard :track="track" :class="{ 'col-gray-700': wasPlayed }" />
+        <TrackDetailCard :track="track" :class="{ 'col-gray-700': wasPlayed }" />
 
         <!-- Actions -->
         <ul class="nextup-item-actions ms-1">

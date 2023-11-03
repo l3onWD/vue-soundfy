@@ -3,7 +3,7 @@
 * RESOURCES
 -------------------------------------------*/
 /*** COMPONENTS ***/
-import MediaDetailsCard from '@/components/media/MediaDetailsCard.vue';
+import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
 import TimeControl from '@/components/player/TimeControl.vue';
 import VolumeControl from '@/components/player/VolumeControl.vue';
 import NextUpModal from '@/components/nextup/NextUpModal.vue';
@@ -15,7 +15,7 @@ import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
-    components: { TimeControl, MediaDetailsCard, VolumeControl, BaseButton, NextUpModal },
+    components: { TimeControl, TrackDetailCard, VolumeControl, BaseButton, NextUpModal },
 
     data: () => ({
         nextUpModalActive: false,
@@ -100,7 +100,7 @@ export default {
             <div class="d-flex justify-content-between flex-shrink-0">
 
                 <!-- Track Details -->
-                <MediaDetailsCard :track="nextUp.currentTrack" />
+                <TrackDetailCard :track="nextUp.currentTrack" />
 
 
                 <!-- Track Actions -->
