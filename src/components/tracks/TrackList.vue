@@ -4,11 +4,12 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
+import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
 
 
 export default {
 
-    components: { BaseButton },
+    components: { BaseButton, TrackDetailCard },
 
     props: {
         tracks: {
@@ -27,17 +28,9 @@ export default {
     <ul class="track-list">
         <li v-for="(track, idx) in tracks" :key="track.id">
 
-            <div class="d-flex align-items-center flex-grow-1">
+            <span class="me-3">{{ (idx + 1) }}</span>
 
-                <img :src="track.album.cover" :alt="track.title">
-
-                <span class="mx-3">{{ (idx + 1) }}</span>
-
-                <div class="flex-grow-1">
-                    <h6 class="mb-0">{{ track.title }}</h6>
-                    <span>{{ track.album.author.name }}</span>
-                </div>
-            </div>
+            <TrackDetailCard :track="track" />
 
             <div class="d-flex align-items-center">
                 <BaseButton icon="heart" iconStyle="far" title="Like" class="btn btn-ui" />
