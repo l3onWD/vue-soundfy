@@ -24,10 +24,6 @@ export default {
         media: {
             type: Object,
             default: null
-        },
-        type: {
-            type: String,
-            default: ''
         }
     },
 
@@ -130,7 +126,7 @@ export default {
                 </div>
 
                 <!-- Length Info -->
-                <div v-if="type != 'track'" class="media-length d-none d-md-flex">
+                <div v-if="media.kind != 'track'" class="media-length d-none d-md-flex">
                     <h2 class="mb-0">{{ media.tracks.length }}</h2>
                     <h6 class="mb-0">TRACKS</h6>
                     <span>{{ totalDurationString }}</span>

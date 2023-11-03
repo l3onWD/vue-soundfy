@@ -90,7 +90,7 @@ export default {
         <div class="detail-top p-3">
 
             <!-- Detail -->
-            <MediaDetail :media="media" :type="mediaType" />
+            <MediaDetail :media="media" />
         </div>
 
         <!-- Content Bottom -->
