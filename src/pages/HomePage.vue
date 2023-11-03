@@ -42,7 +42,7 @@ export default {
             // Calculate tracks based on media kind
             const tracks = kind === 'track' ?
                 [{ ...media, uid: `${prefixUid}-${media.id}` }] :
-                media.tracks.map(track => ({ ...track, uid: `${prefixUid}-${media.id}` }));
+                media.tracks.map(track => ({ ...track, uid: `${prefixUid}-${track.id}` }));
 
 
             return {
