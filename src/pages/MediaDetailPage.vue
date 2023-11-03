@@ -29,6 +29,19 @@ export default {
         }
     },
 
+    watch: {
+        '$route.params': {
+
+            handler() {
+                this.fetchApi(this.$route.fullPath, (data) => {
+                    console.log(data);
+                    this.media = this.setUid(data, this.mediaType);
+                });
+            },
+            immediate: true
+        }
+    },
+
     methods: {
 
         fetchApi(endpoint, success) {
@@ -62,15 +75,6 @@ export default {
                 author: media.author
             }
         }
-    },
-
-    created() {
-
-        // Get media
-        this.fetchApi(this.$route.fullPath, (data) => {
-
-            this.media = this.setUid(data, this.mediaType);
-        });
     }
 
 }
