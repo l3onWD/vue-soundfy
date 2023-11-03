@@ -34,12 +34,11 @@ export default {
     methods: {
 
         play() {
-            this.player.resumeTrack();
-        },
 
+            if (this.player.isLoading) return;
 
-        pause() {
-            this.player.pauseTrack();
+            if (!this.player.isPlaying) this.player.resumeTrack();
+            else this.player.pauseTrack();
         },
 
 
@@ -135,10 +134,10 @@ export default {
                     <BaseButton @click="goPrevTrack" icon="backward-step" class="btn btn-ui" />
                 </li>
                 <li>
-                    <BaseButton v-if="player.isPlaying" @click="pause" icon="pause" iconSize="lg" class="btn btn-ui"
-                        :class="{ 'btn-disabled': player.isLoading }" :disabled="player.isLoading" />
-                    <BaseButton v-else @click="play" icon="play" iconSize="lg" class="btn btn-ui"
-                        :class="{ 'btn-disabled': player.isLoading }" :disabled="player.isLoading" />
+                    <!-- Play/Pause -->
+                    <BaseButton v-if="player.isLoading" icon="spinner" iconSize="lg" class="btn btn-ui fa-spin-pulse" />
+                    <BaseButton v-else @click="play" :icon="player.isPlaying ? 'pause' : 'play'" iconSize="lg"
+                        class="btn btn-ui" />
                 </li>
                 <li>
                     <BaseButton @click="goNextTrack" icon="forward-step" class="btn btn-ui" />

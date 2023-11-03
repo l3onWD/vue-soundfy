@@ -56,19 +56,20 @@ export default {
     methods: {
 
         play() {
-            if (this.isCurrentTrack) this.player.resumeTrack();
+
+            if (this.isLoading) return;
+
+            if (this.isCurrentTrack)
+
+                this.isPlaying ? this.player.resumeTrack() : this.player.resumeTrack();
+
             else {
                 this.player.fetchTrack(this.track);
 
                 // Update index to this track
                 this.nextUp.goTo(this.listPosition);
             }
-        },
-
-
-        pause() {
-            this.player.pauseTrack();
-        },
+        }
     }
 
 }
@@ -84,10 +85,9 @@ export default {
         <!-- Actions -->
         <ul class="nextup-item-actions ms-1">
             <li>
-                <BaseButton v-if="isPlaying" @click="pause" icon="pause" class="btn btn-ui"
-                    :class="{ 'btn-disabled': isLoading }" :disabled="isLoading" />
-                <BaseButton v-else @click="play" icon="play" class="btn btn-ui" :class="{ 'btn-disabled': isLoading }"
-                    :disabled="isLoading" />
+                <!-- Play/Pause -->
+                <BaseButton v-if="isLoading" icon="spinner" iconSize="lg" class="btn btn-ui fa-spin-pulse" />
+                <BaseButton v-else @click="play" :icon="isPlaying ? 'pause' : 'play'" iconSize="lg" class="btn btn-ui" />
             </li>
             <li>
                 <BaseButton @click="nextUp.removeTrack(listPosition)" icon="trash" class="btn btn-ui"
