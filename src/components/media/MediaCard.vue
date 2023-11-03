@@ -45,22 +45,20 @@ export default {
 
     methods: {
 
-        play() {
+        playAll() {
+            if (this.isLoading) return;
 
-            if (this.isActive) this.player.resumeTrack();
-            else {
+            if (this.isActive) {
+
+                this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
+
+            } else {
                 this.player.fetchTrack(this.media.tracks[0]);
 
                 // Reset upList and add this track
                 this.nextUp.setTracks(this.media.tracks);
             }
         },
-
-
-        pause() {
-            this.player.pauseTrack();
-        },
-
 
         addToNextUp() {
 
@@ -91,16 +89,14 @@ export default {
             <div class="media-card-controls">
 
                 <!-- Loader -->
-                <FontAwesomeIcon v-if="isLoading" icon="fas fa-spinner" spin-pulse size="3x" class="text-white" />
+                <BaseButton v-if="isLoading" icon="spinner" iconSize="2xl"
+                    class="btn btn-ui btn-lg btn-orange rounded-circle fa-spin-pulse" />
 
-                <!-- Controls -->
-                <div v-else>
-                    <!-- Play/Pause -->
-                    <BaseButton v-if="isPlaying" @click="pause" icon="pause" iconSize="2xl"
-                        class="btn btn-ui btn-lg btn-orange rounded-circle" />
-                    <BaseButton v-else @click="play" icon="play" iconSize="2xl"
-                        class="btn btn-ui btn-lg btn-orange rounded-circle" />
-                </div>
+                <!-- Play/Pause -->
+                <BaseButton v-else @click="playAll" :icon="isPlaying ? 'pause' : 'play'" iconSize="2xl"
+                    class="btn btn-ui btn-lg btn-orange rounded-circle" />
+
+
 
             </div>
 

@@ -51,16 +51,16 @@ export default {
         totalDurationString() {
 
             // Get total duration
-            const totlSecs = this.media.tracks.reduce((tot, { duration }) => tot += duration, 0);
+            const totalSecs = this.media.tracks.reduce((tot, { duration }) => tot += duration, 0);
 
             // Return time string
-            return Utils.formatTime(totlSecs);
+            return Utils.formatTime(totalSecs);
         }
     },
 
     methods: {
 
-        play() {
+        playAll() {
 
             if (this.isLoading) return;
 
@@ -104,6 +104,7 @@ export default {
                     <!-- Actions -->
                     <div class="d-flex align-items-center">
 
+                        <!-- Like -->
                         <BaseButton icon="heart" iconStyle="far" iconSize="lg" title="Like"
                             class="btn btn-ui btn-light me-1" />
 
@@ -113,7 +114,7 @@ export default {
                         <!-- Play/Pause -->
                         <BaseButton v-if="isLoading" icon="spinner" iconSize="lg"
                             class="btn btn-ui btn-light fa-spin-pulse" />
-                        <BaseButton v-else @click="play" :icon="isPlaying ? 'pause' : 'play'" iconSize="lg"
+                        <BaseButton v-else @click="playAll" :icon="isPlaying ? 'pause' : 'play'" iconSize="lg"
                             class="btn btn-ui btn-light" />
                     </div>
                 </div>
