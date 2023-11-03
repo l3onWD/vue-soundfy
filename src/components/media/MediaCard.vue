@@ -29,7 +29,7 @@ export default {
 
         isActive() {
             if (!this.nextUp.currentTrack) return false;
-            return this.media.tracks.some(({ sourceUid }) => this.nextUp.currentTrack.sourceUid === sourceUid);
+            return this.media.tracks.some(({ uid }) => this.nextUp.currentTrack.uid === uid);
         },
 
 

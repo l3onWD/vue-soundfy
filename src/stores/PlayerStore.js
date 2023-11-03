@@ -49,7 +49,7 @@ export const usePlayerStore = defineStore('player', {
                 .then(({ data }) => {
 
                     // Abort if track changed during fetch
-                    if (this.isTrackChaged(track)) return;
+                    if (this.isTrackChaged(track.uid)) return;
 
                     // Initialize audio context and volume
                     this.initAudio();
@@ -59,7 +59,7 @@ export const usePlayerStore = defineStore('player', {
                         buffer => {
 
                             // Abort if track changed during buffering
-                            if (this.isTrackChaged(track)) return;
+                            if (this.isTrackChaged(track.uid)) return;
 
                             // Set audio buffer and start track
                             this.audioBuffer = buffer;
@@ -80,11 +80,11 @@ export const usePlayerStore = defineStore('player', {
          * Check il track is changed
          * used for abort fetching
          * 
-         * @param {Object} track - fetching track
+         * @param {String} trackUid - fetching track uid
          * @returns {Boolean}
          */
-        isTrackChaged(track) {
-            return track.id !== this.track.id || track.sourceUid !== this.track.sourceUid;
+        isTrackChaged(trackUid) {
+            return trackUid !== this.track.uid;
         },
 
 

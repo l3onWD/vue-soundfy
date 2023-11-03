@@ -56,17 +56,16 @@ export default {
         setUid(media, kind) {
 
             // Calculate Unique ID for grouping all media kind
-            const uid = `${kind}-${media.id}`;
+            const prefixUid = `${kind}-${media.id}`;
 
             // Calculate tracks based on media kind
             const tracks = kind === 'track' ?
-                [{ ...media, sourceUid: uid }] :
-                media.tracks.map(track => ({ ...track, sourceUid: uid }));
+                [{ ...media, uid: `${prefixUid}-${media.id}` }] :
+                media.tracks.map(track => ({ ...track, uid: `${prefixUid}-${media.id}` }));
 
 
             return {
                 id: media.id,
-                uid,
                 kind,
                 cover: media.cover,
                 title: media.title,
