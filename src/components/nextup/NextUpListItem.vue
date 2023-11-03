@@ -34,6 +34,7 @@ export default {
     computed: {
 
         isCurrentTrack() {
+            if (!this.nextUp.currentTrack) return false;
             return this.nextUp.currentIndex === this.listPosition;
         },
 
@@ -61,7 +62,7 @@ export default {
 
             if (this.isCurrentTrack)
 
-                this.isPlaying ? this.player.resumeTrack() : this.player.resumeTrack();
+                this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
 
             else {
                 this.player.fetchTrack(this.track);
@@ -80,7 +81,7 @@ export default {
     <div class="nextup-item">
 
         <!-- Track Details -->
-        <TrackDetailCard :track="track" :class="{ 'col-gray-700': wasPlayed }" />
+        <TrackDetailCard :track="track" :class="{ 'col-gray-700': wasPlayed, 'col-orange': isCurrentTrack }" />
 
         <!-- Actions -->
         <ul class="nextup-item-actions ms-1">
