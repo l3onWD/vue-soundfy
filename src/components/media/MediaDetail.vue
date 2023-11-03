@@ -74,6 +74,15 @@ export default {
                 // Reset upList and add this track
                 this.nextUp.setTracks(this.media.tracks);
             }
+        },
+
+        addToNextUp() {
+
+            const wasEmpty = !this.nextUp.totalTracks;
+
+            this.nextUp.addTracks(this.media.tracks);
+
+            if (wasEmpty) this.player.fetchTrack(this.media.tracks[0]);
         }
     }
 
@@ -109,7 +118,8 @@ export default {
                             class="btn btn-ui btn-light me-1" />
 
                         <!-- Add to next up -->
-                        <BaseButton icon="list" iconSize="lg" title="Add to Next Up" class="btn btn-ui btn-light me-1" />
+                        <BaseButton @click="addToNextUp" icon="list" iconSize="lg" title="Add to Next Up"
+                            class="btn btn-ui btn-light me-1" />
 
                         <!-- Play/Pause -->
                         <BaseButton v-if="isLoading" icon="spinner" iconSize="lg"
