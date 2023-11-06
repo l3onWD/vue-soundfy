@@ -33,11 +33,12 @@ export const useNextUpStore = defineStore('nextUp', {
          * Set the tracks list
          * 
          * @param {Array} tracks - An array of tracks objects
+         * @param {Number} startIndex - Set the current index to a new position
          */
-        setTracks(tracks) {
+        setTracks(tracks, startIndex = 0) {
             this.tracks = [];
             this.tracks.push(...tracks);
-            this.currentIndex = 0;
+            this.currentIndex = startIndex;
         },
 
 
