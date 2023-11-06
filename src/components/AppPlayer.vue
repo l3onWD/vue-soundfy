@@ -4,6 +4,7 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
+import PlayControl from '@/components/player/PlayControl.vue';
 import TimeControl from '@/components/player/TimeControl.vue';
 import VolumeControl from '@/components/player/VolumeControl.vue';
 import NextUpModal from '@/components/nextup/NextUpModal.vue';
@@ -15,7 +16,7 @@ import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
-    components: { TimeControl, TrackDetailCard, VolumeControl, BaseButton, NextUpModal },
+    components: { PlayControl, TimeControl, TrackDetailCard, VolumeControl, BaseButton, NextUpModal },
 
     data: () => ({
         nextUpModalActive: false,
@@ -133,10 +134,9 @@ export default {
                     <BaseButton @click="goPrevTrack" icon="backward-step" class="btn btn-ui" />
                 </li>
                 <li>
-                    <!-- Play/Pause -->
-                    <BaseButton v-if="player.isLoading" icon="spinner" iconSize="lg" class="btn btn-ui fa-spin-pulse" />
-                    <BaseButton v-else @click="play" :icon="player.isPlaying ? 'pause' : 'play'" iconSize="lg"
-                        class="btn btn-ui" />
+                    <!-- Play Control -->
+                    <PlayControl @@play="play" :isLoading="player.isLoading" :isPlaying="player.isPlaying" />
+
                 </li>
                 <li>
                     <BaseButton @click="goNextTrack" icon="forward-step" class="btn btn-ui" />

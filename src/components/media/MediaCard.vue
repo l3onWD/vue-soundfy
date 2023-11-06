@@ -4,6 +4,7 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
+import PlayControl from '@/components/player/PlayControl.vue';
 
 /*** DATA ***/
 import { usePlayerStore } from '@/stores/PlayerStore';
@@ -11,7 +12,7 @@ import { useNextUpStore } from '@/stores/NextUpStore';
 
 
 export default {
-    components: { BaseButton },
+    components: { BaseButton, PlayControl },
 
     data: () => ({
         player: usePlayerStore(),
@@ -45,7 +46,7 @@ export default {
 
     methods: {
 
-        playAll() {
+        play() {
             if (this.isLoading) return;
 
             if (this.isActive) {
@@ -88,16 +89,9 @@ export default {
             <!-- Media Controls -->
             <div class="media-card-controls">
 
-                <!-- Loader -->
-                <BaseButton v-if="isLoading" icon="spinner" iconSize="2xl"
-                    class="btn btn-ui btn-lg btn-orange rounded-circle fa-spin-pulse" />
-
-                <!-- Play/Pause -->
-                <BaseButton v-else @click="playAll" :icon="isPlaying ? 'pause' : 'play'" iconSize="2xl"
-                    class="btn btn-ui btn-lg btn-orange rounded-circle" />
-
-
-
+                <!-- Play Control -->
+                <PlayControl @@play="play" :isLoading="isLoading" :isPlaying="isPlaying" colorClass="btn-orange" big
+                    rounded />
             </div>
 
             <!-- Track Actions -->

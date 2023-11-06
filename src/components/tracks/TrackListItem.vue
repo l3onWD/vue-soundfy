@@ -4,6 +4,7 @@
 -------------------------------------------*/
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
+import PlayControl from '@/components/player/PlayControl.vue';
 import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
 
 /*** DATA ***/
@@ -13,7 +14,7 @@ import { useNextUpStore } from '@/stores/NextUpStore';
 
 export default {
 
-    components: { BaseButton, TrackDetailCard },
+    components: { BaseButton, PlayControl, TrackDetailCard },
 
     data: () => ({
         player: usePlayerStore(),
@@ -52,8 +53,8 @@ export default {
 
     methods: {
 
-        handlePlayPauseClick() {
-            this.$emit('play-pause-clicked', this.track.uid, this.listPosition);
+        handlePlay() {
+            this.$emit('@play', this.track.uid, this.listPosition);
         },
 
         addToNextUp() {
@@ -66,7 +67,7 @@ export default {
         }
     },
 
-    emits: ['play-pause-clicked']
+    emits: ['@play']
 
 }
 </script>
@@ -89,10 +90,8 @@ export default {
             </li>
 
             <li>
-                <!-- Play/Pause -->
-                <BaseButton v-if="isLoading" icon="spinner" iconSize="lg" class="btn btn-ui fa-spin-pulse" />
-                <BaseButton v-else @click="handlePlayPauseClick" :icon="isPlaying ? 'pause' : 'play'" iconSize="lg"
-                    class="btn btn-ui" />
+                <!-- Play Control -->
+                <PlayControl @@play="handlePlay" :isLoading="isLoading" :isPlaying="isPlaying" />
             </li>
 
         </ul>

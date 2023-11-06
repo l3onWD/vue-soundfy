@@ -73,7 +73,7 @@ export default {
     <ul class="track-list">
         <li v-for="(track, idx) in tracks" :key="track.id">
 
-            <TrackListItem :track="track" :listPosition="idx" @play-pause-clicked="play" />
+            <TrackListItem :track="track" :listPosition="idx" @@play="play" />
 
         </li>
     </ul>
