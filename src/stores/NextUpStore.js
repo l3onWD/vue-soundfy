@@ -26,13 +26,18 @@ export const useNextUpStore = defineStore('nextUp', {
          */
         addTracks(tracks) {
 
+            const wasEmpty = !this.totalTracks;
+
             // Add to list
             this.tracks.push(...tracks);
+
+            // Play track if list was empty
+            if (wasEmpty) this.player.fetchTrack(this.currentTrack);
         },
 
 
         /**
-         * Set the tracks list
+         * Set the tracks list and play start track
          * 
          * @param {Array} tracks - An array of tracks objects
          * @param {Number} startIndex - Set the current index to a new position
@@ -42,6 +47,7 @@ export const useNextUpStore = defineStore('nextUp', {
             this.tracks.push(...tracks);
             this.currentIndex = startIndex;
 
+            // Play track
             this.player.fetchTrack(this.currentTrack);
 
         },
@@ -78,7 +84,7 @@ export const useNextUpStore = defineStore('nextUp', {
 
 
         /**
-         * Move to a new track
+         * Move to a new track and play it
          * 
          * @param {String | Number} dir - direction or track position
          */
@@ -87,6 +93,7 @@ export const useNextUpStore = defineStore('nextUp', {
             else if (dir === 'prev' && this.prevTrack) this.currentIndex--;
             else if (typeof dir === 'number') this.currentIndex = dir;
 
+            // Play track
             this.player.fetchTrack(this.currentTrack);
         }
 

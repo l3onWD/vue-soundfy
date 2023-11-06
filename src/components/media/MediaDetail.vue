@@ -67,16 +67,6 @@ export default {
 
             // Resume/Pause
             else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
-        },
-
-
-        addToNextUp() {
-
-            const wasEmpty = !this.nextUp.totalTracks;
-
-            this.nextUp.addTracks(this.media.tracks);
-
-            if (wasEmpty) this.player.fetchTrack(this.media.tracks[0]);
         }
     }
 
@@ -112,7 +102,7 @@ export default {
                             class="btn btn-ui btn-light me-1" />
 
                         <!-- Add to next up -->
-                        <BaseButton @click="addToNextUp" icon="list" iconSize="lg" title="Add to Next Up"
+                        <BaseButton @click="nextUp.addTracks(media.tracks)" icon="list" iconSize="lg" title="Add to Next Up"
                             class="btn btn-ui btn-light me-1" />
 
                         <!-- Play Control -->
