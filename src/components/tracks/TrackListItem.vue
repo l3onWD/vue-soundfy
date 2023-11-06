@@ -54,6 +54,15 @@ export default {
 
         handlePlayPauseClick() {
             this.$emit('play-pause-clicked', this.track.uid, this.listPosition);
+        },
+
+        addToNextUp() {
+
+            const wasEmpty = !this.nextUp.totalTracks;
+
+            this.nextUp.addTracks([this.track]);
+
+            if (wasEmpty) this.player.fetchTrack(this.track);
         }
     },
 
@@ -76,7 +85,7 @@ export default {
             </li>
 
             <li>
-                <BaseButton icon="list" title="Add to Next Up" class="btn btn-ui" />
+                <BaseButton @click="addToNextUp" icon="list" title="Add to Next Up" class="btn btn-ui" />
             </li>
 
             <li>
