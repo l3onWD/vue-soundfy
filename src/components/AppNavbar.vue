@@ -1,8 +1,8 @@
-<script>
-export default {
+<script setup>
 
+/*** COMPONENTS ***/
+import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
 
-}
 </script>
 
 
@@ -23,12 +23,11 @@ export default {
                         Home
                     </RouterLink>
                 </li>
-                <li>
-                    <a href="#">
-                        <FontAwesomeIcon icon="fas fa-search" size="lg" class="d-md-none" />
-                        Search
-                    </a>
+
+                <li class="p-2">
+                    <BaseSearchInput />
                 </li>
+
                 <li>
                     <a href="#">
                         <FontAwesomeIcon icon="fas fa-book" size="lg" class="d-md-none" />
@@ -43,7 +42,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .app-navbar {
