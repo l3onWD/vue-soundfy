@@ -36,8 +36,10 @@ export default {
 
         play() {
 
+            // Check if is loading
             if (this.player.isLoading) return;
 
+            // Resume/Pause
             this.player.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
         },
 

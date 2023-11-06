@@ -48,7 +48,7 @@ export default {
 
         play(uid, index) {
 
-            // Check if this media card is loading
+            // Check if this media is loading
             if (this.isLoading) return;
 
             // Set Media to next up list and play clicked track

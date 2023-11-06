@@ -62,7 +62,8 @@ export const useNextUpStore = defineStore('nextUp', {
             if (this.totalTracks <= 1) return;
 
             // Take only the current track
-            this.setTracks([this.currentTrack])
+            this.tracks = [this.currentTrack];
+            this.currentIndex = 0;
         },
 
 

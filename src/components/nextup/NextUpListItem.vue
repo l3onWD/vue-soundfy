@@ -34,14 +34,14 @@ export default {
 
     computed: {
 
-        isCurrentTrack() {
+        isActive() {
             if (!this.nextUp.currentTrack) return false;
             return this.nextUp.currentIndex === this.listPosition;
         },
 
 
         isPlaying() {
-            return this.isCurrentTrack && this.player.isPlaying;
+            return this.isActive && this.player.isPlaying;
         },
 
 
@@ -51,7 +51,7 @@ export default {
 
 
         isLoading() {
-            return this.isCurrentTrack && this.player.isLoading;
+            return this.isActive && this.player.isLoading;
         }
     },
 
@@ -59,16 +59,14 @@ export default {
 
         play() {
 
+            // Check if this track is loading
             if (this.isLoading) return;
 
-            if (this.isCurrentTrack)
+            // Update index and play related track
+            if (!this.isActive) this.nextUp.goTo(this.listPosition);
 
-                this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
-
-            else {
-                // Update index and play related track
-                this.nextUp.goTo(this.listPosition);
-            }
+            // Resume/Pause
+            else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
         }
     }
 
@@ -80,7 +78,7 @@ export default {
     <div class="nextup-item">
 
         <!-- Track Details -->
-        <TrackDetailCard :track="track" :class="{ 'col-gray-700': wasPlayed, 'col-orange': isCurrentTrack }" />
+        <TrackDetailCard :track="track" :class="{ 'col-gray-700': wasPlayed, 'col-orange': isActive }" />
 
         <!-- Actions -->
         <ul class="nextup-item-actions ms-1">
@@ -90,7 +88,7 @@ export default {
             </li>
             <li>
                 <BaseButton @click="nextUp.removeTrack(listPosition)" icon="trash" class="btn btn-ui"
-                    :class="{ 'btn-disabled': isLoading || isCurrentTrack }" :disabled="isLoading" />
+                    :class="{ 'btn-disabled': isLoading || isActive }" :disabled="isLoading" />
             </li>
         </ul>
 

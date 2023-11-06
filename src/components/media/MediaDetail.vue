@@ -59,7 +59,7 @@ export default {
 
         play() {
 
-            // Check if this media card is loading
+            // Check if this media is loading
             if (this.isLoading) return;
 
             // Set Media to next up list and play first track
