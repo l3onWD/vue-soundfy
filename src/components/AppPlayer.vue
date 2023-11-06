@@ -37,8 +37,7 @@ export default {
 
             if (this.player.isLoading) return;
 
-            if (!this.player.isPlaying) this.player.resumeTrack();
-            else this.player.pauseTrack();
+            this.player.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
         },
 
 
