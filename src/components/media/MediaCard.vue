@@ -47,18 +47,16 @@ export default {
     methods: {
 
         play() {
+
+            // Check if this media card is loading
             if (this.isLoading) return;
 
-            if (this.isActive) {
+            // Set Media to next up list and play first track
+            if (!this.isActive) this.nextUp.setTracks(this.media.tracks);
 
-                this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
+            // Resume/Pause
+            else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
 
-            } else {
-                this.player.fetchTrack(this.media.tracks[0]);
-
-                // Reset upList and add this track
-                this.nextUp.setTracks(this.media.tracks);
-            }
         },
 
         addToNextUp() {

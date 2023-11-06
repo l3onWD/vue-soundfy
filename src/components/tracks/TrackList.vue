@@ -48,18 +48,15 @@ export default {
 
         play(uid, index) {
 
+            // Check if this media card is loading
             if (this.isLoading) return;
 
-            if (this.isActive && this.nextUp.currentTrack.uid === uid) {
+            // Set Media to next up list and play clicked track
+            if (!this.isActive || this.nextUp.currentTrack.uid !== uid) this.nextUp.setTracks(this.tracks, index);
 
-                this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
+            // Resume/Pause
+            else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
 
-            } else {
-                this.player.fetchTrack(this.tracks[index]);
-
-                // Reset upList and add this track
-                this.nextUp.setTracks(this.tracks, index);
-            }
         }
     }
 

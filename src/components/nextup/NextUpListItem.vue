@@ -66,9 +66,7 @@ export default {
                 this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
 
             else {
-                this.player.fetchTrack(this.track);
-
-                // Update index to this track
+                // Update index and play related track
                 this.nextUp.goTo(this.listPosition);
             }
         }

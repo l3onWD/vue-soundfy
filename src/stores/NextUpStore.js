@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia';
+import { usePlayerStore } from '@/stores/PlayerStore';
 
 
 export const useNextUpStore = defineStore('nextUp', {
 
     state: () => ({
         tracks: [],
-        currentIndex: 0
+        currentIndex: 0,
+        player: usePlayerStore()
     }),
 
     getters: {
@@ -39,6 +41,9 @@ export const useNextUpStore = defineStore('nextUp', {
             this.tracks = [];
             this.tracks.push(...tracks);
             this.currentIndex = startIndex;
+
+            this.player.fetchTrack(this.currentTrack);
+
         },
 
 
@@ -75,12 +80,14 @@ export const useNextUpStore = defineStore('nextUp', {
         /**
          * Move to a new track
          * 
-         * @param {*} dir - direction or track position
+         * @param {String | Number} dir - direction or track position
          */
         goTo(dir) {
             if (dir === 'next' && this.nextTrack) this.currentIndex++;
             else if (dir === 'prev' && this.prevTrack) this.currentIndex--;
             else if (typeof dir === 'number') this.currentIndex = dir;
+
+            this.player.fetchTrack(this.currentTrack);
         }
 
     }
