@@ -36,6 +36,7 @@ export default {
 
         isActive() {
             if (!this.nextUp.currentTrack) return false;
+            // Check by list position cause duplicated tracks
             return this.nextUp.currentIndex === this.listPosition;
         },
 
