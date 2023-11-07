@@ -1,7 +1,7 @@
 <script setup>
 
 /*** COMPONENTS ***/
-import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
+import SearchFilter from '@/components/filters/SearchFilter.vue';
 
 </script>
 
@@ -15,23 +15,27 @@ import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
                 <img src="../assets/img/logo.svg" alt="Logo" class="logo">
             </RouterLink>
 
-            <!-- Main Menù -->
+            <!-- Main Menu -->
             <ul>
+
+                <!-- Home page-->
                 <li>
                     <RouterLink :to="{ name: 'home' }">
                         <FontAwesomeIcon icon="fas fa-house" size="lg" class="d-md-none" />
-                        Home
+                        <span class="d-none d-md-inline">Home</span>
                     </RouterLink>
                 </li>
 
-                <li class="p-2">
-                    <BaseSearchInput />
+                <!-- Search Bar-->
+                <li class="flex-grow-1 flex-md-grow-0 p-2">
+                    <SearchFilter />
                 </li>
 
+                <!-- Library page-->
                 <li>
                     <a href="#">
                         <FontAwesomeIcon icon="fas fa-book" size="lg" class="d-md-none" />
-                        Library
+                        <span class="d-none d-md-inline">Library</span>
                     </a>
                 </li>
             </ul>
@@ -68,15 +72,16 @@ import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
         height: 100%;
 
         display: flex;
-        justify-content: space-evenly;
         align-items: center;
 
         li {
-            flex: 0 0 calc(100%/3);
             height: 100%;
+
+            background-color: $col-gray-900;
         }
 
         a {
+            padding: 0 1rem;
             height: 100%;
 
             display: flex;
@@ -85,7 +90,6 @@ import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
             align-items: center;
 
             color: $col-gray-500;
-            background-color: $col-gray-900;
             border: 1px solid $col-dark;
 
             &:hover,
@@ -114,7 +118,6 @@ import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
             justify-content: flex-start;
 
             li {
-                flex: 0 0 80px;
                 height: 100%;
             }
         }
