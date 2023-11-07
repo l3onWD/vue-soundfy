@@ -30,7 +30,8 @@ defineEmits(['update:modelValue'])
 @use '@/assets/scss/vars' as *;
 
 .search-input {
-    height: 100%;
+    width: 100%;
+    height: 35px;
     position: relative;
 
     display: flex;
@@ -38,6 +39,7 @@ defineEmits(['update:modelValue'])
 
     input {
         padding: 0 2.5rem;
+        width: 100%;
         height: 100%;
 
         border-radius: 50px;
