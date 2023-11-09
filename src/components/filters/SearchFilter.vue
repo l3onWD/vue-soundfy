@@ -1,7 +1,7 @@
 <script setup>
-import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
+import useFetchApi from '@/composables/useFetchApi';
 
 
 /*** COMPONENTS ***/
@@ -9,38 +9,35 @@ import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
 
 
 /*** DATA ***/
-const baseUri = 'http://127.0.0.1:8000/api';
-const router = useRouter()
+const router = useRouter();
+const { makeGetRequest } = useFetchApi();
 const searchTerm = ref('');
 let searchThrottleId = null;
 
 
-// Suggestions
+/*** LOGIC ***/
 const suggestSearch = () => {
 
+    // Input Validation
     if (searchTerm.value.length < 2) return;
 
+    // Search throttling
     clearTimeout(searchThrottleId);
-    searchThrottleId = setTimeout(() => {
+    searchThrottleId = setTimeout(async () => {
 
-        axios.get(baseUri + '/search', { params: { title: searchTerm.value } })
-            .then(({ data }) => {
-
-                // Create suggetion list
-                console.log(data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        const suggestions = await makeGetRequest('/search', { title: searchTerm.value });
+        console.log(suggestions);
 
     }, 500);
 };
 
 
-// Search
-const search = () => {
+const handleSearchSubmit = () => {
+
+    // Check if input is empty
     if (!searchTerm.value.length) return;
 
+    // Go to search page
     router.push({ name: 'search', query: { title: searchTerm.value } })
 }
 
@@ -48,7 +45,7 @@ const search = () => {
 
 
 <template>
-    <form action="" @submit.prevent="search">
+    <form action="" @submit.prevent="handleSearchSubmit">
         <BaseSearchInput @input="suggestSearch" v-model.trim="searchTerm" />
     </form>
 </template>
