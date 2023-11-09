@@ -1,11 +1,11 @@
 <script setup>
 
+/*** PROPS ***/
 const props = defineProps({
     media: {
         type: Object,
         default: null
-    },
-    small: Boolean
+    }
 });
 
 </script>

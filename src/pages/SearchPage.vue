@@ -16,6 +16,8 @@ const results = reactive([]);
 
 
 /*** LOGIC ***/
+
+// Set UID
 const setUid = (media, kind) => {
 
     // Calculate Unique ID for grouping all media kind
@@ -37,10 +39,12 @@ const setUid = (media, kind) => {
     }
 }
 
+// Listen to query change
 watch(() => route.query.title, async () => {
 
     isLoading.value = true;
 
+    // Get searched results
     await makeGetRequest('/search', { title: route.query.title })
         .then(data => {
             results.playlists = data.playlists.map(media => setUid(media, 'playlist'));
@@ -62,12 +66,13 @@ watch(() => route.query.title, async () => {
         <!-- Loader -->
         <AppLoader v-if="isLoading" />
 
-        <!-- Content -->
+        <!-- Page Content -->
         <div v-else>
 
             <!-- Filters -->
+            <!-- todo -->
 
-            <!-- Results -->
+            <!-- Playlists -->
             <div v-if="results.playlists?.length" class="mb-3">
 
                 <h5>Playlists:</h5>
@@ -79,6 +84,7 @@ watch(() => route.query.title, async () => {
 
             </div>
 
+            <!-- Albums -->
             <div v-if="results.albums?.length" class="mb-3">
 
                 <h5>Albums:</h5>
@@ -90,7 +96,7 @@ watch(() => route.query.title, async () => {
 
             </div>
 
-
+            <!-- Tracks -->
             <div v-if="results.tracks?.length" class="mb-3">
 
                 <h5>Tracks:</h5>
