@@ -15,7 +15,9 @@ export default {
     <div v-if="track" class="media-details-card">
 
         <!-- Cover -->
-        <img :src="track.album.cover" :alt="track.title">
+        <RouterLink :to="{ name: `track-detail`, params: { id: track.id } }">
+            <img :src="track.album.cover" :alt="track.title">
+        </RouterLink>
 
         <!-- Track Info -->
         <div class="media-details-info">
@@ -32,7 +34,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 .media-details-card {
     width: 100%;
