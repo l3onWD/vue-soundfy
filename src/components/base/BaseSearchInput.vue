@@ -11,14 +11,16 @@ defineEmits(['update:modelValue'])
     <div class="search-input">
 
         <!-- Lens Icon -->
-        <FontAwesomeIcon icon="fas fa-search" size="lg" class="search-input-lens" />
+        <button class="search-input-lens">
+            <FontAwesomeIcon icon="fas fa-search" size="lg" />
+        </button>
 
         <!-- Input -->
         <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" type="text"
             placeholder="Search...">
 
         <!-- Reset Button -->
-        <button v-if="modelValue" @click="$emit('update:modelValue', '')" class="search-input-close">
+        <button type="button" v-if="modelValue" @click="$emit('update:modelValue', '')" class="search-input-close">
             <FontAwesomeIcon icon="fas fa-close" size="lg" />
         </button>
 
@@ -53,6 +55,10 @@ defineEmits(['update:modelValue'])
         transform: translateY(-50%);
 
         color: $col-gray-700;
+
+        &:hover {
+            color: $col-gray-900;
+        }
     }
 
     &-lens {
@@ -61,10 +67,6 @@ defineEmits(['update:modelValue'])
 
     &-close {
         right: 0;
-
-        &:hover {
-            color: $col-gray-900;
-        }
     }
 }
 </style>
