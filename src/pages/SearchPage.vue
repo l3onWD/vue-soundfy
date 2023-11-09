@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, watch } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import useFetchApi from '@/composables/useFetchApi';
 
@@ -10,7 +10,8 @@ import MediaDetailCard from '@/components/media/MediaDetailCard.vue';
 
 /*** DATA ***/
 const route = useRoute();
-const { isLoading, makeGetRequest } = useFetchApi();
+const { makeGetRequest } = useFetchApi();
+const isLoading = ref(false);
 const results = reactive([]);
 
 
@@ -38,12 +39,16 @@ const setUid = (media, kind) => {
 
 watch(() => route.query.title, async () => {
 
+    isLoading.value = true;
+
     await makeGetRequest('/search', { title: route.query.title })
         .then(data => {
             results.playlists = data.playlists.map(media => setUid(media, 'playlist'));
             results.albums = data.albums.map(media => setUid(media, 'album'));
             results.tracks = data.tracks.map(media => setUid(media, 'track'));
         });
+
+    isLoading.value = false;
 
 }, { immediate: true });
 
