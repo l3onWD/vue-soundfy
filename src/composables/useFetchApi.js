@@ -8,7 +8,7 @@ const activeRequests = ref(0);// Global variable
 export default function useFetchApi() {
 
     // Loading state
-    const isLoading = computed(() => activeRequests.value);
+    const isLoading = computed(() => Boolean(activeRequests.value));
 
     // Get request
     const makeGetRequest = async (endpoint, params) => {
