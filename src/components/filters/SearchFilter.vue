@@ -16,34 +16,44 @@ const { isLoading, makeGetRequest } = useFetchApi();
 const searchTerm = ref('');
 let searchThrottleId = null;
 const suggestions = ref([]);
+const showSuggestions = ref(false);
 
 
 /*** LOGIC ***/
-
 // Set Search Term on route change
 watchEffect(() => searchTerm.value = route.query.title);
+
 
 // Get search suggestions
 const suggestSearch = () => {
 
     // Input Validation
-    if (searchTerm.value.length < 2) return;
+    if (searchTerm.value.length < 2) {
+        suggestions.value.splice(0);// reset suggestions
+        return;
+    }
 
     // Search throttling
     clearTimeout(searchThrottleId);
+
     searchThrottleId = setTimeout(async () => {
 
+        // Reset
+        suggestions.value.splice(0);
+
+        // Fetch
         const results = await makeGetRequest('/search', { title: searchTerm.value });
 
-        console.log(results);
+        // Update suggestions
         if (!results.length) return;
-
-        suggestions.value.splice(0);
         suggestions.value.push(...results);
+
+        // Fix track media
         suggestions.value.forEach(media => { if (media.kind === 'track') setMediaTrack(media, 'track') });
 
     }, 500);
 };
+
 
 // Go to search page
 const handleSearchSubmit = () => {
@@ -65,15 +75,24 @@ const setMediaTrack = (media) => {
     }
 }
 
+
+// Close suggestions modal
+const closeSuggestions = () => {
+    showSuggestions.value = false;
+}
+
 </script>
 
 
 <template>
     <form class="search-filter" @submit.prevent="handleSearchSubmit">
 
-        <BaseSearchInput @input="suggestSearch" v-model.trim="searchTerm" />
+        <!-- Search input -->
+        <BaseSearchInput @focusin="showSuggestions = true" v-click-outside="closeSuggestions" @input="suggestSearch"
+            v-model.trim="searchTerm" />
 
-        <div class="search-filter-menu">
+        <!-- Search suggestions -->
+        <div v-if="showSuggestions && searchTerm" class="search-filter-suggestions">
             <SearchSuggestionList :suggestions="suggestions" :isLoading="isLoading" :searchTerm="searchTerm" />
         </div>
     </form>
@@ -89,7 +108,7 @@ const setMediaTrack = (media) => {
     justify-content: center;
     align-items: center;
 
-    &-menu {
+    &-suggestions {
         position: absolute;
         top: auto;
         bottom: 100%;
@@ -101,7 +120,7 @@ const setMediaTrack = (media) => {
 // MEDIA MD
 @media screen and (min-width: 768px) {
     .search-filter {
-        &-menu {
+        &-suggestions {
             top: 100%;
             bottom: auto;
         }
