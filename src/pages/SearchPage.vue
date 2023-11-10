@@ -35,13 +35,13 @@ const setMediaTrack = (media) => {
 watch(() => route.query.title, async () => {
 
     isLoading.value = true;
+    results.splice(0);
 
     // Get searched results
     await makeGetRequest('/search', { title: route.query.title })
         .then(data => {
 
             if (!data.length) return;
-            results.splice(0);
             results.push(...data);
 
             // Fix track media
@@ -68,43 +68,55 @@ watch(() => route.query.title, async () => {
             <!-- Filters -->
             <!-- todo -->
 
-            <!-- Playlists -->
-            <div v-if="searchedPlaylists.length" class="mb-3">
+            <!-- Results -->
+            <div v-if="results.length">
 
-                <h5>Playlists:</h5>
-                <hr>
+                <!-- Playlists -->
+                <div v-if="searchedPlaylists.length" class="mb-3">
 
-                <div v-for="media in searchedPlaylists" :key="media.id" class="mb-3">
-                    <MediaSearchCard :media="media" />
+                    <h5>Playlists:</h5>
+                    <hr>
+
+                    <div v-for="media in searchedPlaylists" :key="media.id" class="mb-3">
+                        <MediaSearchCard :media="media" />
+                    </div>
+
+                </div>
+
+                <!-- Albums -->
+                <div v-if="searchedAlbums.length" class="mb-3">
+
+                    <h5>Albums:</h5>
+                    <hr>
+
+                    <div v-for="media in searchedAlbums" :key="media.id" class="mb-3">
+                        <MediaSearchCard :media="media" />
+                    </div>
+
+                </div>
+
+                <!-- Tracks -->
+                <div v-if="searchedTracks.length" class="mb-3">
+
+                    <h5>Tracks:</h5>
+                    <hr>
+
+                    <div v-for="media in searchedTracks" :key="media.id" class="mb-3">
+                        <MediaSearchCard :media="media" />
+                    </div>
+
                 </div>
 
             </div>
 
-            <!-- Albums -->
-            <div v-if="searchedAlbums.length" class="mb-3">
-
-                <h5>Albums:</h5>
-                <hr>
-
-                <div v-for="media in searchedAlbums" :key="media.id" class="mb-3">
-                    <MediaSearchCard :media="media" />
-                </div>
-
-            </div>
-
-            <!-- Tracks -->
-            <div v-if="searchedTracks.length" class="mb-3">
-
-                <h5>Tracks:</h5>
-                <hr>
-
-                <div v-for="media in searchedTracks" :key="media.id" class="mb-3">
-                    <MediaSearchCard :media="media" />
-                </div>
-
+            <!-- Nothing Found -->
+            <div v-else class="py-5">
+                <h3>Nothing Founded</h3>
             </div>
 
         </div>
+
+
 
     </div>
 </template>
