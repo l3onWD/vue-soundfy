@@ -22,7 +22,6 @@ const searchedTracks = computed(() => results.filter(({ kind }) => kind === 'tra
 
 
 /*** LOGIC ***/
-
 // Set Media track
 const setMediaTrack = (media) => {
 
@@ -41,11 +40,11 @@ watch(() => route.query.title, async () => {
     await makeGetRequest('/search', { title: route.query.title })
         .then(data => {
 
-            console.log(data);
             if (!data.length) return;
-
             results.splice(0);
             results.push(...data);
+
+            // Fix track media
             results.forEach(media => { if (media.kind === 'track') setMediaTrack(media, 'track') });
         });
 
