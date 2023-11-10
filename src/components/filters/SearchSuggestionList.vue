@@ -19,15 +19,17 @@ const props = defineProps({
 <template>
     <ul class="suggestions">
 
-        <li v-for="suggestion in props.suggestions" :key="suggestion.id">
-            <MediaSearchCard :media="suggestion" small />
-        </li>
-
+        <!-- Search Title Link -->
         <li>
             <RouterLink :to="{ name: 'search', query: { title: props.searchTerm } }" class="d-block">
                 <FontAwesomeIcon icon="fas fa-search" />
                 Search for "{{ props.searchTerm }}"
             </RouterLink>
+        </li>
+
+        <!-- Suggested Media -->
+        <li v-for="suggestion in props.suggestions" :key="suggestion.id">
+            <MediaSearchCard :media="suggestion" small />
         </li>
     </ul>
 </template>
