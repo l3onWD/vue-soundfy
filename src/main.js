@@ -8,6 +8,9 @@ import { router } from './router/';
 // Pinia
 import { createPinia } from 'pinia'
 
+// Custom Directives
+import { clickOutside } from '@/directives/';
+
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -23,5 +26,6 @@ const app = createApp(App);
 const pinia = createPinia();
 app.use(pinia);
 app.use(router);
+app.directive('click-outside', clickOutside);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.mount('#app');
