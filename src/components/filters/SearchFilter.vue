@@ -27,6 +27,9 @@ watchEffect(() => searchTerm.value = route.query.title);
 // Get search suggestions
 const suggestSearch = () => {
 
+    // Open suggestions dialog
+    showSuggestions.value = true;
+
     // Input Validation
     if (searchTerm.value.length < 2) {
         suggestions.value.splice(0);// reset suggestions
@@ -61,6 +64,9 @@ const handleSearchSubmit = () => {
     // Check if input is empty
     if (!searchTerm.value.length) return;
 
+    // Close suggestions dialog
+    showSuggestions.value = false;
+
     // Go to search page
     router.push({ name: 'search', query: { title: searchTerm.value } })
 }
@@ -88,7 +94,7 @@ const closeSuggestions = () => {
     <form class="search-filter" @submit.prevent="handleSearchSubmit">
 
         <!-- Search input -->
-        <BaseSearchInput @focusin="showSuggestions = true" v-click-outside="closeSuggestions" @input="suggestSearch"
+        <BaseSearchInput @focusin="suggestSearch" v-click-outside="closeSuggestions" @input="suggestSearch"
             v-model.trim="searchTerm" />
 
         <!-- Search suggestions -->
