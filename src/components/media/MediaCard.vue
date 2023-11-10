@@ -104,7 +104,7 @@ export default {
                 {{ media.title }}
             </RouterLink>
         </h5>
-        <span class="col-gray-700">{{ media.author }}</span>
+        <span class="text-gray-700">{{ media.author }}</span>
     </div>
 </template>
 

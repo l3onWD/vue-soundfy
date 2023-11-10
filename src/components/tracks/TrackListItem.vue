@@ -69,7 +69,7 @@ export default {
 
         <span class="me-3">{{ (listPosition + 1) }}</span>
 
-        <TrackDetailCard :track="track" :class="{ 'col-orange': isActive }" />
+        <TrackDetailCard :track="track" :class="{ 'text-orange': isActive }" />
 
         <ul class="d-flex align-items-center">
             <li>

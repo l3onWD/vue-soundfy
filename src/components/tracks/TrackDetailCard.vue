@@ -26,7 +26,7 @@ export default {
                     {{ track.title }}
                 </RouterLink>
             </h6>
-            <span :title="track.author" class="col-gray-700">{{ track.album.author.name }}</span>
+            <span :title="track.author" class="text-gray-700">{{ track.album.author.name }}</span>
         </div>
 
     </div>

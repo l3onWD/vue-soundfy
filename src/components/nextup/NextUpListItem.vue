@@ -79,7 +79,7 @@ export default {
     <div class="nextup-item">
 
         <!-- Track Details -->
-        <TrackDetailCard :track="track" :class="{ 'col-gray-700': wasPlayed, 'col-orange': isActive }" />
+        <TrackDetailCard :track="track" :class="{ 'text-gray-700': wasPlayed, 'text-orange': isActive }" />
 
         <!-- Actions -->
         <ul class="nextup-item-actions ms-1">

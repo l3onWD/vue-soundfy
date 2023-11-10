@@ -27,7 +27,7 @@ const imageSize = computed(() => props.small ? 35 : 50);
             <h6 class="mb-1" :title="media.title">
                 {{ media.title }}
             </h6>
-            <span :title="media.kind" class="col-gray-700">{{ media.kind }}</span>
+            <span :title="media.kind" class="text-gray-700">{{ media.kind }}</span>
         </div>
 
     </RouterLink>

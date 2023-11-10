@@ -91,7 +91,7 @@ export default {
                     <!-- Main data -->
                     <div class="flex-grow-1">
                         <h2 class="mb-1">{{ media.title }}</h2>
-                        <span class="col-gray-700 fs-5">{{ media.author }}</span>
+                        <span class="text-gray-700 fs-5">{{ media.author }}</span>
                     </div>
 
                     <!-- Actions -->
