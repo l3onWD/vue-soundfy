@@ -1,12 +1,17 @@
 <script setup>
+import { computed } from 'vue';
 
 /*** PROPS ***/
 const props = defineProps({
     media: {
         type: Object,
         default: null
-    }
+    }, small: Boolean
 });
+
+
+const imageSize = computed(() => props.small ? 35 : 50);
+
 
 </script>
 
@@ -16,7 +21,7 @@ const props = defineProps({
 
         <!-- Cover -->
         <RouterLink :to="{ name: `${media.kind}-detail`, params: { id: media.id } }">
-            <img :src="media.cover" :alt="media.title">
+            <img :src="media.cover" :alt="media.title" :width="imageSize" :height="imageSize">
         </RouterLink>
 
         <!-- Media Info -->
@@ -48,9 +53,6 @@ const props = defineProps({
     overflow: hidden;
 
     img {
-        height: 50px;
-        width: 50px;
-
         border: 1px solid $col-gray-700;
     }
 
