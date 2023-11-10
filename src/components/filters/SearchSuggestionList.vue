@@ -31,6 +31,10 @@ const props = defineProps({
         <li v-for="suggestion in props.suggestions" :key="suggestion.id">
             <MediaSearchCard :media="suggestion" small />
         </li>
+
+        <li v-if="isLoading" class="text-center">
+            <FontAwesomeIcon icon="fas fa-spinner" size="xl" spin-pulse />
+        </li>
     </ul>
 </template>
 
