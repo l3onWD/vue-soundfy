@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import useFetchApi from '@/composables/useFetchApi';
 
@@ -13,6 +13,12 @@ const route = useRoute();
 const { makeGetRequest } = useFetchApi();
 const isLoading = ref(false);
 const results = reactive([]);
+
+
+/*** COMPUTED ***/
+const searchedPlaylists = computed(() => results.filter(({ kind }) => kind === 'playlist'));
+const searchedAlbums = computed(() => results.filter(({ kind }) => kind === 'album'));
+const searchedTracks = computed(() => results.filter(({ kind }) => kind === 'track'));
 
 
 /*** LOGIC ***/
@@ -33,14 +39,14 @@ watch(() => route.query.title, async () => {
 
     // Get searched results
     await makeGetRequest('/search', { title: route.query.title })
-        .then(results => {
+        .then(data => {
 
-            console.log(results);
-            if (!results.length) return;
+            console.log(data);
+            if (!data.length) return;
 
-            suggestions.value.splice(0);
-            suggestions.value.push(...results);
-            suggestions.value.forEach(media => { if (media.kind === 'track') setMediaTrack(media, 'track') });
+            results.splice(0);
+            results.push(...data);
+            results.forEach(media => { if (media.kind === 'track') setMediaTrack(media, 'track') });
         });
 
     isLoading.value = false;
@@ -64,36 +70,36 @@ watch(() => route.query.title, async () => {
             <!-- todo -->
 
             <!-- Playlists -->
-            <div v-if="results.playlists?.length" class="mb-3">
+            <div v-if="searchedPlaylists.length" class="mb-3">
 
                 <h5>Playlists:</h5>
                 <hr>
 
-                <div v-for="media in results.playlists" :key="media.id" class="mb-3">
+                <div v-for="media in searchedPlaylists" :key="media.id" class="mb-3">
                     <MediaDetailCard :media="media" />
                 </div>
 
             </div>
 
             <!-- Albums -->
-            <div v-if="results.albums?.length" class="mb-3">
+            <div v-if="searchedAlbums.length" class="mb-3">
 
                 <h5>Albums:</h5>
                 <hr>
 
-                <div v-for="media in results.albums" :key="media.id" class="mb-3">
+                <div v-for="media in searchedAlbums" :key="media.id" class="mb-3">
                     <MediaDetailCard :media="media" />
                 </div>
 
             </div>
 
             <!-- Tracks -->
-            <div v-if="results.tracks?.length" class="mb-3">
+            <div v-if="searchedTracks.length" class="mb-3">
 
                 <h5>Tracks:</h5>
                 <hr>
 
-                <div v-for="media in results.tracks" :key="media.id" class="mb-3">
+                <div v-for="media in searchedTracks" :key="media.id" class="mb-3">
                     <MediaDetailCard :media="media" />
                 </div>
 
