@@ -17,31 +17,27 @@ const imageSize = computed(() => props.small ? 35 : 50);
 
 
 <template>
-    <div v-if="media" class="media-details-card">
+    <RouterLink v-if="media" :to="{ name: `${media.kind}-detail`, params: { id: media.id } }" class="media-search-card">
 
         <!-- Cover -->
-        <RouterLink :to="{ name: `${media.kind}-detail`, params: { id: media.id } }">
-            <img :src="media.cover" :alt="media.title" :width="imageSize" :height="imageSize">
-        </RouterLink>
+        <img :src="media.cover" :alt="media.title" :width="imageSize" :height="imageSize">
 
         <!-- Media Info -->
-        <div class="media-details-info">
+        <div class="media-search-info">
             <h6 class="mb-1" :title="media.title">
-                <RouterLink :to="{ name: `${media.kind}-detail`, params: { id: media.id } }">
-                    {{ media.title }}
-                </RouterLink>
+                {{ media.title }}
             </h6>
-            <span :title="media.author" class="col-gray-700">{{ media.author }}</span>
+            <span :title="media.kind" class="col-gray-700">{{ media.kind }}</span>
         </div>
 
-    </div>
+    </RouterLink>
 </template>
 
 
 <style lang="scss" scoped>
 @use '@/assets/scss/vars' as *;
 
-.media-details-card {
+.media-search-card {
     width: 100%;
 
     display: flex;
@@ -56,7 +52,7 @@ const imageSize = computed(() => props.small ? 35 : 50);
         border: 1px solid $col-gray-700;
     }
 
-    .media-details-info {
+    .media-search-info {
         flex-grow: 1;
 
         overflow: hidden;

@@ -1,7 +1,7 @@
 <script setup>
 
 /*** COMPONENTS ***/
-import MediaDetailCard from '@/components/media/MediaDetailCard.vue';
+import MediaSearchCard from '@/components/media/MediaSearchCard.vue';
 
 /*** PROPS ***/
 const props = defineProps({
@@ -20,7 +20,7 @@ const props = defineProps({
     <ul class="suggestions">
 
         <li v-for="suggestion in props.suggestions" :key="suggestion.id">
-            <MediaDetailCard :media="suggestion" small />
+            <MediaSearchCard :media="suggestion" small />
         </li>
 
         <li>

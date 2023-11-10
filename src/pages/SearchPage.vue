@@ -5,7 +5,7 @@ import useFetchApi from '@/composables/useFetchApi';
 
 /*** COMPONENTS ***/
 import AppLoader from '@/components/AppLoader.vue';
-import MediaDetailCard from '@/components/media/MediaDetailCard.vue';
+import MediaSearchCard from '@/components/media/MediaSearchCard.vue';
 
 
 /*** DATA ***/
@@ -76,7 +76,7 @@ watch(() => route.query.title, async () => {
                 <hr>
 
                 <div v-for="media in searchedPlaylists" :key="media.id" class="mb-3">
-                    <MediaDetailCard :media="media" />
+                    <MediaSearchCard :media="media" />
                 </div>
 
             </div>
@@ -88,7 +88,7 @@ watch(() => route.query.title, async () => {
                 <hr>
 
                 <div v-for="media in searchedAlbums" :key="media.id" class="mb-3">
-                    <MediaDetailCard :media="media" />
+                    <MediaSearchCard :media="media" />
                 </div>
 
             </div>
@@ -100,7 +100,7 @@ watch(() => route.query.title, async () => {
                 <hr>
 
                 <div v-for="media in searchedTracks" :key="media.id" class="mb-3">
-                    <MediaDetailCard :media="media" />
+                    <MediaSearchCard :media="media" />
                 </div>
 
             </div>
