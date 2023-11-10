@@ -27,7 +27,7 @@ import SearchFilter from '@/components/filters/SearchFilter.vue';
                 </li>
 
                 <!-- Search Bar-->
-                <li class="flex-grow-1 flex-md-grow-0 p-2">
+                <li class="flex-grow-1 flex-md-grow-0">
                     <SearchFilter />
                 </li>
 

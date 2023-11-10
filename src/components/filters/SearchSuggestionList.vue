@@ -24,7 +24,7 @@ const props = defineProps({
         </li>
 
         <li>
-            <RouterLink :to="{ name: 'search', query: { title: props.searchTerm } }">
+            <RouterLink :to="{ name: 'search', query: { title: props.searchTerm } }" class="d-block">
                 <FontAwesomeIcon icon="fas fa-search" />
                 Search for "{{ props.searchTerm }}"
             </RouterLink>
@@ -39,6 +39,8 @@ const props = defineProps({
 .suggestions {
     color: $col-light;
     background-color: $col-dark;
+
+    box-shadow: 0 0 8px 2px rgba($color: #000, $alpha: 0.2);
 
     li {
         padding: 0.5rem;

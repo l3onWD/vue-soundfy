@@ -81,13 +81,30 @@ const setMediaTrack = (media) => {
 
 <style lang="scss" scoped>
 .search-filter {
+    padding: 0.5rem;
+    height: 100%;
     position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &-menu {
         position: absolute;
-        top: calc(100% + 8px);
+        top: auto;
+        bottom: 100%;
         left: 0;
         right: 0;
+    }
+}
+
+// MEDIA MD
+@media screen and (min-width: 768px) {
+    .search-filter {
+        &-menu {
+            top: 100%;
+            bottom: auto;
+        }
     }
 }
 </style>
