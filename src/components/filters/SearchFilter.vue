@@ -21,7 +21,7 @@ const showSuggestions = ref(false);
 
 /*** LOGIC ***/
 // Set Search Term on route change
-watchEffect(() => searchTerm.value = route.query.title);
+watchEffect(() => { searchTerm.value = route.query.title || '' });
 
 
 // Get search suggestions
