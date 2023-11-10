@@ -17,25 +17,12 @@ const results = reactive([]);
 
 /*** LOGIC ***/
 
-// Set UID
-const setUid = (media, kind) => {
-
-    // Calculate Unique ID for grouping all media kind
-    const prefixUid = `${kind}-${media.id}`;
-
-    // Calculate tracks based on media kind
-    const tracks = kind === 'track' ?
-        [{ ...media, uid: `${prefixUid}-${media.id}` }] :
-        media.tracks.map(track => ({ ...track, uid: `${prefixUid}-${track.id}` }));
-
+// Set Media track
+const setMediaTrack = (media) => {
 
     return {
-        id: media.id,
-        kind,
-        cover: media.cover,
-        title: media.title,
-        tracks,
-        author: media.author
+        ...media,
+        tracks: [{ ...media, uid: `track-${media.id}` }]
     }
 }
 
@@ -46,10 +33,14 @@ watch(() => route.query.title, async () => {
 
     // Get searched results
     await makeGetRequest('/search', { title: route.query.title })
-        .then(data => {
-            results.playlists = data.playlists.map(media => setUid(media, 'playlist'));
-            results.albums = data.albums.map(media => setUid(media, 'album'));
-            results.tracks = data.tracks.map(media => setUid(media, 'track'));
+        .then(results => {
+
+            console.log(results);
+            if (!results.length) return;
+
+            suggestions.value.splice(0);
+            suggestions.value.push(...results);
+            suggestions.value.forEach(media => { if (media.kind === 'track') setMediaTrack(media, 'track') });
         });
 
     isLoading.value = false;
@@ -79,7 +70,7 @@ watch(() => route.query.title, async () => {
                 <hr>
 
                 <div v-for="media in results.playlists" :key="media.id" class="mb-3">
-                    <MediaDetailCard :media="media" small />
+                    <MediaDetailCard :media="media" />
                 </div>
 
             </div>
