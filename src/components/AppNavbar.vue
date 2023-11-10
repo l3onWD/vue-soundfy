@@ -78,6 +78,7 @@ import SearchFilter from '@/components/filters/SearchFilter.vue';
             height: 100%;
 
             background-color: $col-gray-900;
+            border: 1px solid $col-dark;
         }
 
         a {
@@ -90,7 +91,6 @@ import SearchFilter from '@/components/filters/SearchFilter.vue';
             align-items: center;
 
             color: $col-gray-500;
-            border: 1px solid $col-dark;
 
             &:hover,
             &.active {
