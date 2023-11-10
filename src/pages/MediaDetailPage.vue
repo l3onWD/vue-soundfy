@@ -22,19 +22,12 @@ export default {
         isLoading: 0
     }),
 
-    computed: {
-
-        mediaType() {
-            return this.$route.fullPath.split('/')[1].slice(0, -1);
-        }
-    },
-
     watch: {
         '$route.params': {
 
             handler() {
                 this.fetchApi(this.$route.fullPath, (data) => {
-                    this.media = this.setUid(data, this.mediaType);
+                    this.media = data.kind !== 'track' ? data : this.setMediaTrack(data, 'track');
                 });
             },
             immediate: true
@@ -53,24 +46,12 @@ export default {
                 .then(() => { this.isLoading-- });
         },
 
-        setUid(media, kind) {
-
-            // Calculate Unique ID for grouping all media kind
-            const prefixUid = `${kind}-${media.id}`;
-
-            // Calculate tracks based on media kind
-            const tracks = kind === 'track' ?
-                [{ ...media, uid: `${prefixUid}-${media.id}` }] :
-                media.tracks.map(track => ({ ...track, uid: `${prefixUid}-${track.id}` }));
-
+        // Set Media track
+        setMediaTrack(media) {
 
             return {
-                id: media.id,
-                kind,
-                cover: media.cover,
-                title: media.title,
-                tracks,
-                author: media.author
+                ...media,
+                tracks: [{ ...media, uid: `track-${media.id}` }]
             }
         }
     }
@@ -97,7 +78,7 @@ export default {
         <div class="detail-bottom p-3">
 
             <!-- Tracks -->
-            <TrackList v-if="mediaType != 'track'" :tracks="media.tracks" />
+            <TrackList v-if="media.kind != 'track'" :tracks="media.tracks" />
 
             <!-- Track Info -->
             <TrackDetail v-else :track="media.tracks[0]" />

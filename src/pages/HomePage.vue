@@ -34,24 +34,12 @@ export default {
                 .then(() => { this.isLoading-- });
         },
 
-        setUid(media, kind) {
-
-            // Calculate Unique ID for grouping all media kind
-            const prefixUid = `${kind}-${media.id}`;
-
-            // Calculate tracks based on media kind
-            const tracks = kind === 'track' ?
-                [{ ...media, uid: `${prefixUid}-${media.id}` }] :
-                media.tracks.map(track => ({ ...track, uid: `${prefixUid}-${track.id}` }));
-
+        // Set Media track
+        setMediaTrack(media) {
 
             return {
-                id: media.id,
-                kind,
-                cover: media.cover,
-                title: media.title,
-                tracks,
-                author: media.author
+                ...media,
+                tracks: [{ ...media, uid: `track-${media.id}` }]
             }
         }
     },
@@ -60,18 +48,18 @@ export default {
 
         // Get all sections data and set UID to all media
         // Our picks Playlists
-        this.fetchApi('/playlists/our-picks', (mediaList) => {
-            this.ourPicksPlaylists = mediaList.map(media => this.setUid(media, 'playlist'));
+        this.fetchApi('/playlists/our-picks', (playlists) => {
+            this.ourPicksPlaylists = playlists;
         });
 
         // Random Albums
-        this.fetchApi('/albums/random', (mediaList) => {
-            this.randomAlbums = mediaList.map(media => this.setUid(media, 'album'));
+        this.fetchApi('/albums/random', (albums) => {
+            this.randomAlbums = albums;
         });
 
         // Random Tracks
         this.fetchApi('/tracks/random', (mediaList) => {
-            this.randomTracks = mediaList.map(media => this.setUid(media, 'track'));
+            this.randomTracks = mediaList.map(media => this.setMediaTrack(media, 'track'));
         });
     }
 
