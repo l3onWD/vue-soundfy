@@ -34,13 +34,7 @@ onMounted(() => {
     /*** TRACKS ***/
     makeGetRequest('/tracks/random')
         .then((tracks) => {
-            // [TODO da eliminare]
-            mediaLists.randomTracks = tracks.map(media => {
-                return {
-                    ...media,
-                    tracks: [{ ...media, uid: `track-${media.id}` }]
-                }
-            });
+            mediaLists.randomTracks = tracks;
         });
 });
 

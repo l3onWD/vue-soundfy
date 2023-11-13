@@ -1,67 +1,62 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+import { computed } from 'vue';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { useNextUpStore } from '@/stores/NextUpStore';
+
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
 import PlayControl from '@/components/player/PlayControl.vue';
 
-/*** DATA ***/
-import { usePlayerStore } from '@/stores/PlayerStore';
-import { useNextUpStore } from '@/stores/NextUpStore';
 
-
-export default {
-    components: { BaseButton, PlayControl },
-
-    data: () => ({
-        player: usePlayerStore(),
-        nextUp: useNextUpStore()
-    }),
-
-    props: {
-        media: {
-            type: Object,
-            default: null
-        }
-    },
-
-    computed: {
-
-        isActive() {
-            if (!this.nextUp.currentTrack) return false;
-            return this.media.tracks.some(({ uid }) => this.nextUp.currentTrack.uid === uid);
-        },
-
-
-        isPlaying() {
-            return this.isActive && this.player.isPlaying;
-        },
-
-
-        isLoading() {
-            return this.isActive && this.player.isLoading;
-        }
-    },
-
-    methods: {
-
-        play() {
-
-            // Check if this media card is loading
-            if (this.isLoading) return;
-
-            // Set Media to next up list and play first track
-            if (!this.isActive) this.nextUp.setTracks(this.media.tracks);
-
-            // Resume/Pause
-            else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
-
-        }
-
+/*** PROPS ***/
+const props = defineProps({
+    media: {
+        type: Object,
+        default: null
     }
+});
+
+/*** DATA ***/
+const player = usePlayerStore();
+const nextUp = useNextUpStore();
+
+
+/*** COMPUTED ***/
+const tracks = computed(() => {
+    if (!props.media.tracks) {
+
+        return [{ ...props.media, uid: `track-${props.media.id}` }]
+    }
+    return props.media.tracks;
+});
+
+const isActive = computed(() => {
+    if (!nextUp.currentTrack) return false;
+    return tracks.value.some(({ uid }) => nextUp.currentTrack.uid === uid);
+});
+
+const isPlaying = computed(() => {
+    return isActive.value && player.isPlaying;
+});
+
+const isLoading = computed(() => {
+    return isActive.value && player.isLoading;
+});
+
+/*** FUNCTIONS ***/
+const play = () => {
+
+    // Check if this media card is loading
+    if (isLoading.value) return;
+
+    // Set Media to next up list and play first track
+    if (!isActive.value) nextUp.setTracks(tracks.value);
+
+    // Resume/Pause
+    else isPlaying.value ? player.pauseTrack() : player.resumeTrack();
 
 }
+
 </script>
 
 
@@ -110,7 +105,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .media-card {

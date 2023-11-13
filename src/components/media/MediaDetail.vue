@@ -29,10 +29,16 @@ export default {
     },
 
     computed: {
+        tracks() {
+            if (!this.media.tracks) {
 
+                return [{ ...this.media, uid: `track-${this.media.id}` }]
+            }
+            return this.media.tracks;
+        },
         isActive() {
             if (!this.nextUp.currentTrack) return false;
-            return this.media.tracks.some(({ uid }) => this.nextUp.currentTrack.uid === uid);
+            return this.tracks.some(({ uid }) => this.nextUp.currentTrack.uid === uid);
         },
 
 
@@ -48,7 +54,7 @@ export default {
         totalDurationString() {
 
             // Get total duration
-            const totalSecs = this.media.tracks.reduce((tot, { duration }) => tot += duration, 0);
+            const totalSecs = this.tracks.reduce((tot, { duration }) => tot += duration, 0);
 
             // Return time string
             return Utils.formatTime(totalSecs);
@@ -63,7 +69,7 @@ export default {
             if (this.isLoading) return;
 
             // Set Media to next up list and play first track
-            if (!this.isActive) this.nextUp.setTracks(this.media.tracks);
+            if (!this.isActive) this.nextUp.setTracks(this.tracks);
 
             // Resume/Pause
             else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
@@ -102,7 +108,7 @@ export default {
                             class="btn btn-ui btn-light me-1" />
 
                         <!-- Add to next up -->
-                        <BaseButton @click="nextUp.addTracks(media.tracks)" icon="list" iconSize="lg" title="Add to Next Up"
+                        <BaseButton @click="nextUp.addTracks(tracks)" icon="list" iconSize="lg" title="Add to Next Up"
                             class="btn btn-ui btn-light me-1" />
 
                         <!-- Play Control -->
@@ -112,7 +118,7 @@ export default {
 
                 <!-- Length Info -->
                 <div v-if="media.kind != 'track'" class="media-length d-none d-md-flex">
-                    <h2 class="mb-0">{{ media.tracks.length }}</h2>
+                    <h2 class="mb-0">{{ tracks.length }}</h2>
                     <h6 class="mb-0">TRACKS</h6>
                     <span>{{ totalDurationString }}</span>
                 </div>

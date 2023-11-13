@@ -10,14 +10,14 @@ import TrackDetail from '@/components/tracks/TrackDetail.vue';
 
 
 /*** ROUTER PROPS ***/
-const { id, mediaType } = defineProps(['id', 'mediaType']);
+const props = defineProps(['id', 'mediaType']);
 
 /*** DATA ***/
 const { isLoading, makeGetRequest } = useFetchApi();
 const media = ref(null);
 
 /*** COMPUTED ***/
-const endpoint = computed(() => `/${mediaType}s/${id}`);
+const endpoint = computed(() => `/${props.mediaType}s/${props.id}`);
 
 
 // Check endpoint change
@@ -29,16 +29,7 @@ watch(endpoint, () => {
     // Fetch Details
     makeGetRequest(endpoint.value)
         .then(data => {
-
-            // Add more details if is a track media [TODO da eliminare]
-            if (data.kind === 'track') {
-                media.value = {
-                    ...data,
-                    tracks: [{ ...data, uid: `track-${data.id}` }]
-                };
-            } else {
-                media.value = data;
-            }
+            media.value = data;
         });
 
 }, { immediate: true });
@@ -68,7 +59,7 @@ watch(endpoint, () => {
             <TrackList v-if="media.kind != 'track'" :tracks="media.tracks" />
 
             <!-- Track Info -->
-            <TrackDetail v-else :track="media.tracks[0]" />
+            <TrackDetail v-else :track="media" />
 
         </div>
 

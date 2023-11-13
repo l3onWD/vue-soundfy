@@ -8,7 +8,7 @@ import MediaSearchCard from '@/components/media/MediaSearchCard.vue';
 
 
 /*** ROUTER PROPS ***/
-const { searchedTerm } = defineProps(['searchedTerm']);
+const props = defineProps(['searchedTerm']);
 
 /*** DATA ***/
 const { isLoading, makeGetRequest } = useFetchApi();
@@ -22,29 +22,19 @@ const tracks = computed(() => results.filter(({ kind }) => kind === 'track'));
 
 /*** LOGIC ***/
 // Listen to query change
-watch(() => searchedTerm, () => {
+watch(() => props.searchedTerm, () => {
 
     // Reset Results
     results.splice(0);
 
     // Search API
-    makeGetRequest('/search', { title: searchedTerm })
+    makeGetRequest('/search', { title: props.searchedTerm })
         .then(data => {
 
             // Check if there aren't results
             if (!data.length) return;
 
             results.push(...data);
-
-            // Add more details if is a track media [TODO da eliminare]
-            results.forEach(media => {
-                if (media.kind === 'track') {
-                    media = {
-                        ...media,
-                        tracks: [{ ...media, uid: `track-${media.id}` }]
-                    }
-                }
-            });
         });
 
 }, { immediate: true });
