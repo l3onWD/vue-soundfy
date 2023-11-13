@@ -1,13 +1,9 @@
-<script>
+<script setup>
+
+/*** COMPONENTS ***/
 import AppMain from './components/AppMain.vue';
 import AppBottom from './components/AppBottom.vue';
 
-
-export default {
-    components: { AppMain, AppBottom }
-
-
-}
 </script>
 
 
@@ -20,5 +16,5 @@ export default {
 
 
 <style lang="scss">
-@use './assets/scss/style.scss';
+@use '@/assets/scss/style.scss';
 </style>
