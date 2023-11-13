@@ -1,7 +1,9 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+import { ref, watch } from 'vue';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { useNextUpStore } from '@/stores/NextUpStore';
+import { storeToRefs } from 'pinia';
+
 /*** COMPONENTS ***/
 import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
 import PlayControl from '@/components/player/PlayControl.vue';
@@ -10,88 +12,80 @@ import VolumeControl from '@/components/player/VolumeControl.vue';
 import NextUpModal from '@/components/nextup/NextUpModal.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
-/*** DATA ***/
-import { usePlayerStore } from '@/stores/PlayerStore';
-import { useNextUpStore } from '@/stores/NextUpStore';
+
+/*** PLAYER ***/
+const player = usePlayerStore();
+const { isEnded, isLoading, isPlaying, loop, currentTime } = storeToRefs(player);
+const { resumeTrack, pauseTrack, stopTrack, seekTrack, toggleTrackLoop } = player;
+
+/*** NEXT UP LIST ***/
+const nextUp = useNextUpStore();
+const { currentTrack, nextTrack, prevTrack, totalTracks } = storeToRefs(nextUp);
+const { goTo } = nextUp;
+const nextUpModalActive = ref(false);
 
 
-export default {
-    components: { PlayControl, TimeControl, TrackDetailCard, VolumeControl, BaseButton, NextUpModal },
+/*** FUNCTIONS ***/
 
-    data: () => ({
-        nextUpModalActive: false,
-        player: usePlayerStore(),
-        nextUp: useNextUpStore()
-    }),
+/**
+ * Start or pause a track
+ */
+const play = () => {
 
-    watch: {
+    // Check if is loading
+    if (isLoading.value) return;
 
-        'player.isEnded'(ended) {
-            if (ended) this.goNextTrack();
-        },
-
-    },
-
-    methods: {
-
-        play() {
-
-            // Check if is loading
-            if (this.player.isLoading) return;
-
-            // Resume/Pause
-            this.player.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
-        },
-
-
-        /**
-         * Update current time from Time Control Bar
-         * 
-         * @param {Number} newTime 
-         */
-        handleTimeMoved(newTime) {
-            if (this.player.isLoading) return;
-
-            this.player.seekTrack(newTime, !this.player.isPlaying);
-        },
-
-
-        /**
-         * Go to next Track or reset list
-         */
-        goNextTrack() {
-
-            // Check if list is ended
-            if (!this.nextUp.nextTrack) {
-                this.player.stopTrack();
-            } else {
-                this.nextUp.goTo('next');
-            }
-        },
-
-
-        /**
-         * Go to previous Track or restart Track
-         */
-        goPrevTrack() {
-
-            // Restart Track
-            if (this.player.currentTime > 5 || !this.nextUp.prevTrack) this.player.seekTrack(0);
-
-            // Change to prev track
-            else {
-                this.nextUp.goTo('prev');
-            }
-
-        },
-
-    }
+    // Resume/Pause
+    isPlaying.value ? pauseTrack() : resumeTrack();
 }
+
+/**
+ * Go to next Track or reset list
+ */
+const goNextTrack = () => {
+
+    // Check if list is ended
+    if (!nextTrack.value) stopTrack();
+    else goTo('next');
+
+}
+
+/**
+ * Go to previous Track or restart Track
+ */
+const goPrevTrack = () => {
+
+    // Restart Track
+    if (currentTime.value > 5 || !prevTrack.value) seekTrack(0);
+
+    // Change to prev track
+    else goTo('prev');
+
+}
+
+/**
+ * Update current time from Time Control Bar
+ * 
+ * @param {Number} newTime 
+ */
+const handleTimeMoved = newTime => {
+    if (isLoading.value) return;
+
+    seekTrack(newTime, !isPlaying.value);
+}
+
+
+/*** LOGIC ***/
+
+watch(isEnded, () => {
+    if (isEnded.value) goNextTrack();
+});
+
 </script>
 
 
 <template>
-    <div v-if="nextUp.totalTracks" class="app-player">
+    <div v-if="totalTracks" class="app-player">
 
         <div class="container">
 
@@ -100,7 +94,7 @@ export default {
             <div class="d-flex justify-content-between flex-shrink-0">
 
                 <!-- Track Details -->
-                <TrackDetailCard :track="nextUp.currentTrack" />
+                <TrackDetailCard :track="currentTrack" />
 
 
                 <!-- Track Actions -->
@@ -121,8 +115,8 @@ export default {
 
 
             <!-- Time Control -->
-            <TimeControl @time-moved="handleTimeMoved" :currentTime="player.currentTime"
-                :duration="nextUp.currentTrack.duration" loading class="mx-md-4" />
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentTrack.duration" loading
+                class="mx-md-4" />
 
 
             <!-- Main Track Controls -->
@@ -135,15 +129,14 @@ export default {
                 </li>
                 <li>
                     <!-- Play Control -->
-                    <PlayControl @@play="play" :isLoading="player.isLoading" :isPlaying="player.isPlaying" />
+                    <PlayControl @@play="play" :isLoading="isLoading" :isPlaying="isPlaying" />
 
                 </li>
                 <li>
                     <BaseButton @click="goNextTrack" icon="forward-step" class="btn btn-ui" />
                 </li>
                 <li>
-                    <BaseButton @click="player.toggleTrackLoop" icon="repeat" class="btn btn-ui"
-                        :class="{ 'active': player.loop }" />
+                    <BaseButton @click="toggleTrackLoop" icon="repeat" class="btn btn-ui" :class="{ 'active': loop }" />
                 </li>
             </ul>
 
@@ -155,7 +148,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .app-player {
