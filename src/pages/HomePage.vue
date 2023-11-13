@@ -32,17 +32,14 @@ onMounted(() => {
 
 
     /*** TRACKS ***/
-    const setMediaTrack = (media) => {
-
-        return {
-            ...media,
-            tracks: [{ ...media, uid: `track-${media.id}` }]
-        }
-    }
-
     makeGetRequest('/tracks/random')
         .then((tracks) => {
-            mediaLists.randomTracks = tracks.map(media => setMediaTrack(media, 'track'));
+            mediaLists.randomTracks = tracks.map(media => {
+                return {
+                    ...media,
+                    tracks: [{ ...media, uid: `track-${media.id}` }]
+                }
+            });
         });
 });
 
