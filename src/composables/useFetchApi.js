@@ -9,7 +9,8 @@ const apiClient = axios.create({
 // Global state
 const activeRequests = ref(0);
 
-export default function useFetchApi() {
+
+export default function useFetchApi(loader = true) {
 
     // Loading state
     const isLoading = computed(() => Boolean(activeRequests.value));
@@ -18,18 +19,18 @@ export default function useFetchApi() {
     const makeGetRequest = async (endpoint, params) => {
 
         // Update global state
-        activeRequests.value++;
+        if (loader) activeRequests.value++;
 
         // Make axios get request
-        try {
-            const { data } = await apiClient.get(endpoint, { params });
-            return data;
-        } catch (err) {
-            console.error(err);
-        } finally {
-            // Update global state
-            activeRequests.value--;
-        }
+        const { data } = await apiClient.get(endpoint, { params })
+            .catch((err) => {
+                console.error(err);
+            });
+
+        // Update global state
+        if (loader) activeRequests.value--;
+
+        return data;
     }
 
     return { isLoading, makeGetRequest };
