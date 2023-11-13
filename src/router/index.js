@@ -8,14 +8,42 @@ const router = createRouter({
     history: createWebHistory(),
     linkExactActiveClass: 'active',
     routes: [
+        // Home
         { path: '/', name: 'home', component: HomePage },
 
-        { path: '/playlists/:id', name: 'playlist-detail', component: MediaDetailPage },
-        { path: '/albums/:id', name: 'album-detail', component: MediaDetailPage },
-        { path: '/tracks/:id', name: 'track-detail', component: MediaDetailPage },
+        // Media
+        {
+            path: '/playlists/:id',
+            name: 'playlist-detail',
+            component: MediaDetailPage,
+            props: (route) => ({
+                id: route.params.id,
+                mediaType: 'playlist'
+            })
+        },
+        {
+            path: '/albums/:id',
+            name: 'album-detail',
+            component: MediaDetailPage,
+            props: (route) => ({
+                id: route.params.id,
+                mediaType: 'album'
+            })
+        },
+        {
+            path: '/tracks/:id',
+            name: 'track-detail',
+            component: MediaDetailPage,
+            props: (route) => ({
+                id: route.params.id,
+                mediaType: 'track'
+            })
+        },
 
+        // Search
         { path: '/search', name: 'search', component: SearchPage },
 
+        // Errors
         { path: '/:pathMatch(.*)*', redirect: '/' },
     ]
 });
