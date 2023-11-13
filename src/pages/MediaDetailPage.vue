@@ -1,62 +1,49 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+import { ref, computed, watch } from 'vue';
+import useFetchApi from '@/composables/useFetchApi';
+
 /*** COMPONENTS ***/
 import AppLoader from '@/components/AppLoader.vue';
 import MediaDetail from '@/components/media/MediaDetail.vue';
 import TrackList from '@/components/tracks/TrackList.vue';
 import TrackDetail from '@/components/tracks/TrackDetail.vue';
 
+
+/*** ROUTER PROPS ***/
+const { id, mediaType } = defineProps(['id', 'mediaType']);
+
 /*** DATA ***/
-import axios from 'axios';
-const baseUri = 'http://127.0.0.1:8000/api';
+const { isLoading, makeGetRequest } = useFetchApi();
+const media = ref(null);
+
+/*** COMPUTED ***/
+const endpoint = computed(() => `/${mediaType}s/${id}`);
 
 
-export default {
+// Check endpoint change
+watch(endpoint, () => {
 
-    components: { AppLoader, MediaDetail, TrackList, TrackDetail },
+    // Reset Media
+    media.value = null;
 
-    data: () => ({
-        media: null,
-        isLoading: 0
-    }),
+    // Fetch Details
+    makeGetRequest(endpoint.value)
+        .then(data => {
 
-    watch: {
-        '$route.params': {
-
-            handler() {
-                this.fetchApi(this.$route.fullPath, (data) => {
-                    this.media = data.kind !== 'track' ? data : this.setMediaTrack(data, 'track');
-                });
-            },
-            immediate: true
-        }
-    },
-
-    methods: {
-
-        fetchApi(endpoint, success) {
-
-            this.isLoading++;
-
-            axios.get(baseUri + endpoint)
-                .then(({ data }) => { success(data) })
-                .catch(err => { console.log(err) })
-                .then(() => { this.isLoading-- });
-        },
-
-        // Set Media track
-        setMediaTrack(media) {
-
-            return {
-                ...media,
-                tracks: [{ ...media, uid: `track-${media.id}` }]
+            // Add more details if is a track media [TODO da eliminare]
+            if (data.kind === 'track') {
+                media.value = {
+                    ...data,
+                    tracks: [{ ...data, uid: `track-${data.id}` }]
+                };
+            } else {
+                media.value = data;
             }
-        }
-    }
+        });
 
-}
+}, { immediate: true });
+
+
 </script>
 
 
@@ -65,7 +52,7 @@ export default {
     <AppLoader v-if="isLoading" />
 
     <!-- Page Content -->
-    <div v-else class="detail pb-4">
+    <div v-else-if="media" class="detail pb-4">
 
         <!-- Content Top -->
         <div class="detail-top p-3">
