@@ -1,69 +1,51 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+import { reactive, onMounted } from 'vue';
+import useFetchApi from '@/composables/useFetchApi';
+
 /*** COMPONENTS ***/
 import AppLoader from '@/components/AppLoader.vue';
 import MediaSection from '@/components/media/MediaSection.vue';
 
 /*** DATA ***/
-import axios from 'axios';
+const { isLoading, makeGetRequest } = useFetchApi();
+const mediaLists = reactive({
+    ourPicksPlaylists: [],
+    randomAlbums: [],
+    randomTracks: [],
+});
 
-const baseUri = 'http://127.0.0.1:8000/api';
+
+onMounted(() => {
+
+    /*** PLAYLISTS ***/
+    makeGetRequest('/playlists/our-picks')
+        .then((playlists) => {
+            mediaLists.ourPicksPlaylists = playlists;
+        });
 
 
-export default {
-    components: { MediaSection, AppLoader },
+    /*** ALBUMS ***/
+    makeGetRequest('/albums/random')
+        .then((albums) => {
+            mediaLists.randomAlbums = albums;
+        });
 
-    data: () => ({
-        ourPicksPlaylists: [],
-        randomAlbums: [],
-        randomTracks: [],
-        isLoading: 0
-    }),
 
-    methods: {
+    /*** TRACKS ***/
+    const setMediaTrack = (media) => {
 
-        fetchApi(endpoint, success) {
-
-            this.isLoading++;
-
-            axios.get(baseUri + endpoint)
-                .then(({ data }) => { success(data) })
-                .catch(err => { console.log(err) })
-                .then(() => { this.isLoading-- });
-        },
-
-        // Set Media track
-        setMediaTrack(media) {
-
-            return {
-                ...media,
-                tracks: [{ ...media, uid: `track-${media.id}` }]
-            }
+        return {
+            ...media,
+            tracks: [{ ...media, uid: `track-${media.id}` }]
         }
-    },
-
-    created() {
-
-        // Get all sections data and set UID to all media
-        // Our picks Playlists
-        this.fetchApi('/playlists/our-picks', (playlists) => {
-            this.ourPicksPlaylists = playlists;
-        });
-
-        // Random Albums
-        this.fetchApi('/albums/random', (albums) => {
-            this.randomAlbums = albums;
-        });
-
-        // Random Tracks
-        this.fetchApi('/tracks/random', (mediaList) => {
-            this.randomTracks = mediaList.map(media => this.setMediaTrack(media, 'track'));
-        });
     }
 
-}
+    makeGetRequest('/tracks/random')
+        .then((tracks) => {
+            mediaLists.randomTracks = tracks.map(media => setMediaTrack(media, 'track'));
+        });
+});
+
 </script>
 
 
@@ -74,13 +56,13 @@ export default {
 
         <div v-else>
             <!-- Our Picks Playlists -->
-            <MediaSection title="Our Picks" :mediaList="ourPicksPlaylists" />
+            <MediaSection title="Our Picks" :mediaList="mediaLists.ourPicksPlaylists" />
 
             <!-- Random Albums -->
-            <MediaSection title="Random Albums" :mediaList="randomAlbums" />
+            <MediaSection title="Random Albums" :mediaList="mediaLists.randomAlbums" />
 
             <!-- Random Tracks -->
-            <MediaSection title="Random Tracks" :mediaList="randomTracks" />
+            <MediaSection title="Random Tracks" :mediaList="mediaLists.randomTracks" />
         </div>
 
     </div>
