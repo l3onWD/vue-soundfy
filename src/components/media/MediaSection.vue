@@ -1,25 +1,21 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+
 /*** COMPONENTS ***/
 import MediaCard from './MediaCard.vue';
 
 
-export default {
-    components: { MediaCard },
-    props: {
-        title: {
-            type: String,
-            default: 'Media List'
-        },
-        mediaList: {
-            type: Array,
-            default: []
-        }
+/*** PROPS ***/
+const props = defineProps({
+    title: {
+        type: String,
+        default: 'Media List'
+    },
+    mediaList: {
+        type: Array,
+        default: []
     }
+});
 
-}
 </script>
 
 
@@ -39,6 +35,3 @@ export default {
 
     </section>
 </template>
-
-
-<style></style>
