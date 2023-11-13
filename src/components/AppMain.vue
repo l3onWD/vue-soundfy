@@ -1,17 +1,12 @@
-<script>
+<script setup>
 
-export default {
-
-}
 </script>
 
 
 <template>
     <main class="app-main">
         <div class="container">
-
             <RouterView />
-
         </div>
     </main>
 </template>

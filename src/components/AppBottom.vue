@@ -1,13 +1,9 @@
-<script>
-import AppNavbar from './AppNavbar.vue';
-import AppPlayer from './AppPlayer.vue';
+<script setup>
 
+/*** COMPONENTS ***/
+import AppNavbar from '@/components/AppNavbar.vue';
+import AppPlayer from '@/components/AppPlayer.vue';
 
-export default {
-    components: { AppNavbar, AppPlayer }
-
-
-}
 </script>
 
 
