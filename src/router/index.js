@@ -41,7 +41,14 @@ const router = createRouter({
         },
 
         // Search
-        { path: '/search', name: 'search', component: SearchPage },
+        {
+            path: '/search',
+            name: 'search',
+            component: SearchPage,
+            props: (route) => ({
+                searchedTerm: route.query.title || '',
+            })
+        },
 
         // Errors
         { path: '/:pathMatch(.*)*', redirect: '/' },
