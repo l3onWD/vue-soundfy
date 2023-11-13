@@ -16,6 +16,7 @@ const props = defineProps({
     }
 });
 
+
 /*** DATA ***/
 const player = usePlayerStore();
 const nextUp = useNextUpStore();
@@ -23,8 +24,10 @@ const nextUp = useNextUpStore();
 
 /*** COMPUTED ***/
 const tracks = computed(() => {
-    if (!props.media.tracks) {
 
+    // Check if is a track
+    if (!props.media.tracks) {
+        // Create a fake traks array
         return [{ ...props.media, uid: `track-${props.media.id}` }]
     }
     return props.media.tracks;
@@ -42,6 +45,7 @@ const isPlaying = computed(() => {
 const isLoading = computed(() => {
     return isActive.value && player.isLoading;
 });
+
 
 /*** FUNCTIONS ***/
 const play = () => {

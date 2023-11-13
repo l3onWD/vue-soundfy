@@ -1,82 +1,75 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
-/*** COMPONENTS ***/
-import BaseButton from '@/components/base/BaseButton.vue';
-import PlayControl from '@/components/player/PlayControl.vue';
-
-/*** DATA ***/
+<script setup>
+import { computed } from 'vue';
 import { usePlayerStore } from '@/stores/PlayerStore';
 import { useNextUpStore } from '@/stores/NextUpStore';
 import * as Utils from '@/utils/';
 
-
-export default {
-
-    components: { BaseButton, PlayControl },
-
-    data: () => ({
-        player: usePlayerStore(),
-        nextUp: useNextUpStore()
-    }),
-
-    props: {
-        media: {
-            type: Object,
-            default: null
-        }
-    },
-
-    computed: {
-        tracks() {
-            if (!this.media.tracks) {
-
-                return [{ ...this.media, uid: `track-${this.media.id}` }]
-            }
-            return this.media.tracks;
-        },
-        isActive() {
-            if (!this.nextUp.currentTrack) return false;
-            return this.tracks.some(({ uid }) => this.nextUp.currentTrack.uid === uid);
-        },
+/*** COMPONENTS ***/
+import BaseButton from '@/components/base/BaseButton.vue';
+import PlayControl from '@/components/player/PlayControl.vue';
 
 
-        isPlaying() {
-            return this.isActive && this.player.isPlaying;
-        },
-
-
-        isLoading() {
-            return this.isActive && this.player.isLoading;
-        },
-
-        totalDurationString() {
-
-            // Get total duration
-            const totalSecs = this.tracks.reduce((tot, { duration }) => tot += duration, 0);
-
-            // Return time string
-            return Utils.formatTime(totalSecs);
-        }
-    },
-
-    methods: {
-
-        play() {
-
-            // Check if this media is loading
-            if (this.isLoading) return;
-
-            // Set Media to next up list and play first track
-            if (!this.isActive) this.nextUp.setTracks(this.tracks);
-
-            // Resume/Pause
-            else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
-        }
+/*** PROPS ***/
+const props = defineProps({
+    media: {
+        type: Object,
+        default: null
     }
+});
 
+
+/*** DATA ***/
+const player = usePlayerStore();
+const nextUp = useNextUpStore();
+
+
+/*** COMPUTED ***/
+const tracks = computed(() => {
+
+    // Check if is a track
+    if (!props.media.tracks) {
+        // Create a fake traks array
+        return [{ ...props.media, uid: `track-${props.media.id}` }]
+    }
+    return props.media.tracks;
+});
+
+const isActive = computed(() => {
+    if (!nextUp.currentTrack) return false;
+    return tracks.value.some(({ uid }) => nextUp.currentTrack.uid === uid);
+});
+
+const isPlaying = computed(() => {
+    return isActive.value && player.isPlaying;
+});
+
+const isLoading = computed(() => {
+    return isActive.value && player.isLoading;
+});
+
+const totalDurationString = computed(() => {
+
+    // Get total duration
+    const totalSecs = tracks.value.reduce((tot, { duration }) => tot += duration, 0);
+
+    // Return time string
+    return Utils.formatTime(totalSecs);
+});
+
+
+/*** FUNCTIONS ***/
+const play = () => {
+
+    // Check if this media is loading
+    if (isLoading.value) return;
+
+    // Set Media to next up list and play first track
+    if (!isActive.value) nextUp.setTracks(tracks.value);
+
+    // Resume/Pause
+    else isPlaying.value ? player.pauseTrack() : player.resumeTrack();
 }
+
 </script>
 
 

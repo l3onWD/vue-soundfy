@@ -1,15 +1,20 @@
 <script setup>
 import { computed } from 'vue';
 
+
 /*** PROPS ***/
 const props = defineProps({
     media: {
         type: Object,
         default: null
-    }, small: Boolean
+    },
+    small: {
+        type: Boolean,
+        default: false
+    }
 });
 
-
+/*** COMPUTED ***/
 const imageSize = computed(() => props.small ? 35 : 50);
 
 
