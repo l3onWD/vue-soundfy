@@ -1,32 +1,26 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+import { useNextUpStore } from '@/stores/NextUpStore';
+
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
 import NextUpListItem from '@/components/nextup/NextUpListItem.vue';
 
+
 /*** DATA ***/
-import { useNextUpStore } from '@/stores/NextUpStore';
+const nextUp = useNextUpStore();
 
 
-export default {
-    components: { BaseButton, NextUpListItem },
+/*** PROPS ***/
+const props = defineProps({
+    isActive: {
+        type: Boolean,
+        default: false
+    }
+});
 
-    data: () => ({
-        nextUp: useNextUpStore()
-    }),
+/*** EVENTS ***/
+defineEmits(['close-modal']);
 
-    props: {
-        isActive: {
-            type: Boolean,
-            default: false
-        }
-    },
-
-    emits: ['close-modal']
-
-}
 </script>
 
 
@@ -60,7 +54,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .nextup-modal {
