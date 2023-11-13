@@ -1,9 +1,13 @@
 import { ref, computed } from 'vue';
 import axios from 'axios';
 
-const baseUri = 'http://127.0.0.1:8000/api';
-const activeRequests = ref(0);// Global variable
-//TODO axios global settings
+// Axios global settings
+const apiClient = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api'
+});
+
+// Global state
+const activeRequests = ref(0);
 
 export default function useFetchApi() {
 
@@ -18,7 +22,7 @@ export default function useFetchApi() {
 
         // Make axios get request
         try {
-            const { data } = await axios.get(baseUri + endpoint, { params });
+            const { data } = await apiClient.get(endpoint, { params });
             return data;
         } catch (err) {
             console.error(err);
