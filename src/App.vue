@@ -1,8 +1,8 @@
 <script setup>
 
 /*** COMPONENTS ***/
-import AppMain from './components/AppMain.vue';
-import AppBottom from './components/AppBottom.vue';
+import AppMain from '@/components/AppMain.vue';
+import AppBottom from '@/components/AppBottom.vue';
 
 </script>
 
