@@ -3,14 +3,31 @@
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
 
+
 /*** PROPS ***/
 defineProps({
-    isLoading: Boolean,
-    isPlaying: Boolean,
-    big: Boolean,
-    rounded: Boolean,
-    colorClass: String,
+    isLoading: {
+        type: Boolean,
+        default: false
+    },
+    isPlaying: {
+        type: Boolean,
+        default: false
+    },
+    big: {
+        type: Boolean,
+        default: false
+    },
+    rounded: {
+        type: Boolean,
+        default: false
+    },
+    colorClass: {
+        type: String,
+        required: false
+    }
 });
+
 
 /*** EVENTS ***/
 const emit = defineEmits(['@play']);

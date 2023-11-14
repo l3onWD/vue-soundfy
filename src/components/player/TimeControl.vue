@@ -1,42 +1,55 @@
-<script>
-export default {
-    props: {
-        currentTime: Number,
-        duration: Number,
+<script setup>
+import { computed } from 'vue';
+
+
+/*** PROPS ***/
+const props = defineProps({
+    currentTime: {
+        type: Number,
+        default: 0
     },
-    computed: {
-        currentTimeLabel() {
-            const minutes = Math.floor(this.currentTime / 60);
-            const seconds = Math.floor(this.currentTime % 60);
-            return minutes + ':' + (seconds < 10 ? `0${seconds}` : seconds);
-        },
+    duration: {
+        type: Number,
+        required: true
+    }
+});
 
-        durationLabel() {
-            const minutes = Math.floor(this.duration / 60);
-            const seconds = Math.floor(this.duration % 60);
-            return minutes + ':' + (seconds < 10 ? `0${seconds}` : seconds);
-        },
 
-        barWidth() {
-            return Math.min(this.currentTime / this.duration * 100, 100);
-        }
-    },
-    methods: {
-        updateCurrentTime(e) {
+/*** COMPUTED ***/
+const currentTimeLabel = computed(() => {
+    const minutes = Math.floor(props.currentTime / 60);
+    const seconds = Math.floor(props.currentTime % 60);
+    return minutes + ':' + (seconds < 10 ? `0${seconds}` : seconds);
+});
 
-            // Get component dimensions
-            const rect = e.currentTarget.getBoundingClientRect();
+const durationLabel = computed(() => {
+    const minutes = Math.floor(props.duration / 60);
+    const seconds = Math.floor(props.duration % 60);
+    return minutes + ':' + (seconds < 10 ? `0${seconds}` : seconds);
+});
 
-            // Calculate new time by mouse position on thr component
-            const newTime = Math.min(Math.max(0, (e.x - rect.left) / rect.width), 1) * this.duration;
+const barWidth = computed(() => {
+    return Math.min(props.currentTime / props.duration * 100, 100);
+});
 
-            // Emit event
-            this.$emit('time-moved', newTime);
-        }
-    },
-    emits: ['time-moved']
 
+/*** FUNCTIONS ***/
+const updateCurrentTime = e => {
+
+    // Get component dimensions
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    // Calculate new time by mouse position on thr component
+    const newTime = Math.min(Math.max(0, (e.x - rect.left) / rect.width), 1) * props.duration;
+
+    // Emit event
+    emit('time-moved', newTime);
 }
+
+
+/*** EVENTS ***/
+const emit = defineEmits(['time-moved']);
+
 </script>
 
 
@@ -62,7 +75,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .time-control {

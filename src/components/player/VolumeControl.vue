@@ -1,42 +1,33 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+import { computed, ref, watch } from 'vue';
+import { usePlayerStore } from '@/stores/PlayerStore';
+
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseVerticalRangeInput from '@/components/base/BaseVerticalRangeInput.vue';
 
+
 /*** DATA ***/
-import { usePlayerStore } from '@/stores/PlayerStore';
+const player = usePlayerStore();
+const volume = ref(1);
 
 
-export default {
-    components: { BaseButton, BaseVerticalRangeInput },
+/*** COMPUTED ***/
+/**
+ * Update mute icon style
+ */
+const volumeIcon = computed(() => {
+    if (player.muted || volume.value === 0) return 'volume-mute';
+    if (volume.value < 0.5) return 'volume-low';
+    return 'volume-high';
+});
 
-    data: () => ({
-        volume: 1,
-        player: usePlayerStore()
-    }),
 
-    computed: {
+/*** UPDATE ***/
+watch(volume, () => {
+    player.setTrackVolume(volume.value);
+});
 
-        /**
-         * Update mute icon style
-         */
-        volumeIcon() {
-            if (this.player.muted || this.volume === 0) return 'volume-mute';
-            if (this.volume < 0.5) return 'volume-low';
-            return 'volume-high';
-        }
-    },
-
-    watch: {
-        volume(value) {
-            this.player.setTrackVolume(value);
-        }
-    },
-
-}
 </script>
 
 
@@ -56,7 +47,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 .volume-control {
     position: relative;
