@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/pages/HomePage.vue';
 import MediaDetailPage from '@/pages/MediaDetailPage.vue';
 import SearchPage from '@/pages/SearchPage.vue';
+import ErrorPage from '@/pages/ErrorPage.vue';
 
 
 const router = createRouter({
@@ -51,7 +52,16 @@ const router = createRouter({
         },
 
         // Errors
-        { path: '/:pathMatch(.*)*', redirect: '/' },
+        {
+            path: '/error',
+            name: 'error',
+            component: ErrorPage,
+            props: (route) => ({
+                code: route.query.code || ''
+            })
+        },
+
+        { path: '/:pathMatch(.*)*', redirect: '/' }
     ]
 });
 
