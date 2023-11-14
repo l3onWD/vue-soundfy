@@ -22,15 +22,12 @@ export default function useFetchApi(loader = true) {
         if (loader) activeRequests.value++;
 
         // Make axios get request
-        const { data } = await apiClient.get(endpoint, { params })
-            .catch((err) => {
-                console.error(err);
-            });
+        const response = await apiClient.get(endpoint, { params });
 
         // Update global state
         if (loader) activeRequests.value--;
 
-        return data;
+        return response;
     }
 
     return { isLoading, makeGetRequest };
