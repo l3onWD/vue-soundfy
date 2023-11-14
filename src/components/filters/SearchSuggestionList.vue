@@ -3,14 +3,21 @@
 /*** COMPONENTS ***/
 import MediaSearchCard from '@/components/media/MediaSearchCard.vue';
 
+
 /*** PROPS ***/
 const props = defineProps({
     suggestions: {
         type: Array,
         default: []
     },
-    isLoading: Boolean,
-    searchTerm: String
+    isLoading: {
+        type: Boolean,
+        default: false
+    },
+    searchTerm: {
+        type: String,
+        default: ''
+    }
 });
 
 </script>

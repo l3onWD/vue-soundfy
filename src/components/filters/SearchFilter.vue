@@ -1,8 +1,7 @@
 <script setup>
-import { ref, reactive, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import useFetchApi from '@/composables/useFetchApi';
-
 
 /*** COMPONENTS ***/
 import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
@@ -12,27 +11,30 @@ import SearchSuggestionList from '@/components/filters/SearchSuggestionList.vue'
 /*** DATA ***/
 const router = useRouter();
 const route = useRoute();
-const { isLoading, makeGetRequest } = useFetchApi();
+
+const { makeGetRequest } = useFetchApi(false);
+const isLoading = ref(false);
 const searchTerm = ref('');
-let searchThrottleId = null;
 const suggestions = ref([]);
-const showSuggestions = ref(false);
+const showSuggestionList = ref(false);
+
+let searchThrottleId = null;
 
 
 /*** LOGIC ***/
 // Set Search Term on route change
-watchEffect(() => { searchTerm.value = route.query.title || '' });
+watchEffect(() => { searchTerm.value = route.query.title || '' });// search term
 
 
 // Get search suggestions
-const suggestSearch = () => {
+const getSuggestions = () => {
 
     // Open suggestions dialog
-    showSuggestions.value = true;
+    showSuggestionList.value = true;
 
     // Input Validation
     if (searchTerm.value.length < 2) {
-        suggestions.value.splice(0);// reset suggestions
+        suggestions.value = [];// reset suggestions
         return;
     }
 
@@ -42,20 +44,25 @@ const suggestSearch = () => {
     searchThrottleId = setTimeout(async () => {
 
         // Reset
-        suggestions.value.splice(0);
+        suggestions.value = [];
+        isLoading.value = true;
 
         // Fetch
         const results = await makeGetRequest('/search', { title: searchTerm.value });
+        isLoading.value = false;
 
         // Update suggestions
         if (!results.length) return;
-        suggestions.value.push(...results);
-
-        // Fix track media
-        suggestions.value.forEach(media => { if (media.kind === 'track') setMediaTrack(media, 'track') });
+        suggestions.value = results;
 
     }, 500);
 };
+
+
+// Close suggestions modal
+const closeSuggestionList = () => {
+    showSuggestionList.value = false;
+}
 
 
 // Go to search page
@@ -65,26 +72,10 @@ const handleSearchSubmit = () => {
     if (!searchTerm.value.length) return;
 
     // Close suggestions dialog
-    showSuggestions.value = false;
+    showSuggestionList.value = false;
 
     // Go to search page
     router.push({ name: 'search', query: { title: searchTerm.value } })
-}
-
-
-// Set Media track
-const setMediaTrack = (media) => {
-
-    return {
-        ...media,
-        tracks: [{ ...media, uid: `track-${media.id}` }]
-    }
-}
-
-
-// Close suggestions modal
-const closeSuggestions = () => {
-    showSuggestions.value = false;
 }
 
 </script>
@@ -94,11 +85,11 @@ const closeSuggestions = () => {
     <form class="search-filter" @submit.prevent="handleSearchSubmit">
 
         <!-- Search input -->
-        <BaseSearchInput @focusin="suggestSearch" v-click-outside="closeSuggestions" @input="suggestSearch"
+        <BaseSearchInput @focusin="getSuggestions" v-click-outside="closeSuggestionList" @input="getSuggestions"
             v-model.trim="searchTerm" />
 
         <!-- Search suggestions -->
-        <div v-if="showSuggestions && searchTerm" class="search-filter-suggestions">
+        <div v-if="showSuggestionList && searchTerm" class="search-filter-suggestions">
             <SearchSuggestionList :suggestions="suggestions" :isLoading="isLoading" :searchTerm="searchTerm" />
         </div>
     </form>
