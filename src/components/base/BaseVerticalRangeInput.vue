@@ -1,73 +1,78 @@
-<script>
-export default {
-    data: () => ({
-        isActive: false
-    }),
+<script setup>
+import { computed, ref } from 'vue';
 
-    props: {
-        value: {
-            type: Number,
-            default: 1
-        },
-        disabled: {
-            type: Boolean,
-            default: false
-        }
+
+/*** PROPS ***/
+const props = defineProps({
+    value: {
+        type: Number,
+        default: 1
     },
-
-    computed: {
-        /**
-         * Update range style value
-         */
-        barValue() {
-            if (this.disabled) return '0';
-            return `${this.value * 100}%`;
-        }
-    },
-
-    methods: {
-
-        /**
-         * Activate component logic
-         * 
-         * @param {Object} e - event ref
-         */
-        activate(e) {
-
-            // Check left click
-            if (e.button !== 0) return;
-
-            this.isActive = true;
-            this.update(e);
-        },
-
-        /**
-         * Calculate new value and emit a v-model update
-         * 
-         * @param {Object} e - event ref
-         */
-        update(e) {
-
-            // Check if mouse pressed
-            if (!this.isActive) return;
-
-            // Get data
-            const barGap = 10;// padding
-            const rect = e.currentTarget.getBoundingClientRect();
-
-            // Calculate component vertical position with padding
-            const barBottom = rect.bottom - barGap;
-            const barHeight = rect.height - barGap * 2;
-
-            // Calculate new value by mouse position on the component
-            const newValue = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
-
-            // Emit value (custom v-model)
-            this.$emit('update:value', newValue);
-        }
+    disabled: {
+        type: Boolean,
+        default: false
     }
+});
 
+
+/*** DATA ***/
+const isActive = ref(false);
+
+
+/*** COMPUTED ***/
+/**
+ * Update range style value
+ */
+const barValue = computed(() => {
+    if (props.disabled) return '0';
+    return `${props.value * 100}%`;
+});
+
+
+/*** EVENTS ***/
+const emits = defineEmits(['update:value']);
+
+
+/*** FUNCTIONS ***/
+/**
+ * Activate component logic
+ * 
+ * @param {Object} e - event ref
+ */
+const activate = e => {
+
+    // Check left click
+    if (e.button !== 0) return;
+
+    isActive.value = true;
+    update(e);
 }
+
+/**
+ * Calculate new value and emit a v-model update
+ * 
+ * @param {Object} e - event ref
+ */
+const update = e => {
+
+    // Check if mouse pressed
+    if (!isActive.value) return;
+
+    // Get data
+    const barGap = 10;// padding
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    // Calculate component vertical position with padding
+    const barBottom = rect.bottom - barGap;
+    const barHeight = rect.height - barGap * 2;
+
+    // Calculate new value by mouse position on the component
+    const newValue = Math.min(Math.max(0, (barBottom - e.y) / barHeight), 1);
+
+    // Emit value (custom v-model)
+    emits('update:value', newValue);
+}
+
 </script>
 
 
@@ -86,7 +91,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '../../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .vertical-range {

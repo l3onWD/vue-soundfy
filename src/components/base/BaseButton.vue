@@ -1,19 +1,24 @@
-<script>
-export default {
-    props: {
+<script setup>
 
-        icon: String,
+/*** PROPS ***/
+defineProps({
 
-        iconSize: String,
+    icon: {
+        type: String,
+        required: false
+    },
 
-        iconStyle: {
-            type: String,
-            default: 'fas',
-            required: false
-        }
+    iconSize: {
+        type: String,
+        required: false
+    },
+
+    iconStyle: {
+        type: String,
+        default: 'fas'
     }
+})
 
-}
 </script>
 
 

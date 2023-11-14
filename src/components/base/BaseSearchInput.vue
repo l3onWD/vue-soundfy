@@ -1,8 +1,11 @@
 <script setup>
 
-/*** DATA ***/
-defineProps(['modelValue'])
-defineEmits(['update:modelValue'])
+/*** PROPS ***/
+defineProps(['modelValue']);
+
+
+/*** EVENTS ***/
+defineEmits(['update:modelValue']);
 
 </script>
 
