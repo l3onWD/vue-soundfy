@@ -1,13 +1,14 @@
-<script>
-export default {
-    props: {
-        track: {
-            type: Object,
-            default: null
-        }
-    }
+<script setup>
 
-}
+
+/*** PROPS ***/
+defineProps({
+    track: {
+        type: Object,
+        default: null
+    }
+});
+
 </script>
 
 

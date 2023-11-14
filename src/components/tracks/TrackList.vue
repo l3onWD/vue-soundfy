@@ -1,66 +1,55 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
-/*** COMPONENTS ***/
-import TrackListItem from '@/components/tracks/TrackListItem.vue';
-
-/*** DATA ***/
+<script setup>
+import { computed } from 'vue';
 import { usePlayerStore } from '@/stores/PlayerStore';
 import { useNextUpStore } from '@/stores/NextUpStore';
 
-
-export default {
-
-    components: { TrackListItem },
-
-    data: () => ({
-        player: usePlayerStore(),
-        nextUp: useNextUpStore()
-    }),
-
-    props: {
-        tracks: {
-            type: Array,
-            default: []
-        }
-    },
-
-    computed: {
-
-        isActive() {
-            if (!this.nextUp.currentTrack) return false;
-            return this.tracks.some(({ uid }) => this.nextUp.currentTrack.uid === uid);
-        },
+/*** COMPONENTS ***/
+import TrackListItem from '@/components/tracks/TrackListItem.vue';
 
 
-        isPlaying() {
-            return this.isActive && this.player.isPlaying;
-        },
-
-
-        isLoading() {
-            return this.isActive && this.player.isLoading;
-        }
-    },
-
-    methods: {
-
-        play(uid, index) {
-
-            // Check if this media is loading
-            if (this.isLoading) return;
-
-            // Set Media to next up list and play clicked track
-            if (!this.isActive || this.nextUp.currentTrack.uid !== uid) this.nextUp.setTracks(this.tracks, index);
-
-            // Resume/Pause
-            else this.isPlaying ? this.player.pauseTrack() : this.player.resumeTrack();
-
-        }
+/*** PROPS ***/
+const props = defineProps({
+    tracks: {
+        type: Array,
+        default: []
     }
+});
+
+
+/*** DATA ***/
+const player = usePlayerStore();
+const nextUp = useNextUpStore();
+
+
+/*** COMPUTED ***/
+const isActive = computed(() => {
+    if (!nextUp.currentTrack) return false;
+    return props.tracks.some(({ uid }) => nextUp.currentTrack.uid === uid);
+});
+
+const isPlaying = computed(() => {
+    return isActive.value && player.isPlaying;
+});
+
+const isLoading = computed(() => {
+    return isActive.value && player.isLoading;
+});
+
+
+/*** FUNCTIONS ***/
+const play = (uid, index) => {
+
+    // Check if this media is loading
+    if (isLoading.value) return;
+
+    // Set Media to next up list and play clicked track
+    if (!isActive.value || nextUp.currentTrack.uid !== uid) nextUp.setTracks(props.tracks, index);
+
+    // Resume/Pause
+    else isPlaying.value ? player.pauseTrack() : player.resumeTrack();
 
 }
+
 </script>
 
 

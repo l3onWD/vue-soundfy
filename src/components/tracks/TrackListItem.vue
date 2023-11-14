@@ -1,66 +1,57 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
+<script setup>
+import { computed } from 'vue';
+import { usePlayerStore } from '@/stores/PlayerStore';
+import { useNextUpStore } from '@/stores/NextUpStore';
+
 /*** COMPONENTS ***/
 import BaseButton from '@/components/base/BaseButton.vue';
 import PlayControl from '@/components/player/PlayControl.vue';
 import TrackDetailCard from '@/components/tracks/TrackDetailCard.vue';
 
+
+/*** PROPS ***/
+const props = defineProps({
+    track: {
+        type: Object,
+        required: true
+    },
+
+    listPosition: {
+        type: Number,
+        required: true
+    }
+});
+
+
 /*** DATA ***/
-import { usePlayerStore } from '@/stores/PlayerStore';
-import { useNextUpStore } from '@/stores/NextUpStore';
+const player = usePlayerStore();
+const nextUp = useNextUpStore();
 
 
-export default {
+/*** COMPUTED ***/
+const isActive = computed(() => {
+    if (!nextUp.currentTrack) return false;
+    return nextUp.currentTrack.uid === props.track.uid;
+});
 
-    components: { BaseButton, PlayControl, TrackDetailCard },
+const isPlaying = computed(() => {
+    return isActive.value && player.isPlaying;
+});
 
-    data: () => ({
-        player: usePlayerStore(),
-        nextUp: useNextUpStore()
-    }),
-
-    props: {
-        track: {
-            type: Object,
-            required: true
-        },
-
-        listPosition: {
-            type: Number,
-            required: true
-        }
-    },
-
-    computed: {
-
-        isActive() {
-            if (!this.nextUp.currentTrack) return false;
-            return this.nextUp.currentTrack.uid === this.track.uid;
-        },
+const isLoading = computed(() => {
+    return isActive.value && player.isLoading;
+});
 
 
-        isPlaying() {
-            return this.isActive && this.player.isPlaying;
-        },
-
-
-        isLoading() {
-            return this.isActive && this.player.isLoading;
-        }
-    },
-
-    methods: {
-
-        handlePlay() {
-            this.$emit('@play', this.track.uid, this.listPosition);
-        }
-    },
-
-    emits: ['@play']
-
+/*** FUNCTIONS ***/
+const handlePlay = () => {
+    emit('@play', props.track.uid, props.listPosition);
 }
+
+
+/*** EVENTS ***/
+const emit = defineEmits(['@play']);
+
 </script>
 
 

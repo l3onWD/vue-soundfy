@@ -1,31 +1,26 @@
-<script>
-/* -----------------------------------------
-* RESOURCES
--------------------------------------------*/
-/*** DATA ***/
+<script setup>
+import { computed } from 'vue';
 import * as Utils from '@/utils/';
 
 
-export default {
-
-    props: {
-        track: {
-            type: Object,
-            default: null
-        }
-    },
-    computed: {
-
-        durationString() {
-            return Utils.formatTime(this.track.duration);
-        },
-
-        releaseDateString() {
-            return Utils.formatDate(this.track.album.release_date);
-        }
+/*** PROPS ***/
+const props = defineProps({
+    track: {
+        type: Object,
+        default: null
     }
+});
 
-}
+
+/*** COMPUTED ***/
+const durationString = computed(() => {
+    return Utils.formatTime(props.track.duration);
+});
+
+const releaseDateString = computed(() => {
+    return Utils.formatDate(props.track.album.release_date);
+});
+
 </script>
 
 
