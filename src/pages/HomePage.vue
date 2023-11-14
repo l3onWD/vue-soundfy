@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import useFetchApi from '@/composables/useFetchApi';
 
 /*** COMPONENTS ***/
@@ -13,28 +14,41 @@ const mediaLists = reactive({
     randomAlbums: [],
     randomTracks: [],
 });
+const router = useRouter();
 
 
 onMounted(() => {
 
     /*** PLAYLISTS ***/
     makeGetRequest('/playlists/our-picks')
-        .then((playlists) => {
+        .then(({ data: playlists }) => {
             mediaLists.ourPicksPlaylists = playlists;
+        })
+        .catch(err => {
+            // Network error
+            router.push({ name: 'error' });
         });
 
 
     /*** ALBUMS ***/
     makeGetRequest('/albums/random')
-        .then((albums) => {
+        .then(({ data: albums }) => {
             mediaLists.randomAlbums = albums;
+        })
+        .catch(err => {
+            // Network error
+            router.push({ name: 'error' });
         });
 
 
     /*** TRACKS ***/
     makeGetRequest('/tracks/random')
-        .then((tracks) => {
+        .then(({ data: tracks }) => {
             mediaLists.randomTracks = tracks;
+        })
+        .catch(err => {
+            // Network error
+            router.push({ name: 'error' });
         });
 });
 
