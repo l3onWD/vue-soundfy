@@ -13,20 +13,16 @@ import NextUpModal from '@/components/nextup/NextUpModal.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
 
 
-/*** PLAYER ***/
+/*** DATA ***/
 const player = usePlayerStore();
 const { isEnded, isLoading, isPlaying, loop, currentTime } = storeToRefs(player);
 const { resumeTrack, pauseTrack, stopTrack, seekTrack, toggleTrackLoop } = player;
 
-/*** NEXT UP LIST ***/
 const nextUp = useNextUpStore();
-const { currentTrack, nextTrack, prevTrack, totalTracks } = storeToRefs(nextUp);
-const { goTo } = nextUp;
 const nextUpModalActive = ref(false);
 
 
 /*** FUNCTIONS ***/
-
 /**
  * Start or pause a track
  */
@@ -45,8 +41,8 @@ const play = () => {
 const goNextTrack = () => {
 
     // Check if list is ended
-    if (!nextTrack.value) stopTrack();
-    else goTo('next');
+    if (!nextUp.nextTrack) stopTrack();
+    else nextUp.goTo('next');
 
 }
 
@@ -56,10 +52,10 @@ const goNextTrack = () => {
 const goPrevTrack = () => {
 
     // Restart Track
-    if (currentTime.value > 5 || !prevTrack.value) seekTrack(0);
+    if (currentTime.value > 5 || !nextUp.prevTrack) seekTrack(0);
 
     // Change to prev track
-    else goTo('prev');
+    else nextUp.goTo('prev');
 
 }
 
@@ -75,8 +71,7 @@ const handleTimeMoved = newTime => {
 }
 
 
-/*** LOGIC ***/
-
+/*** UPDATE ***/
 watch(isEnded, () => {
     if (isEnded.value) goNextTrack();
 });
@@ -85,7 +80,7 @@ watch(isEnded, () => {
 
 
 <template>
-    <div v-if="totalTracks" class="app-player">
+    <div v-if="nextUp.totalTracks" class="app-player">
 
         <div class="container">
 
@@ -94,7 +89,7 @@ watch(isEnded, () => {
             <div class="d-flex justify-content-between flex-shrink-0">
 
                 <!-- Track Details -->
-                <TrackDetailCard :track="currentTrack" />
+                <TrackDetailCard :track="nextUp.currentTrack" />
 
 
                 <!-- Track Actions -->
@@ -115,8 +110,8 @@ watch(isEnded, () => {
 
 
             <!-- Time Control -->
-            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="currentTrack.duration" loading
-                class="mx-md-4" />
+            <TimeControl @time-moved="handleTimeMoved" :currentTime="currentTime" :duration="nextUp.currentTrack.duration"
+                loading class="mx-md-4" />
 
 
             <!-- Main Track Controls -->
