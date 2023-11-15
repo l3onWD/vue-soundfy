@@ -2,6 +2,7 @@
 import { ref, watchEffect } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import useFetchApi from '@/composables/useFetchApi';
+import { useFlashMessagesStore } from '@/stores/FlashMessagesStore';
 
 /*** COMPONENTS ***/
 import BaseSearchInput from '@/components/base/BaseSearchInput.vue';
@@ -11,6 +12,7 @@ import SearchSuggestionList from '@/components/filters/SearchSuggestionList.vue'
 /*** DATA ***/
 const router = useRouter();
 const route = useRoute();
+const messagesStore = useFlashMessagesStore();
 
 const { makeGetRequest } = useFetchApi(false);
 const isLoading = ref(false);
@@ -54,7 +56,8 @@ const getSuggestions = () => {
             })
             .catch(err => {
                 // Server | Connection Error
-                console.log(err);// TODO gestire con messaggio d'errore
+                console.log(err);
+                messagesStore.sendMessage('Connection Error.');
             })
             .then(() => {
                 // Deactivate Loader

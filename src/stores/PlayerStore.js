@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import useFetchApi from '@/composables/useFetchApi';
+import { useFlashMessagesStore } from '@/stores/FlashMessagesStore';
 
 const { makeGetRequest } = useFetchApi(false);
 
@@ -24,8 +25,9 @@ export const usePlayerStore = defineStore('player', {
         audioCtx: null,
         audioGain: null,
         audioSource: null,
-        audioBuffer: null
+        audioBuffer: null,
 
+        messagesStore: useFlashMessagesStore()
     }),
 
     actions: {
@@ -67,12 +69,15 @@ export const usePlayerStore = defineStore('player', {
                         }),
                         err => {
                             // Decode Error
-                            console.log(err);// TODO gestire con messaggio d'errore
+                            console.log(err);
+                            this.messagesStore.sendMessage('An Error occurred on Audio Deconding.');
+
                         };
                 })
                 .catch(err => {
                     // Server | Connection Error
-                    console.log(err);// TODO gestire con messaggio d'errore
+                    console.log(err);
+                    this.messagesStore.sendMessage('Connection Error.');
                 });
         },
 
