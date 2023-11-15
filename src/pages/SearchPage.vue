@@ -29,13 +29,17 @@ watch(() => props.searchedTerm, () => {
 
     // Search API
     makeGetRequest('/search', { title: props.searchedTerm })
-        .then(data => {
+        .then(({ data }) => {
 
             // Check if there aren't results
             if (!data.length) return;
 
             results.push(...data);
-        });
+        })
+        .catch(() => {
+            // Network error
+            router.push({ name: 'error' });
+        });;
 
 }, { immediate: true });
 
