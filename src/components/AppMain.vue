@@ -13,7 +13,7 @@
 
 
 <style lang="scss" scoped>
-@use '../assets/scss/vars' as *;
+@use '@/assets/scss/vars' as *;
 
 
 .app-main {
