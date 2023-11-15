@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, watch, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import useFetchApi from '@/composables/useFetchApi';
 
 /*** COMPONENTS ***/
@@ -13,6 +14,8 @@ const props = defineProps(['searchedTerm']);
 /*** DATA ***/
 const { isLoading, makeGetRequest } = useFetchApi();
 const results = reactive([]);
+const router = useRouter();
+
 
 /*** COMPUTED ***/
 const playlists = computed(() => results.filter(({ kind }) => kind === 'playlist'));
