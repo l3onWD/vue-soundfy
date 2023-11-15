@@ -52,9 +52,9 @@ const getSuggestions = () => {
             .then(({ data }) => {
                 suggestions.value = data;
             })
-            .catch(() => {
-                // Network error
-                router.push({ name: 'error' });// TODO mostrare solo un messaggio
+            .catch(err => {
+                // Server | Connection Error
+                console.log(err);// TODO gestire con messaggio d'errore
             })
             .then(() => {
                 // Deactivate Loader
