@@ -42,10 +42,22 @@ const errorMessage = computed(() => {
 <template>
     <div id="error-page" class="d-flex flex-column justyfy-content-center align-items-center py-5">
 
+        <!-- Illustration -->
         <FontAwesomeIcon icon="fas fa-ban" size="10x" class="text-orange mb-2" />
+
+        <!-- Message -->
         <h1 class="mb-3">Oops!</h1>
         <p class="text-center fs-5 mb-5">{{ errorMessage }}</p>
-        <BaseButton @click="router.back()" icon="fa-arrow-left" class="btn btn-outline-orange p-3">Go Back</BaseButton>
+
+        <!-- Navigation -->
+        <BaseButton v-if="code != 404" @click="router.back()" icon="fa-arrow-left" class="btn btn-outline-orange p-3">Go
+            Back</BaseButton>
+        <BaseButton v-else @click="router.push({ name: 'home' })" icon="fa-arrow-left" class="btn btn-outline-orange p-3">
+            Back
+            to Home</BaseButton>
+
+
+
 
     </div>
 </template>
