@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { usePlayerStore } from '@/stores/PlayerStore';
+import { useFlashMessagesStore } from '@/stores/FlashMessagesStore';
 
 
 export const useNextUpStore = defineStore('nextUp', {
@@ -7,7 +8,9 @@ export const useNextUpStore = defineStore('nextUp', {
     state: () => ({
         tracks: [],
         currentIndex: 0,
-        player: usePlayerStore()
+        player: usePlayerStore(),
+        messagesStore: useFlashMessagesStore()
+
     }),
 
     getters: {
@@ -30,6 +33,7 @@ export const useNextUpStore = defineStore('nextUp', {
 
             // Add to list
             this.tracks.push(...tracks);
+            this.messagesStore.sendMessage('Tracks added to next list.');
 
             // Play track if list was empty
             if (wasEmpty) this.player.fetchTrack(this.currentTrack);
