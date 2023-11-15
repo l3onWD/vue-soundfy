@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import useFetchApi from '@/composables/useFetchApi';
 
-const baseUri = 'http://127.0.0.1:8000/api';
+const { makeGetRequest } = useFetchApi(false);
 
 
 export const usePlayerStore = defineStore('player', {
@@ -45,7 +45,7 @@ export const usePlayerStore = defineStore('player', {
             if (this.audioCtx) this.stopTrack();
 
             // Fetch new track
-            axios.get(`${baseUri}/tracks/${track.id}/stream`, { responseType: 'arraybuffer' })
+            makeGetRequest(`/tracks/${track.id}/stream`, null, 'arraybuffer')
                 .then(({ data }) => {
 
                     // Abort if track changed during fetch
@@ -64,15 +64,16 @@ export const usePlayerStore = defineStore('player', {
                             // Set audio buffer and start track
                             this.audioBuffer = buffer;
                             this.startAudio();
-
                         }),
                         err => {
-                            console.log(err);
+                            // Decode Error
+                            console.log(err);// TODO gestire con messaggio d'errore
                         };
                 })
                 .catch(err => {
-                    console.log(err);
-                })
+                    // Server | Connection Error
+                    console.log(err);// TODO gestire con messaggio d'errore
+                });
         },
 
 
