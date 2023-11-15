@@ -16,14 +16,14 @@ export default function useFetchApi(loader = true) {
     const isLoading = computed(() => Boolean(activeRequests.value));
 
     // Get request
-    const makeGetRequest = async (endpoint, params) => {
+    const makeGetRequest = async (endpoint, params, responseType = 'json') => {
 
         try {
             // Update global loading state
             if (loader) activeRequests.value++;
 
             // Make axios get request
-            const response = await apiClient.get(endpoint, { params });
+            const response = await apiClient.get(endpoint, { params, responseType });
 
             // Remove this request from loading state
             if (loader) activeRequests.value--;
