@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import useFetchApi from '@/composables/useFetchApi';
 
 /*** COMPONENTS ***/
@@ -15,6 +16,7 @@ const props = defineProps(['id', 'mediaType']);
 /*** DATA ***/
 const { isLoading, makeGetRequest } = useFetchApi();
 const media = ref(null);
+const router = useRouter();
 
 /*** COMPUTED ***/
 const endpoint = computed(() => `/${props.mediaType}s/${props.id}`);
@@ -28,8 +30,18 @@ watch(endpoint, () => {
 
     // Fetch Details
     makeGetRequest(endpoint.value)
-        .then(data => {
+        .then(({ data }) => {
             media.value = data;
+        })
+        .catch(err => {
+
+            // Media not founded
+            if (err === 404) {
+                router.push({ name: 'error', query: { code: err } });
+            } else {
+                // Network error
+                router.push({ name: 'error' });
+            }
         });
 
 }, { immediate: true });
