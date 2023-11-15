@@ -24,7 +24,7 @@ onMounted(() => {
         .then(({ data: playlists }) => {
             mediaLists.ourPicksPlaylists = playlists;
         })
-        .catch(err => {
+        .catch(() => {
             // Network error
             router.push({ name: 'error' });
         });
@@ -35,7 +35,7 @@ onMounted(() => {
         .then(({ data: albums }) => {
             mediaLists.randomAlbums = albums;
         })
-        .catch(err => {
+        .catch(() => {
             // Network error
             router.push({ name: 'error' });
         });
@@ -46,7 +46,7 @@ onMounted(() => {
         .then(({ data: tracks }) => {
             mediaLists.randomTracks = tracks;
         })
-        .catch(err => {
+        .catch(() => {
             // Network error
             router.push({ name: 'error' });
         });
