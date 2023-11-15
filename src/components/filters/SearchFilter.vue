@@ -48,12 +48,18 @@ const getSuggestions = () => {
         isLoading.value = true;
 
         // Fetch
-        const results = await makeGetRequest('/search', { title: searchTerm.value });
-        isLoading.value = false;
-
-        // Update suggestions
-        if (!results.length) return;
-        suggestions.value = results;
+        makeGetRequest('/search', { title: searchTerm.value })
+            .then(({ data }) => {
+                suggestions.value = data;
+            })
+            .catch(() => {
+                // Network error
+                router.push({ name: 'error' });// TODO mostrare solo un messaggio
+            })
+            .then(() => {
+                // Deactivate Loader
+                isLoading.value = false;
+            });
 
     }, 500);
 };
